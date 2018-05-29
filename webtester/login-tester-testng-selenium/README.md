@@ -17,11 +17,11 @@ Maven will run the default test suite with all login tests using the Surefire pl
 
 ## Contents
 
-| **Folder**                    | **Contents** |
+| **Folder / File**                    | **Contents** |
 | ---                           | ---          |
 |   src/test/java               |   Folder with TestNG tests and supporting code     |
-|   pom.xml                     |    Maven project dependencies and description     |
-|   testng.xml                  |  Test suite configuration for Maven Surefire plugin |
+|   [pom.xml](pom.xml)                     |    Maven project dependencies and description     |
+|   [testng.xml](testng.xml)                  |  Test suite configuration for Maven Surefire plugin |
 
 
 ## Dependencies
