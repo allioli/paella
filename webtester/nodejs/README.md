@@ -10,7 +10,7 @@ Tests use chromedriver to run chrome browser with maximised windows.
 
 Default selenium timeouts are adjusted to run on a low-end laptop and might appear conservative for higher powered machines.
 
-Async *Promises* in selenium.js have been a real pain in order write readable code using expectations together with assertions from the *chai library*.
+Async *Promises* in selenium.js have been a real pain in order to write readable code using expectations together with assertions from the *chai library*.
 
 Functionality like *driver.Key.RETURN* didn't work to trigger a RETURN press on an element, so I defaulted to "\n".
 
