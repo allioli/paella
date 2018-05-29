@@ -2,7 +2,10 @@
 
 This is a node.js project.
 
-It was put together using npm init, npm install of dependencies (in package.json).
+It was put together using:
+
+- `npm init`
+- `npm install` of dependencies (see *dependencies* section in package.json).
 
 It will run cucumber scenarios against us.letgo.com and report results in console and `reports/*.json` files.
 
