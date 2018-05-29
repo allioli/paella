@@ -4,7 +4,7 @@ This is a cucumber-jvm, selenium project.
 
 It was put together using eclipse, mvn.
 
-It will run cucumber scenarios against us.letgo.com and report results to console and target\cucumber-html-report\index.html
+It will run cucumber scenarios against us.letgo.com and report results to console and `target\cucumber-html-report\index.html`.
 
 Tests use chromedriver to run chrome browser with maximised windows.
 
