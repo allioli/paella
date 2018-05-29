@@ -8,7 +8,7 @@ It will run test cases against purgomalum api and create a test matrix in html f
 
 ## Contents
 
-- purgotester.py
+- [purgotester.py](purgotester.py)
     * Python script.
 
 ## Dependencies
