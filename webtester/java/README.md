@@ -12,7 +12,7 @@ Default selenium timeouts are adjusted to run on a low-end laptop and might appe
 
 Examples include design patterns such as *Page object*, *Page factory* and *Action Bot*.
 
-Additionally, there is an example of guice injection of Scenario scopped World instance, which supports passing information between steps.
+Additionally, there is an example of guice injection of a Scenario-scopped World instance, which supports passing information between steps.
 
 Default cukes runner tags are @account, @search
 
