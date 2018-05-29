@@ -20,11 +20,11 @@ Default cukes runner tags are @account, @search
 ## Contents
 
 
-| **Folder**                    | **Contents** |
+| **Folder / File**                    | **Contents** |
 | ---                           | ---          |
 |   src/test/resources/features |   feature files with cucumber scenarios      |
 |   src/test/java               |    Scenario step definitions and supporting code     |
-|   pom.xml               |    Maven project dependencies and description     |
+|   [pom.xml](pom.xml)               |    Maven project dependencies and description     |
 
 
 
