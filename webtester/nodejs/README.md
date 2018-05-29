@@ -21,7 +21,7 @@ Functionality like *driver.Key.RETURN* didn't work to trigger a RETURN press on 
 
 ## Contents
 
-| **Folder** | **Contents** |
+| **Folder / File** | **Contents** |
 | ---        | ---          |
 |   features |    Folder containing all the code     |
 |   node_modules |     Nodejs dependencies and binaries      |
