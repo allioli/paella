@@ -30,13 +30,25 @@ Examples include design patterns such as *Page object* and *Page factory*.
 ### Installing stuff on Windows
 
 - Download & Install JDK 8
-- Update `JAVA_HOME` and `PATH` env variables
+    - Update `JAVA_HOME` and `PATH` env variables
 - Download & Install maven
-- Update `PATH` env variable
-- 
+    - Update `PATH` env variable
+- Download & Install Node.js
+    - Update `PATH`env variable
+- Install appium node module
+    - `npm -g appium`
+- Install[appium Desktop](http://appium.io/downloads.html)
+    - Standalone appium server + Inspector session
+    - Really useful to 
+        - Debug your session & capabilities
+        - Inspect app element locators while app is running on device
+        - Check interactions
+
+
+
 
 ## How to run
 
-The tests manage appium server runtime and client sessions.
+The tests manage the lifecycle of appium server and client sessions.
 
 `mvn clean test`
