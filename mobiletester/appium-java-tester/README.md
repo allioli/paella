@@ -37,12 +37,14 @@ Examples include design patterns such as *Page object* and *Page factory*.
     - Update `PATH`env variable
 - Install appium node module
     - `npm -g appium`
-- Install[appium Desktop](http://appium.io/downloads.html)
+- Install [appium Desktop](http://appium.io/downloads.html)
     - Standalone appium server + Inspector session
-    - Really useful to 
+    - Really useful while developing test cases to 
         - Debug your session & capabilities
         - Inspect app element locators while app is running on device
         - Check interactions
+    - Remember to *stop this appium server* before running the tests
+        - The tests will start their own instance of appium server
 
 
 
