@@ -19,6 +19,8 @@ public class AndroidTest extends BaseDriver{
 
         assertTrue(preferences.tapPreferenceDependenciesButton());
 
+        assertTrue(preferences.checkWifiCheckbox());
+
         Thread.sleep(4000);
         
     }		

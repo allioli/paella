@@ -9,9 +9,13 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 public class Preferences extends Page {
 
 
-    @iOSFindBy(accessibility = "Preference")
+    @iOSFindBy(accessibility = "3. Preference dependencies")
     @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='3. Preference dependencies']")
     public MobileElement preferenceDependenciesButton;
+
+    @iOSFindBy(id = "checkbox")
+    @AndroidFindBy(id = "android:id/checkbox")
+    public MobileElement wifiCheckbox;
 
     public Preferences(WebDriver driver) {
         super(driver);
@@ -19,6 +23,11 @@ public class Preferences extends Page {
 
     public boolean tapPreferenceDependenciesButton(){
 
-        return checkElemenClickableAndTap(preferenceDependenciesButton);
+        return waitElementReadyAndTap(preferenceDependenciesButton);
+    }
+
+    public boolean checkWifiCheckbox(){
+
+        return waitElementReadyAndTap(wifiCheckbox);
     }
 }

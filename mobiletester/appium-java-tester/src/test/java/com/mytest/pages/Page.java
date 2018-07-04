@@ -25,7 +25,7 @@ public abstract class Page {
             this);
     }
 
-    protected boolean isElementClickable(MobileElement element) {
+    protected boolean isElementVisibleAndEnabled(MobileElement element) {
 
         try {
             WebDriverWait wait = new WebDriverWait(driver, defaultExplicitTimeoutInSeconds);
@@ -37,12 +37,13 @@ public abstract class Page {
         }
     }
 
-    protected boolean checkElemenClickableAndTap(MobileElement element) {
+    protected boolean waitElementReadyAndTap(MobileElement element) {
 
-        if (!isElementClickable(element))
+        if (!isElementVisibleAndEnabled(element))
             return false;
 
         element.click();
         return true;
     }
+ 
 }

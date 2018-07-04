@@ -19,6 +19,6 @@ public class MainMenu extends Page {
 
     public boolean tapPreferenceButton(){
 
-        return checkElemenClickableAndTap(preferenceButton);
+        return waitElementReadyAndTap(preferenceButton);
     }
 }

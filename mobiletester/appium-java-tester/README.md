@@ -27,7 +27,7 @@ Examples include design patterns such as *Page object* and *Page factory*.
 - Node.js
 - Appium server
 
-### Installing stuff on Windows
+### Set up on Windows
 
 - Download & Install JDK 8
     - Update `JAVA_HOME` and `PATH` env variables
@@ -46,7 +46,12 @@ Examples include design patterns such as *Page object* and *Page factory*.
     - Remember to *stop this appium server* before running the tests
         - The tests will start their own instance of appium server
 
-
+- Switch device to Developer Mode
+    - Configure `Developer Options`
+        - Stay awake
+	- USB Debugging
+	- Verify apps via USB
+	- Show touches
 
 
 ## How to run
