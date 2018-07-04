@@ -1,5 +1,7 @@
 package com.mytest.pages;
 
+import com.mytest.actions.IActionBot;
+
 import org.openqa.selenium.WebDriver;
 
 import io.appium.java_client.MobileElement;
@@ -13,21 +15,27 @@ public class Preferences extends Page {
     @AndroidFindBy(xpath = "//android.widget.TextView[@content-desc='3. Preference dependencies']")
     public MobileElement preferenceDependenciesButton;
 
-    @iOSFindBy(id = "checkbox")
-    @AndroidFindBy(id = "android:id/checkbox")
-    public MobileElement wifiCheckbox;
+    @iOSFindBy(accessibility = "2. Launching preferences")
+    @AndroidFindBy(accessibility = "2. Launching preferences")
+    public MobileElement launchingPreferencesButton;
 
-    public Preferences(WebDriver driver) {
-        super(driver);
+    public Preferences(WebDriver driver, IActionBot actionBot) {
+        super(driver, actionBot);
+    }
+
+    public boolean validatePage(){
+
+        if( actionBot.isElementClickable(preferenceDependenciesButton) &&
+            actionBot.isElementClickable(launchingPreferencesButton))
+
+            return true;
+
+        return false;
+
     }
 
     public boolean tapPreferenceDependenciesButton(){
 
-        return waitElementReadyAndTap(preferenceDependenciesButton);
-    }
-
-    public boolean checkWifiCheckbox(){
-
-        return waitElementReadyAndTap(wifiCheckbox);
-    }
+        return actionBot.waitElementClickableAndTap(preferenceDependenciesButton);
+    }    
 }
