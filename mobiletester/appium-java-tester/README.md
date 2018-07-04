@@ -49,9 +49,9 @@ Examples include design patterns such as *Page object* and *Page factory*.
 - Switch device to Developer Mode
     - Configure `Developer Options`
         - Stay awake
-	- USB Debugging
-	- Verify apps via USB
-	- Show touches
+        - USB Debugging
+        - Verify apps via USB
+        - Show touches
 
 
 ## How to run
