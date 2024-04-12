@@ -30,6 +30,57 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
    - The app is build, installed and launched in the virtual device
 8. In Visual Studio Code, the Flutter dev tools include the handy [Flutter Inspector](https://docs.flutter.dev/tools/devtools/inspector), to navigate the view tree accessible to the Flutter driver in real-time.
 
+## Main code changes
+
+### Exposing keys for item title, item price and loading items inside the list
+For our Flutter test, we want to check item title as well as item price. This type of test is a good fit to check for loading states (mocked backend calls, simulated load time), so we are also going to need a key for loading items. 
+- Adding key property to loading ListTile title - [`item_tile.dart`](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/lib/src/item_tile.dart#L61)
+
+
+- Adding key properties to ListTile title, price - [`item_tile.dart`](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/lib/src/item_tile.dart#L33)
+ 
+### Exposing Semantic identifier, label for each item inside the list
+For the Appium test, we want to locate item tiles as a whole. Here we use real backend service and we limit the amount of granular asserts, focusing on the happy path scenario without digging too deep into fine detail.
+
+We need to wrap up the Item tile Widget in a `Semantics` object that contains an `identifier` property (that will be exposed to appium as `resource-id` in Android / `accessibilityIdentifier` iOS). There is also an example of usage for the `label` property. This one will be exposed to appium as part of `content-desc` in Android / `label` in iOS. Here we are using a neat approach shared in this [article](https://maestro.mobile.dev/platform-support/flutter) to return the wrapped Widget, passing the desired identifier to the constructor.
+
+```
+/// This is the widget responsible for building the item in the list,
+/// once we have the actual data [item].
+class ItemTile extends StatelessWidget {
+  final Item item;
+  final String identifier;
+  const ItemTile({required this.item, super.key, required this.identifier});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      identifier: identifier, // to expose unique id to appium (Android resource-id, iOS accessibility-id)
+      label: identifier, // to expose semantics label to Flutter finder find.bySemanticsLabel(RegExp(r'identifier'))
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            leading: AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                color: item.color,
+              ),
+            ),
+            title: Text(
+                item.name,
+                style: Theme.of(context).textTheme.titleLarge,
+                key: const ValueKey("item_title") // to expose key to Flutter finder find.byKey)
+            ),
+            trailing: Text(
+                '\€ ${(item.price / 100).toStringAsFixed(2)}',
+                key: const ValueKey("item_price")
+            ),
+          ),
+      )
+    );
+  }
+}
+```
 
 
 ## Limitations
@@ -52,6 +103,6 @@ Tools • Dart 3.3.3 • DevTools 2.31.1
 * [Flutter Widget Finders](https://docs.flutter.dev/cookbook/testing/widget/finders)
 * [Interacting with widgets by Semantic Label by Maestro](https://maestro.mobile.dev/platform-support/flutter)
 * [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing/)
-* 
+* [Appium Flutter driver docs](https://github.com/appium/appium-flutter-driver/blob/master/README.md)
 
  
