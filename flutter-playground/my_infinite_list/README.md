@@ -82,6 +82,36 @@ class ItemTile extends StatelessWidget {
 }
 ```
 
+This is how the semantic identifier is defined in the constructor of ItemTile in [`main.dart`](lib/main.dart)
+```
+// Catalog provides a single synchronous method for getting the
+// current data.
+return switch (catalog.getByIndex(index)) {
+  Item(isLoading: true) => const LoadingItemTile(),
+  // Define Semantics identifier in constructor
+  var item => ItemTile(item: item, identifier:  'colour-item')
+};
+```
+
+### Finding by key, text and Semantics label in Flutter test
+The existing [`smoke_test.dart`](test/smoke_test.dart) has been modified to check 
+1. List loading state
+2. New loaded items
+3. User scroll down
+4. List loading state
+5. New loaded items
+
+You will find examples of key and text finders, as well as [Semantics label](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/test/smoke_test.dart#L44).
+
+Last but not least, there is also an example of text retrieval from widget and assert on literal text:
+```
+// Check for title and price of top widget
+    Text topItemTitle = tester.firstWidget(itemTitleFinder);
+    expect(topItemTitle.data, 'Colour #0');
+
+    Text topItemPrice = tester.firstWidget(itemPriceFinder);
+    expect(topItemPrice.data, '€ 0.50');
+```
 
 ## Limitations
 
