@@ -20,28 +20,37 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install)
 2. [Configure your favourite IDE](https://docs.flutter.dev/get-started/editor)
-3. Open "my_infinite_list" folder in your IDE
-4. 
+3. Install appium uiautomator2, xcuitest, [flutter](https://github.com/appium/appium-flutter-driver/blob/master/README.md) drivers
+4. Open [my_infinite_list](.) folder in your IDE
+5. Enable Flutter driver extension
+    - Based on the [driver setup guide](https://github.com/appium/appium-flutter-driver/blob/master/README.md#usage-and-requirement). There is a nice practical example in this [article](https://testgrid.io/blog/appium-flutter-testing/).
+    - Check [pubspec.yaml]([pubspec.yaml](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/pubspec.yaml#L28)) and [main.dart](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/lib/main.dart#L18) to see how it looks in this app sample
+
+
+
+
+
 
 ## Limitations
 
 ### iOS identifiers
-Could not get property "Semantics.identifier" to be exposed as accessibilityIdentifier when Appium Inspector connects to this Flutter App using "xcuitest" or "flutter" drivers, as described [here](https://forums.developer.apple.com/forums/thread/743902). On the other hand, property "Semantics.label" did transate into the element label, as expected.
-- Could not debug presence of accessibilityIdentifier from Xcode "Debug View Hierarchy". The views we want to access via accessibilityIdentifier are all rendered inside a CAMetalLayer, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
+Property `Semantics.identifier` not exposed as accessibilityIdentifier when Appium Inspector connects to this Flutter App using `xcuitest` or `flutter` drivers, as described [here](https://forums.developer.apple.com/forums/thread/743902). On the other hand, property `Semantics.label` did transate into the element label, as expected.
+
+- Could not debug presence of accessibilityIdentifier from Xcode "Debug View Hierarchy". The views we want to access via accessibilityIdentifier are all rendered inside a `CAMetalLayer, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
 
 ### Code relevant to the following flutter versions
 
-`Flutter 3.19.5 • channel stable • https://github.com/flutter/flutter.git`
-
-`Framework • revision 300451adae • 2024-03-27 21:54:07 -0500`
-
-`Engine • revision e76c956498`
-
-`Tools • Dart 3.3.3 • DevTools 2.31.1`
+```
+Flutter 3.19.5 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 300451adae • 2024-03-27 21:54:07 -0500
+Engine • revision e76c956498
+Tools • Dart 3.3.3 • DevTools 2.31.1
+```
 
 ## Sources
 * [Flutter Widget Finders](https://docs.flutter.dev/cookbook/testing/widget/finders)
 * [Interacting with widgets by Semantic Label by Maestro](https://maestro.mobile.dev/platform-support/flutter)
 * [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing/)
+* 
 
  
