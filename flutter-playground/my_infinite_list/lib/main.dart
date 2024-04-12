@@ -85,7 +85,8 @@ class MyHomePage extends StatelessWidget {
             // current data.
             return switch (catalog.getByIndex(index)) {
               Item(isLoading: true) => const LoadingItemTile(),
-              var item => ItemTile(item: item, identifier: 'colour-item')
+              // Define Semantics identifier in constructor
+              var item => ItemTile(item: item, identifier:  'colour-item')
             };
           },
         ),
