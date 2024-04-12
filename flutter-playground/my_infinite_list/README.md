@@ -1,4 +1,4 @@
-# infinite_list
+# Infinite List widget locators
 
 A Flutter sample app based on [infinite_list sample](https://github.com/flutter/samples/tree/main/infinite_list) that shows different strategies to locate widgets.
 
