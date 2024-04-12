@@ -15,7 +15,13 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
 * Flutter test
   - Find widgets by key and text
   - Retrieve and Assert on text from a located widget
- 
+
+## Set up
+
+1. [Install Flutter](https://docs.flutter.dev/get-started/install)
+2. [Configure your favourite IDE](https://docs.flutter.dev/get-started/editor)
+3. Open "my_infinite_list" folder in your IDE
+4. 
 
 ## Limitations
 
@@ -27,7 +33,7 @@ Could not get property "Semantics.identifier" to be exposed as accessibilityIden
 
 `Flutter 3.19.5 • channel stable • https://github.com/flutter/flutter.git`
 
-`Framework • revision 300451adae (2 weeks ago) • 2024-03-27 21:54:07 -0500`
+`Framework • revision 300451adae • 2024-03-27 21:54:07 -0500`
 
 `Engine • revision e76c956498`
 
