@@ -150,7 +150,7 @@ Notice how the `content-desc` value is composed by the actual Widget text and th
 #### iOS identifiers
 Property `Semantics.identifier` not exposed as accessibilityIdentifier when Appium Inspector connects to this Flutter App using `xcuitest` or `flutter` drivers, as described [here](https://forums.developer.apple.com/forums/thread/743902). On the other hand, property `Semantics.label` did transate into the element label, as expected.
 
-- Could not debug presence of accessibilityIdentifier from Xcode "Debug View Hierarchy". The views we want to access via accessibilityIdentifier are all rendered inside a `CAMetalLayer, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
+- Could not debug presence of `accessibilityIdentifier` from Xcode "Debug View Hierarchy". The views we want to access via `accessibilityIdentifier` are all rendered inside a `CAMetalLayer`, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
 
 #### Appium inspector session with flutter-driver iOS
 I wasn't able to properly establish a session with this appium driver. The app would start, but then it was killed immediately after. WebDriverAgent app was installed. Tried with 2 different device / iOS version combinations with the same result.
