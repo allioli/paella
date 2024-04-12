@@ -19,15 +19,16 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
 ## Set up
 
 1. [Install Flutter](https://docs.flutter.dev/get-started/install)
-2. [Configure your favourite IDE](https://docs.flutter.dev/get-started/editor)
+2. [Configure your favourite IDE](https://docs.flutter.dev/get-started/editor). I used Visual Studio Code.
 3. Install appium uiautomator2, xcuitest, [flutter](https://github.com/appium/appium-flutter-driver/blob/master/README.md) drivers
 4. Open [my_infinite_list](.) folder in your IDE
 5. Enable Flutter driver extension
     - Based on the [driver setup guide](https://github.com/appium/appium-flutter-driver/blob/master/README.md#usage-and-requirement). There is a nice practical example in this [article](https://testgrid.io/blog/appium-flutter-testing/).
-    - Check [pubspec.yaml]([pubspec.yaml](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/pubspec.yaml#L28)) and [main.dart](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/lib/main.dart#L18) to see how it looks in this app sample
-
-
-
+    - Check [pubspec.yaml](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/pubspec.yaml#L28)) and [main.dart](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/lib/main.dart#L18) to see how it looks in this app sample
+6. Launch iOS simulator or Android emulator
+7. Run the Flutter app from IDE, selecting iOS simulator or Android emulator on the running configuration
+   - The app is build, installed and launched in the virtual device
+8. In Visual Studio Code, the Flutter dev tools include the handy [Flutter Inspector](https://docs.flutter.dev/tools/devtools/inspector), to navigate the view tree accessible to the Flutter driver in real-time.
 
 
 
