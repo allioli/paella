@@ -16,19 +16,37 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
   - Find widgets by key and text
   - Retrieve and Assert on text from a located widget
 
-## Set up
-
+## Set up & usage Flutter environment
 1. [Install Flutter](https://docs.flutter.dev/get-started/install)
 2. [Configure your favourite IDE](https://docs.flutter.dev/get-started/editor). I used Visual Studio Code.
-3. Install appium uiautomator2, xcuitest, [flutter](https://github.com/appium/appium-flutter-driver/blob/master/README.md) drivers
-4. Open [my_infinite_list](.) folder in your IDE
-5. Enable Flutter driver extension
+3. Open [my_infinite_list](.) folder in your IDE
+4. Enable Flutter driver extension
     - Based on the [driver setup guide](https://github.com/appium/appium-flutter-driver/blob/master/README.md#usage-and-requirement). There is a nice practical example in this [article](https://testgrid.io/blog/appium-flutter-testing/).
     - Check [pubspec.yaml](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/pubspec.yaml#L28)) and [main.dart](https://github.com/allioli/paella/blob/master/flutter-playground/my_infinite_list/lib/main.dart#L18) to see how it looks in this app sample
-6. Launch iOS simulator or Android emulator
-7. Run the Flutter app from IDE, selecting iOS simulator or Android emulator on the running configuration
+5. Launch iOS simulator or Android emulator
+6. Run the Flutter app from IDE, selecting iOS simulator or Android emulator on the running configuration
    - The app is build, installed and launched in the virtual device
-8. In Visual Studio Code, the Flutter dev tools include the handy [Flutter Inspector](https://docs.flutter.dev/tools/devtools/inspector), to navigate the view tree accessible to the Flutter driver in real-time.
+7. In Visual Studio Code, the Flutter dev tools include the handy [Flutter Inspector](https://docs.flutter.dev/tools/devtools/inspector), to navigate the view tree accessible to the Flutter driver in real-time.
+8. You can also run the stand-alone flutter test from IDE [`smoke_test.dart`](test/smoke_test.dart)
+
+## Set up & usage Appium - Flutter environment
+1. Install appium uiautomator2, xcuitest, [flutter](https://github.com/appium/appium-flutter-driver/blob/master/README.md) drivers
+2. Install [appium inspector](https://appium.github.io/appium-inspector/latest/quickstart/)
+3. Start appium server locally
+4. Build the app package
+   - `flutter build apk --debug` on Android
+   - `flutter build ios --simulator` on iOS
+   - Notice the generated APK / Runner.app path in the terminal logs. We'll need this app path later on.
+5. Open appium inspector
+6. Create a capability set for Android or iOS
+   - Set `platformName`, `deviceName`, `udid` accordingly
+   - Specify `automationName` with the desired driver. You can go with `flutter` driver with enhanced Flutter finders or keep it appium standard with `xcuitest`or `uiautomator2`. More on the pros / cons [here](https://github.com/appium/appium-flutter-driver/tree/master?tab=readme-ov-file#appium-flutter-driver-or-appium-uiautomator2xcuitest-driver)
+   - Fill `app` with the app path from Step 3
+7. Start session with the local appium server
+   - The app is installed to the running virtual device and started
+   - You should see a fresh app screenshot with the view tree in Appium Inspector
+   - On Android emulator with appium driver `flutter`, sometimes Appium Inspector gets stuck loading. As a workaround, click alternatively on the "Native" and "Hybrid" mode buttons quickly to get the view tree loaded.
+
 
 ## Main code changes
 
@@ -113,12 +131,30 @@ Last but not least, there is also an example of text retrieval from widget and a
     expect(topItemPrice.data, '€ 0.50');
 ```
 
-## Limitations
+## Results from Appium inspector / Limitations
 
-### iOS identifiers
+### Result iOS (on `xcuitest`driver)
+```
+    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="colour-item&#10;Colour #0&#10;€ 0.50" name="colour-item" label="colour-item&#10;Colour #0&#10;€ 0.50" enabled="true" visible="true" accessible="true" x="0" y="133" width="393" height="72" index="1"/>
+                
+```
+We can see how the `label` value is composed by the actual Widget text and the `Semantics.label` value.
+
+## Result Android (on `flutter` and `uiautomator2` drivers)
+```
+  <android.view.View index="0" package="dev.flutter.infinite_list" class="android.view.View" text="" content-desc="colour-item&#10;Colour #0&#10;€ 0.50" resource-id="colour-item" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" long-clickable="false" password="false" scrollable="false" selected="false" bounds="[0,322][1080,511]" displayed="true" />
+
+```
+Notice how the `content-desc` value is composed by the actual Widget text and the `Semantics.label` value. Here the `resource-id` value matches `Semantics.identifier`.
+
+#### iOS identifiers
 Property `Semantics.identifier` not exposed as accessibilityIdentifier when Appium Inspector connects to this Flutter App using `xcuitest` or `flutter` drivers, as described [here](https://forums.developer.apple.com/forums/thread/743902). On the other hand, property `Semantics.label` did transate into the element label, as expected.
 
 - Could not debug presence of accessibilityIdentifier from Xcode "Debug View Hierarchy". The views we want to access via accessibilityIdentifier are all rendered inside a `CAMetalLayer, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
+
+#### Appium inspector session with flutter-driver iOS
+I wasn't able to properly establish a session with this appium driver. The app would start, but then it was killed immediately after. WebDriverAgent app was installed. Tried with 2 different device / iOS version combinations with the same result.
+
 
 ### Code relevant to the following flutter versions
 
