@@ -15,6 +15,7 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
 * Flutter test
   - Find widgets by key and text
   - Retrieve and Assert on text from a located widget
+ 
 
 ## Limitations
 
@@ -22,16 +23,19 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
 Could not get property "Semantics.identifier" to be exposed as accessibilityIdentifier when Appium Inspector connects to this Flutter App using "xcuitest" or "flutter" drivers, as described [here](https://forums.developer.apple.com/forums/thread/743902). On the other hand, property "Semantics.label" did transate into the element label, as expected.
 - Could not debug presence of accessibilityIdentifier from Xcode "Debug View Hierarchy". The views we want to access via accessibilityIdentifier are all rendered inside a CAMetalLayer, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
 
-## Code relevant to the following flutter versions
+### Code relevant to the following flutter versions
 
-Flutter 3.19.5 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision 300451adae (2 weeks ago) • 2024-03-27 21:54:07 -0500
-Engine • revision e76c956498
-Tools • Dart 3.3.3 • DevTools 2.31.1
+`Flutter 3.19.5 • channel stable • https://github.com/flutter/flutter.git`
+
+`Framework • revision 300451adae (2 weeks ago) • 2024-03-27 21:54:07 -0500`
+
+`Engine • revision e76c956498`
+
+`Tools • Dart 3.3.3 • DevTools 2.31.1`
 
 ## Sources
 * [Flutter Widget Finders](https://docs.flutter.dev/cookbook/testing/widget/finders)
 * [Interacting with widgets by Semantic Label by Maestro](https://maestro.mobile.dev/platform-support/flutter)
-* [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing)
+* [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing/)
 
  
