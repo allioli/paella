@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:infinitelist/main.dart';
-import 'package:infinitelist/src/item_tile.dart';
 
 void main() {
   testWidgets('Infinite list smoke test', (tester) async {
@@ -56,8 +55,6 @@ void main() {
 
     Text topItemPrice = tester.firstWidget(itemPriceFinder);
     expect(topItemPrice.data, '€ 0.50');
-
-    List<ItemTile> itemList = tester.widgetList<ItemTile>(itemFinder).toList();
 
     // Check number of list elements found with the same key
     List<Text> titleList = tester.widgetList<Text>(itemTitleFinder).toList();
