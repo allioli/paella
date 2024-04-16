@@ -73,8 +73,10 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      identifier: identifier, // to expose unique id to appium (Android resource-id, iOS accessibility-id)
+      dentifier: identifier, // to expose unique id to appium (Android resource-id, iOS accessibility-id)
       label: identifier, // to expose semantics label to Flutter finder find.bySemanticsLabel(RegExp(r'identifier'))
+      explicitChildNodes: true, //to expose separated elements for the ItemTile and its child Text elements
+      container: false,
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
@@ -135,14 +137,16 @@ Last but not least, there is also an example of text retrieval from widget and a
 
 ### Result iOS (on `xcuitest`driver)
 ```
-    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="colour-item&#10;Colour #0&#10;€ 0.50" name="colour-item" label="colour-item&#10;Colour #0&#10;€ 0.50" enabled="true" visible="true" accessible="true" x="0" y="133" width="393" height="72" index="1"/>
-                
+    <XCUIElementTypeOther type="XCUIElementTypeOther" name="colour-item" label="colour-item" enabled="true" visible="true" accessible="true" x="0" y="133" width="393" height="72" index="0"/>
+    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Colour #0&#10;€ 0.50" name="Colour #0&#10;€ 0.50" label="Colour #0&#10;€ 0.50" enabled="true" visible="true" accessible="true" x="8" y="141" width="377" height="56" index="1"/>        
 ```
 We can see how the `label` value is composed by the actual Widget text and the `Semantics.label` value.
 
 ## Result Android (on `flutter` and `uiautomator2` drivers)
 ```
-  <android.view.View index="0" package="dev.flutter.infinite_list" class="android.view.View" text="" content-desc="colour-item&#10;Colour #0&#10;€ 0.50" resource-id="colour-item" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" long-clickable="false" password="false" scrollable="false" selected="false" bounds="[0,322][1080,511]" displayed="true" />
+                      <android.view.View index="0" package="dev.flutter.infinite_list" class="android.view.View" text="" content-desc="colour-item" resource-id="colour-item" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" long-clickable="false" password="false" scrollable="false" selected="false" bounds="[0,322][1080,511]" displayed="true">
+                        <android.view.View index="0" package="dev.flutter.infinite_list" class="android.view.View" text="" content-desc="item_title&#10;item_price" resource-id="" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" long-clickable="false" password="false" scrollable="false" selected="false" bounds="[21,343][1059,490]" displayed="true" />
+                 
 
 ```
 Notice how the `content-desc` value is composed by the actual Widget text and the `Semantics.label` value. Here the `resource-id` value matches `Semantics.identifier`.
