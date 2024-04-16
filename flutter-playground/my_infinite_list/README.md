@@ -42,6 +42,7 @@ A Flutter sample app based on [infinite_list sample](https://github.com/flutter/
    - Set `platformName`, `deviceName`, `udid` accordingly
    - Specify `automationName` with the desired driver. You can go with `flutter` driver with enhanced Flutter finders or keep it appium standard with `xcuitest`or `uiautomator2`. More on the pros / cons [here](https://github.com/appium/appium-flutter-driver/tree/master?tab=readme-ov-file#appium-flutter-driver-or-appium-uiautomator2xcuitest-driver)
    - Fill `app` with the app path from Step 3
+   - Set `disableIdLocatorAutocompletion`to true on Android, to expose the Semantics.identifier value as defined in the .dart code. Otherwise, the driver will compose that value with app package.
 7. Start session with the local appium server
    - The app is installed to the running virtual device and started
    - You should see a fresh app screenshot with the view tree in Appium Inspector
