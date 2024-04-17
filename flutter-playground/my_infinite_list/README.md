@@ -138,10 +138,11 @@ Last but not least, there is also an example of text retrieval from widget and a
 
 ### Result iOS (on `xcuitest`driver)
 ```
-    <XCUIElementTypeOther type="XCUIElementTypeOther" name="colour-item" label="colour-item" enabled="true" visible="true" accessible="true" x="0" y="133" width="393" height="72" index="0"/>
-    <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Colour #0&#10;€ 0.50" name="Colour #0&#10;€ 0.50" label="Colour #0&#10;€ 0.50" enabled="true" visible="true" accessible="true" x="8" y="141" width="377" height="56" index="1"/>        
+    <XCUIElementTypeOther type="XCUIElementTypeOther" enabled="true" visible="true" accessible="false" x="0" y="133" width="393" height="72" index="1">
+                          <XCUIElementTypeOther type="XCUIElementTypeOther" name="colour-item" label="colour-item" enabled="true" visible="true" accessible="true" x="0" y="133" width="393" height="72" index="0"/>
+                          <XCUIElementTypeStaticText type="XCUIElementTypeStaticText" value="Colour #0&#10;€ 0.50" name="Colour #0&#10;€ 0.50" label="Colour #0&#10;€ 0.50" enabled="true" visible="true" accessible="true" x="8" y="141" width="377" height="56" index="1"/>        
 ```
-We can see how the `label` value is composed by the actual Widget text and the `Semantics.label` value.
+We can see how the `label` value is composed by the actual Widget text and the `Semantics.label` value. In this case the colour-item and its companion text nodes are exposed as sibling nodes.
 
 ## Result Android (on `flutter` and `uiautomator2` drivers)
 ```
@@ -150,7 +151,7 @@ We can see how the `label` value is composed by the actual Widget text and the `
                  
 
 ```
-Notice how the `content-desc` value is composed by the actual Widget text and the `Semantics.label` value. Here the `resource-id` value matches `Semantics.identifier`.
+Notice how the `content-desc` value is composed by the actual Widget text and the `Semantics.label` value. Here the `resource-id` value matches `Semantics.identifier`. In this case the colour-item and its companion text nodes are exposed as parent-child nodes.
 
 #### iOS identifiers
 Property `Semantics.identifier` not exposed as accessibilityIdentifier when Appium Inspector connects to this Flutter App using `xcuitest` or `flutter` drivers, as described [here](https://forums.developer.apple.com/forums/thread/743902). On the other hand, property `Semantics.label` did transate into the element label, as expected.
