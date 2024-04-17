@@ -19,7 +19,7 @@ class ItemTile extends StatelessWidget {
       identifier: identifier, // to expose unique id to appium (Android resource-id, iOS accessibility-id)
       label: identifier, // to expose semantics label to Flutter finder find.bySemanticsLabel(RegExp(r'identifier'))
       explicitChildNodes: true,
-      container: false,
+      container: true,
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(

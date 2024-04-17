@@ -14,23 +14,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
-
+public class FlutterInfiniteListIOSTests extends BaseIOSTest {
 
     @Test
     public void testListItems() {
+
         FlutterFinder finder = new FlutterFinder(getDriver());
-        
+
         getDriver().context("NATIVE_APP");
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
 
-        List<WebElement> itemTiles = getDriver().findElements(By.id("colour-item"));
-        Assert.assertTrue(itemTiles.size() >= 10);
+        List<WebElement> itemDescriptions = getDriver().findElements(By.xpath("//*[@name='colour-item']/following-sibling::XCUIElementTypeStaticText"));
+        Assert.assertTrue(itemDescriptions.size() >= 10);
 
-        for (WebElement item : itemTiles) {
-            wait.until(ExpectedConditions.visibilityOf(item));
-            WebElement itemDescription = item.findElement(By.className("android.view.View"));
-            String itemText = itemDescription.getAttribute("content-desc");
+        // check first 10 items
+        for (int i = 0; i < 10; i++) {
+            WebElement itemDescription = itemDescriptions.get(i);
+            wait.until(ExpectedConditions.visibilityOf(itemDescription));
+            String itemText = itemDescription.getText();
             System.out.println("New itemTile found with text: " + itemText);
             Assert.assertTrue(itemText.contains("€"));
         }
@@ -58,10 +59,10 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         // WebElement topItemTitle = finder.byValueKey(listItemTitleKey);
         // it's all about duplicate keys. If some widgets have same keys you get too many elements error..
         // Assert.assertEquals(topItemTitle.getText(), "Colour #21");
-         
+
     }
 
     private WebElement waitForElement(FlutterElement finderLocator){
         return (WebElement) getDriver().executeScript("flutter:waitFor", finderLocator, 10000);
-  }
+    }
 }

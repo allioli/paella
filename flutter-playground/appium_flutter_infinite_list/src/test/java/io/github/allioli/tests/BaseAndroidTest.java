@@ -11,8 +11,7 @@ public class BaseAndroidTest {
 
     @BeforeClass(alwaysRun = true)
     public void setup() {
-        this.androidDriverManager = new AndroidDriverManager();
-        this.androidDriverManager.createAndroidDriver();
+        this.androidDriverManager = new AndroidDriverManager().createAndroidDriver();
     }
 
     @AfterClass(alwaysRun = true)
