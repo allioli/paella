@@ -176,6 +176,7 @@ Tools • Dart 3.3.3 • DevTools 2.31.1
 * [Interacting with widgets by Semantic Label by Maestro](https://maestro.mobile.dev/platform-support/flutter)
 * [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing/)
 * [Appium Flutter driver docs](https://github.com/appium/appium-flutter-driver/blob/master/README.md)
-* Appium client base project based on [this flutter lambdatest demo](https://github.com/mfaisalkhatri/flutter-lambdatest-demo)
+* Appium client base project based on [this Flutter lambdatest demo](https://github.com/mfaisalkhatri/flutter-lambdatest-demo)
+* [New Flutter Semantics identifier property](https://github.com/flutter/flutter/issues/137735)
 
  
