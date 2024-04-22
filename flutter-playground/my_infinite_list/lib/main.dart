@@ -62,7 +62,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Infinite List Sample'),
+        title: Semantics(
+          identifier: 'infinite-list-title',
+          child: const Text('Infinite List Sample')
+        ), 
       ),
       body: Selector<Catalog, int?>(
         // Selector is a widget from package:provider. It allows us to listen

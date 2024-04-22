@@ -24,6 +24,10 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         getDriver().context("NATIVE_APP");
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
 
+        WebElement itemListTitle = getDriver().findElement(By.id("infinite-list-title"));
+        wait.until(ExpectedConditions.visibilityOf(itemListTitle));
+
+
         List<WebElement> itemTiles = getDriver().findElements(By.id("colour-item"));
         Assert.assertTrue(itemTiles.size() >= 10);
 
