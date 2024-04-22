@@ -159,7 +159,7 @@ Property `Semantics.identifier` not exposed as accessibilityIdentifier when Appi
 - Could not debug presence of `accessibilityIdentifier` from Xcode "Debug View Hierarchy". The views we want to access via `accessibilityIdentifier` are all rendered inside a `CAMetalLayer`, and this tool [shows Metal rendered content in black](https://forums.developer.apple.com/forums/thread/743902). 
 
 #### Appium inspector session with flutter-driver iOS
-I wasn't able to properly establish a session with this appium driver. The app would start, but then it was killed immediately after. WebDriverAgent app was installed. Tried with 2 different device / iOS version combinations with the same result.
+I wasn't able to properly establish a session with this appium driver. The app would start, but then it was killed immediately after. WebDriverAgent app was installed. Tried with 2 different device / iOS version combinations with the same result. However, from the appium client project the connection worked fine.
 
 
 ### Code relevant to the following flutter versions
@@ -176,5 +176,6 @@ Tools • Dart 3.3.3 • DevTools 2.31.1
 * [Interacting with widgets by Semantic Label by Maestro](https://maestro.mobile.dev/platform-support/flutter)
 * [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing/)
 * [Appium Flutter driver docs](https://github.com/appium/appium-flutter-driver/blob/master/README.md)
+* Appium client base project based on [this flutter lambdatest demo](https://github.com/mfaisalkhatri/flutter-lambdatest-demo)
 
  
