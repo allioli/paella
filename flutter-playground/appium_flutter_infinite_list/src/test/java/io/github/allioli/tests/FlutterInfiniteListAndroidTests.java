@@ -1,5 +1,6 @@
 package io.github.allioli.tests;
 
+import io.github.allioli.pages.InfiniteListAndroidPage;
 import io.github.ashwith.flutter.FlutterElement;
 import io.github.ashwith.flutter.FlutterFinder;
 import org.openqa.selenium.By;
@@ -63,6 +64,24 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         // it's all about duplicate keys. If some widgets have same keys you get too many elements error..
         // Assert.assertEquals(topItemTitle.getText(), "Colour #21");
          
+    }
+
+    @Test
+    public void testListItemsNativePageObjects() {
+
+        getDriver().context("NATIVE_APP");
+        final InfiniteListAndroidPage infiniteListPage = new InfiniteListAndroidPage(getDriver());
+
+        infiniteListPage.waitForPagePresent()
+                .defaultElementsVisible();
+
+        Assert.assertTrue(infiniteListPage.getNumberOfItems() >= 10);
+
+        for (String itemDescription : infiniteListPage.getVisibleItemDescriptions(10)) {
+            System.out.println("New itemTile found with text: " + itemDescription);
+            Assert.assertTrue(itemDescription.contains("€"));
+        }
+
     }
 
     private WebElement waitForElement(FlutterElement finderLocator){
