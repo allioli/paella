@@ -64,6 +64,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Semantics(
           identifier: 'infinite-list-title',
+          label: 'infinite-list-title',
           child: const Text('Infinite List Sample')
         ), 
       ),

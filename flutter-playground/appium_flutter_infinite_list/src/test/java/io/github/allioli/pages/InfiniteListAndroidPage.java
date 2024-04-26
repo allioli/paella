@@ -20,7 +20,6 @@ public class InfiniteListAndroidPage {
     public WebElement headerTitle;
 
     @AndroidFindBy(xpath = "//*[@resource-id='colour-item']/android.view.View")
-    //@iOSXCUITFindBy(xpath = "//*[@name='colour-item']/following-sibling::XCUIElementTypeStaticText")
     public List<WebElement> itemDescriptionElements;
 
     public InfiniteListAndroidPage(final AppiumDriver driver) {

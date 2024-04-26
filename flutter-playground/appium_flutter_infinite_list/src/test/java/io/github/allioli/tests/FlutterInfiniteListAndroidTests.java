@@ -1,6 +1,7 @@
 package io.github.allioli.tests;
 
 import io.github.allioli.pages.InfiniteListAndroidPage;
+import io.github.allioli.pages.InfiniteListFlutterPage;
 import io.github.ashwith.flutter.FlutterElement;
 import io.github.ashwith.flutter.FlutterFinder;
 import org.openqa.selenium.By;
@@ -28,7 +29,6 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         WebElement itemListTitle = getDriver().findElement(By.id("infinite-list-title"));
         wait.until(ExpectedConditions.visibilityOf(itemListTitle));
 
-
         List<WebElement> itemTiles = getDriver().findElements(By.id("colour-item"));
         Assert.assertTrue(itemTiles.size() >= 10);
 
@@ -53,6 +53,10 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         Pattern listItemSemanticsLabelRegExp = Pattern.compile("colour-item");
         WebElement listItem = waitForElement(finder.bySemanticsLabel(listItemSemanticsLabelRegExp));
 
+        //Locating header title
+        Pattern headerTitleSemanticsLabelRegExp = Pattern.compile("infinite-list-title");
+        WebElement headerTitle = waitForElement(finder.bySemanticsLabel(headerTitleSemanticsLabelRegExp));
+
         //Scroll down to specific list item
         getDriver().executeScript("flutter:scrollUntilVisible", finder.byType("ListView"), new HashMap<String, Object>() {{
             put("item", finder.byText("Colour #21"));
@@ -72,8 +76,8 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         getDriver().context("NATIVE_APP");
         final InfiniteListAndroidPage infiniteListPage = new InfiniteListAndroidPage(getDriver());
 
-        infiniteListPage.waitForPagePresent()
-                .defaultElementsVisible();
+        infiniteListPage.waitForPagePresent();
+        Assert.assertTrue(infiniteListPage.defaultElementsVisible());
 
         Assert.assertTrue(infiniteListPage.getNumberOfItems() >= 10);
 
@@ -82,6 +86,18 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
             Assert.assertTrue(itemDescription.contains("€"));
         }
 
+    }
+
+    @Test
+    public void testListItemsFlutterPageObjects() {
+
+        getDriver().context("FLUTTER");
+        final InfiniteListFlutterPage infiniteListPage = new InfiniteListFlutterPage(getDriver());
+
+        infiniteListPage.waitForPagePresent()
+                .defaultElementsVisible();
+
+        infiniteListPage.scrollToItemWithDescription("Colour #21");
     }
 
     private WebElement waitForElement(FlutterElement finderLocator){
