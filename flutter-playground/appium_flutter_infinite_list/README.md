@@ -5,7 +5,7 @@ This is a companion project to the Flutter modified sample in [my_infinite_list]
 ## Goals for this sample
 
 * Appium Flutter context
-  - Identify presence, visibility and get text from elements located by Key values and semantic label
+  - Identify presence, visibility from elements located by Key values and semantic label
   - Scroll down to specific element
   
 * Appium Native context
