@@ -2,8 +2,23 @@
 
 This is a companion project to the Flutter modified sample in [my_infinite_list](my_infinite_list).
 
+## Goals for this sample
 
+* Appium Flutter context
+  - Identify presence, visibility and get text from elements located by Key values and semantic label
+  - Scroll down to specific element
+  
+* Appium Native context
+  - Identify presence, visibility and get text from elements located by native id, xpath locators
+  - Page objects to encapsulate presence of page, presence of page default state elements, get list item info
 
+## Running the tests
+
+You can run them from your favourite IDE:
+- [FlutterInfiniteListAndroidTests.java](src/test/java/io/github/allioli/tests/FlutterInfiniteListAndroidTests.java)
+- [FlutterInfiniteListIOSTests.java](src/test/java/io/github/allioli/tests/FlutterInfiniteListIOSTests.java)
+
+Alternatively, run `mvn test`
 
 ## Results from Appium inspector / Limitations
 
