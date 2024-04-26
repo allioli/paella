@@ -2,7 +2,7 @@
 
 A Flutter sample app based on [infinite_list sample](https://github.com/flutter/samples/tree/main/infinite_list) that shows different strategies to locate widgets.
 
-Appium mobile automation project in [appium_flutter_infinite_list](appium_flutter_infinite_list)
+Companion Appium mobile automation project in [appium_flutter_infinite_list](appium_flutter_infinite_list)
 
 ![An animated gif of the app in action](https://user-images.githubusercontent.com/919717/81858860-3a1e3280-9519-11ea-8e9c-9d22ac1bf0ed.gif)
 
