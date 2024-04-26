@@ -5,8 +5,7 @@ This folder contains modified Flutter app samples and companion appium mobile te
 - Modified sample in [my_infinite_list](my_infinite_list)
 - Appium mobile automation project in [appium_flutter_infinite_list](appium_flutter_infinite_list)
 
-# Usage
-## Set up & usage Appium - Flutter environment
+# Set up & usage Appium - Flutter environment
 1. Install [appium](https://appium.io/docs/en/2.0/quickstart/install/)
 2. Install appium drivers uiautomator2, xcuitest, [flutter](https://github.com/appium/appium-flutter-driver/blob/master/README.md)
 3. Install [appium inspector](https://appium.github.io/appium-inspector/latest/quickstart/)
@@ -34,4 +33,4 @@ This folder contains modified Flutter app samples and companion appium mobile te
    - You should see a fresh app screenshot with the view tree in Appium Inspector
    - On Android emulator with appium driver `flutter`, sometimes Appium Inspector gets stuck loading. As a workaround, click alternatively on the "Native" and "Hybrid" mode buttons quickly to get the view tree loaded.
 11. Now you are ready to open the appium project
-   - Refer to the README in the appium project to run tests
+   - Refer to the README in the appium project to run tests. Example [appium_flutter_infinite_list/README.md](appium_flutter_infinite_list/README.md)
