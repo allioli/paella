@@ -47,4 +47,8 @@ Property `Semantics.identifier` not exposed as accessibilityIdentifier when Appi
 #### Appium inspector session with flutter-driver iOS
 I wasn't able to properly establish a session with this appium driver. The app would start, but then it was killed immediately after. WebDriverAgent app was installed. Tried with 2 different device / iOS version combinations with the same result. However, from the appium client project the connection worked fine.
 
-
+## Sources
+* [Preparing for Flutter cloud testing - testgrid](https://testgrid.io/blog/appium-flutter-testing/)
+* [Appium Flutter driver docs](https://github.com/appium/appium-flutter-driver/blob/master/README.md)
+* Appium client base project based on [this Flutter lambdatest demo](https://github.com/mfaisalkhatri/flutter-lambdatest-demo)
+* [New Flutter Semantics identifier property](https://github.com/flutter/flutter/issues/137735)
