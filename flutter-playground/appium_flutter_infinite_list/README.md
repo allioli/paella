@@ -2,6 +2,8 @@
 
 This is a companion project to the Flutter modified sample in [my_infinite_list](my_infinite_list).
 
+It requires `Java 11` and `maven`to be installed locally.
+
 ## Goals for this sample
 
 * Appium Flutter context
