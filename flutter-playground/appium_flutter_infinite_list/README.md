@@ -1,4 +1,7 @@
-# Appium project for modified Flutter infinite list sample
+# Appium mobile automation project
+
+This is a companion project to the Flutter modified sample in [my_infinite_list](my_infinite_list).
+
 
 
 
