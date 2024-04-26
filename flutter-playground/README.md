@@ -1,4 +1,9 @@
+# Overview Flutter Playground
+This folder contains modified Flutter app samples and companion appium mobile test automation projects.
 
+## Infinite List Sample
+- Modified sample in [my_infinite_list]
+- Appium mobile automation project in [appium_flutter_infinite_list]
 
 ## Set up & usage Appium - Flutter environment
 1. Install appium uiautomator2, xcuitest, [flutter](https://github.com/appium/appium-flutter-driver/blob/master/README.md) drivers
