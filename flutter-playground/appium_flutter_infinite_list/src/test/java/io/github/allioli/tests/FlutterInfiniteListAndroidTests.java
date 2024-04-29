@@ -97,7 +97,7 @@ public class FlutterInfiniteListAndroidTests extends BaseAndroidTest {
         infiniteListPage.waitForPagePresent()
                 .defaultElementsVisible();
 
-        infiniteListPage.scrollToItemWithDescription("Colour #21");
+        infiniteListPage.scrollToItemWithDescription("Colour #31");
     }
 
     private WebElement waitForElement(FlutterElement finderLocator){

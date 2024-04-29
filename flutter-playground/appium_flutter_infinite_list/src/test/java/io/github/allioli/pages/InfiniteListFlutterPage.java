@@ -13,23 +13,21 @@ public class InfiniteListFlutterPage {
 
     private final FlutterFinder finder;
     private final AppiumDriver driver;
-    private final String itemTitleKey = "item-title";
-    private final String itemPriceKey = "item-price";
     private final String itemIdentifier = "colour-item";
-    private final FlutterElement itemTitleLocator;
-    private final FlutterElement itemPriceLocator;
-    private final FlutterElement itemLocator;
+    private final String headerTitleIdentifier = "infinite-list-title";
+    private final WebElement itemLocator;
+    private final WebElement headerTitleLocator;
 
     public InfiniteListFlutterPage(final AppiumDriver driver) {
         this.finder = new FlutterFinder(driver);
         this.driver = driver;
 
         // Initialise page element locators
-        itemTitleLocator = finder.byValueKey(itemTitleKey);
-        itemPriceLocator = finder.byValueKey(itemPriceKey);
-
         Pattern listItemSemanticsLabelRegExp = Pattern.compile(itemIdentifier);
         itemLocator = finder.bySemanticsLabel(listItemSemanticsLabelRegExp);
+
+        Pattern headerTitleSemanticsLabelRegExp = Pattern.compile(headerTitleIdentifier);
+        headerTitleLocator = finder.bySemanticsLabel(headerTitleSemanticsLabelRegExp);
     }
 
     public InfiniteListFlutterPage waitForPagePresent() {
@@ -38,8 +36,7 @@ public class InfiniteListFlutterPage {
     }
     public void defaultElementsVisible() {
         waitForElement(itemLocator);
-        waitForElement(itemPriceLocator);
-        waitForElement(itemTitleLocator);
+        waitForElement(headerTitleLocator);
     }
 
     public void scrollToItemWithDescription(String description) {
@@ -50,7 +47,7 @@ public class InfiniteListFlutterPage {
         }});
     }
 
-    private WebElement waitForElement(FlutterElement finderLocator){
+    private WebElement waitForElement(WebElement finderLocator){
         return (WebElement) driver.executeScript("flutter:waitFor", finderLocator, 10000);
     }
 }
