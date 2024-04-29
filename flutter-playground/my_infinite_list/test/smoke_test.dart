@@ -17,12 +17,15 @@ void main() {
 
     const loadingDuration = Duration(milliseconds: 500);
 
-    // Test keys used by the app to distinguish UI elements.
+    // Test finders to distinguish UI elements.
     final itemFinder             = find.bySemanticsLabel(RegExp(r'colour-item'));
+    final headerTitleFinder      = find.bySemanticsLabel(RegExp(r'infinite-list-title'));
     final loadingItemTitleFinder = find.byKey(const ValueKey("item_title_loading"));
     final itemTitleFinder        = find.byKey(const ValueKey("item_title"));
     final itemPriceFinder        = find.byKey(const ValueKey("item_price"));
-    
+
+    // Use test semantics label to check for header title presence
+    expect(headerTitleFinder, findsOneWidget);
 
     // At first, the catalog shows only "..." (loading items).
     // Use test key + expected text to check for presence

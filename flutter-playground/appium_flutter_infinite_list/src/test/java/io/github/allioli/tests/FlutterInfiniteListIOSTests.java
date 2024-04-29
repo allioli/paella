@@ -50,6 +50,10 @@ public class FlutterInfiniteListIOSTests extends BaseIOSTest {
         Pattern listItemSemanticsLabelRegExp = Pattern.compile("colour-item");
         WebElement listItem = waitForElement(finder.bySemanticsLabel(listItemSemanticsLabelRegExp));
 
+        //Locating header title
+        Pattern headerTitleSemanticsLabelRegExp = Pattern.compile("infinite-list-title");
+        WebElement headerTitle = waitForElement(finder.bySemanticsLabel(headerTitleSemanticsLabelRegExp));
+
         //Scroll down to specific list item
         getDriver().executeScript("flutter:scrollUntilVisible", finder.byType("ListView"), new HashMap<String, Object>() {{
             put("item", finder.byText("Colour #21"));
