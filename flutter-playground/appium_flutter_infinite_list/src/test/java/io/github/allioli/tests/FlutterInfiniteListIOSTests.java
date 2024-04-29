@@ -1,5 +1,6 @@
 package io.github.allioli.tests;
 
+import io.github.allioli.pages.InfiniteListFlutterPage;
 import io.github.allioli.pages.InfiniteListIOSPage;
 import io.github.ashwith.flutter.FlutterElement;
 import io.github.ashwith.flutter.FlutterFinder;
@@ -83,6 +84,18 @@ public class FlutterInfiniteListIOSTests extends BaseIOSTest {
             Assert.assertTrue(itemDescription.contains("€"));
         }
 
+    }
+
+    @Test
+    public void testListItemsFlutterPageObjects() {
+
+        getDriver().context("FLUTTER");
+        final InfiniteListFlutterPage infiniteListPage = new InfiniteListFlutterPage(getDriver());
+
+        infiniteListPage.waitForPagePresent()
+                .defaultElementsVisible();
+
+        infiniteListPage.scrollToItemWithDescription("Colour #31");
     }
 
     private WebElement waitForElement(FlutterElement finderLocator){
