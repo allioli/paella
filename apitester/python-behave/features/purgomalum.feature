@@ -14,8 +14,8 @@ Feature: Purgomalum web service
      
    Examples: Texts with profanity 
      | text                                                  | expected result                                        | error_explanation                                      |
-     | Is it Fuck or ffffffuuuuuuckkkkkkkkk... or fFUCK?     | Is it **** or ****... or ****?                         | One or more offending words not replaced|
-     | Hello $sssssshithe@d$$$$$, yes, you, $$hith3@dddd$    | Hello *********, yes, you, *********                   | One or more offending words not replaced|
+     | Is it Fuck or ffffffuuuuuuckkkkkkkkk... or fFUCK?     | Is it **** or **********************... or *****?      | One or more offending words not replaced|
+     | Hello $sssssshithe@d$$$$$, yes, you, $$hith3@dddd$    | Hello *******************, yes, you, *************     | One or more offending words not replaced|
      | Welcome class of 2018 to Dick Head                    | Welcome class of 2018 to ********                      | Profanity word separated by spaces not identified|
      | Right as f#ck                                         | Right as f#ck                                          | "Missing characters from original text in result|
 
