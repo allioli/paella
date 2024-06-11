@@ -23,7 +23,7 @@ class MarsRoverPhotosV1Api(BaseApi):
         if page_number is not None:
             query_params['page'] = page_number
 
-        query_params_with_api_token = super().add_api_key_to_query_params(query_params)
+        query_params_with_api_token = self.add_api_key_to_query_params(query_params)
 
         response = requests.request(
             'GET', url, headers=self.headers, params=query_params_with_api_token)
@@ -46,7 +46,7 @@ class MarsRoverPhotosV1Api(BaseApi):
         if page_number is not None:
             query_params['page'] = page_number
 
-        query_params_with_api_token = super().add_api_key_to_query_params(query_params)
+        query_params_with_api_token = self.add_api_key_to_query_params(query_params)
 
         response = requests.request(
             'GET', url, headers=self.headers, params=query_params_with_api_token)
