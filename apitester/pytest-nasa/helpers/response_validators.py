@@ -29,7 +29,7 @@ def assert_int_property_valid_range(element_id, element, property_name, min_valu
 
 
 def assert_number_of_elements(element_list_id, elements, min_elements, max_elements=None):
-    
+
     number_of_elements = len(elements)
     assert (number_of_elements >= min_elements), "Not enough elements in " + element_list_id + \
         " :: Found " + str(number_of_elements) + \
