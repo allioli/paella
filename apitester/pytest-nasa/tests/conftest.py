@@ -2,11 +2,17 @@
 
 import pytest
 import sys
-sys.path.append('api_classes')
+import os
+from pathlib import Path
+
+sys.path.append(os.path.join(Path(os.path.dirname(__file__)).parent, 'api_classes'))
+sys.path.append(os.path.join(Path(os.path.dirname(__file__)).parent, 'helpers'))
+
 from mars_rover_photos_v1_api import MarsRoverPhotosV1Api
 from mars_rover_manifests_v1_api import MarsRoverManifestsV1Api
 
 
+# Arrange step with test context settings
 @pytest.fixture(scope="session")
 def test_context_settings():
     test_context_settings = {
@@ -16,7 +22,7 @@ def test_context_settings():
 
     return test_context_settings
 
-
+# Arrange step to initialise api object
 @pytest.fixture(scope="class")
 def get_mars_rover_photos_v1_api(test_context_settings):
     mars_rover_photos_v1_api_instance = MarsRoverPhotosV1Api(
@@ -24,7 +30,7 @@ def get_mars_rover_photos_v1_api(test_context_settings):
 
     return mars_rover_photos_v1_api_instance
 
-
+# Arrange step to initialise api object
 @pytest.fixture(scope="class")
 def get_mars_rover_manivests_v1_api(test_context_settings):
     mars_rover_manifests_v1_api_instance = MarsRoverManifestsV1Api(

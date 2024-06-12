@@ -7,6 +7,8 @@ from base_api import BaseApi
 
 class MarsRoverManifestsV1Api(BaseApi):
 
+    earth_date_format = "%Y-%m-%d"
+
     def __init__(self, gateway_url, api_key=None):
         super().__init__(gateway_url + '/mars-photos/api/v1/manifests', api_key)
 
@@ -24,3 +26,4 @@ class MarsRoverManifestsV1Api(BaseApi):
             str(response.status_code) + " : " + response.text
 
         return response.json()['photo_manifest']
+    
