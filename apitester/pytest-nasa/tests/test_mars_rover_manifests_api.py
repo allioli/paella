@@ -7,10 +7,10 @@ import rover_camera_helper as rc_helper
 
 class TestMarsRoverManifestsAPI():
 
-    def test_curiosity_mission_manifest(self, get_mars_rover_manivests_v1_api):
+    def test_curiosity_mission_manifest(self, get_mars_rover_manivests_v1_api, rover_name):
 
         # Act
-        curiosity_manifest = get_mars_rover_manivests_v1_api.get('curiosity')
+        curiosity_manifest = get_mars_rover_manivests_v1_api.get(rover_name)
 
         # Assert
         self.check_manifest_properties(curiosity_manifest)
@@ -26,7 +26,7 @@ class TestMarsRoverManifestsAPI():
                 photo_group_id=daily_photo_group_id, photo_group=daily_photo_group)
 
             rc_helper.check_photo_cameras(
-                element_id=daily_photo_group_id, element=daily_photo_group, rover_name='curiosity')
+                element_id=daily_photo_group_id, element=daily_photo_group, rover_name=rover_name)
 
     @staticmethod
     def check_manifest_dates(manifest, expected_date_format):
