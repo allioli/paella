@@ -7,15 +7,32 @@ import rover_camera_helper as rc_helper
 
 class TestMarsRoverManifestsAPI():
 
-    def test_curiosity_mission_manifest(self, get_mars_rover_manivests_v1_api, rover_name):
+    def test_mission_manifest_basics(self, get_mars_rover_manivests_v1_api, rover_name):
 
         # Act
         curiosity_manifest = get_mars_rover_manivests_v1_api.get(rover_name)
 
         # Assert
         self.check_manifest_properties(curiosity_manifest)
+
+
+    def test_mission_manifest_dates(self, get_mars_rover_manivests_v1_api, rover_name):
+
+        # Act
+        curiosity_manifest = get_mars_rover_manivests_v1_api.get(rover_name)
+
+        # Assert
         self.check_manifest_dates(
             manifest=curiosity_manifest, expected_date_format=get_mars_rover_manivests_v1_api.earth_date_format)
+
+
+    def test_mission_manifest_photos(self, get_mars_rover_manivests_v1_api, rover_name):
+
+        # Act
+        curiosity_manifest = get_mars_rover_manivests_v1_api.get(rover_name)
+
+        # Assert
+        actual_photo_count = 0
 
         for daily_photo_group in curiosity_manifest['photos']:
 
@@ -27,6 +44,11 @@ class TestMarsRoverManifestsAPI():
 
             rc_helper.check_photo_cameras(
                 element_id=daily_photo_group_id, element=daily_photo_group, rover_name=rover_name)
+            
+            actual_photo_count += daily_photo_group['total_photos']
+
+        assert (actual_photo_count == curiosity_manifest['total_photos'])
+            
 
     @staticmethod
     def check_manifest_dates(manifest, expected_date_format):
