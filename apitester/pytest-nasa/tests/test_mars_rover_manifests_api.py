@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 from datetime import datetime
 import response_validators
 import rover_camera_helper as rc_helper
@@ -7,6 +8,7 @@ import rover_camera_helper as rc_helper
 
 class TestMarsRoverManifestsAPI():
 
+    @pytest.mark.smoke
     def test_mission_manifest_basics(self, get_mars_rover_manivests_v1_api, rover_name):
 
         # Act
@@ -15,7 +17,7 @@ class TestMarsRoverManifestsAPI():
         # Assert
         self.check_manifest_properties(curiosity_manifest)
 
-
+    @pytest.mark.data_health
     def test_mission_manifest_dates(self, get_mars_rover_manivests_v1_api, rover_name):
 
         # Act
@@ -25,7 +27,7 @@ class TestMarsRoverManifestsAPI():
         self.check_manifest_dates(
             manifest=curiosity_manifest, expected_date_format=get_mars_rover_manivests_v1_api.earth_date_format)
 
-
+    @pytest.mark.data_health
     def test_mission_manifest_photos(self, get_mars_rover_manivests_v1_api, rover_name):
 
         # Act
