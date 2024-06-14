@@ -39,6 +39,6 @@ def get_mars_rover_manivests_v1_api(test_context_settings):
     return mars_rover_manifests_v1_api_instance
 
 # Arrange step with several rover names
-@pytest.fixture(scope="session", params=['spirit', 'opportunity', 'curiosity'])
+@pytest.fixture(scope="session", params=['spirit', 'opportunity', 'curiosity', 'perseverance'])
 def rover_name(request):
     return request.param
