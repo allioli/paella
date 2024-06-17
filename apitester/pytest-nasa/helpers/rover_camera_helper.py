@@ -51,10 +51,14 @@ expected_rover_camera_types = {
 
 def check_photo_cameras(element_id, element, rover_name):
 
+    for camera in element['cameras']:
+        check_photo_camera(element_id=element_id, camera_name=camera, rover_name=rover_name)
+
+def check_photo_camera(element_id, camera_name, rover_name):
+    
     allowed_camera_types_for_rover = expected_rover_camera_types[MarsRover(
         rover_name)]
-
-    for camera in element['cameras']:
-        assert (CameraType(camera) in allowed_camera_types_for_rover), 'Reported photos in ' + element_id + ' with unexpected camera ' + \
-            camera + ' for rover ' + rover_name + \
+    
+    assert (CameraType(camera_name) in allowed_camera_types_for_rover), 'Reported photos in ' + element_id + ' with unexpected camera ' + \
+            camera_name + ' for rover ' + rover_name + \
             '. Allowed cameras are ' + str(allowed_camera_types_for_rover)

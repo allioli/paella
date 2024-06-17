@@ -32,7 +32,7 @@ def get_mars_rover_photos_v1_api(test_context_settings):
 
 # Arrange step to initialise api object
 @pytest.fixture(scope='class')
-def get_mars_rover_manivests_v1_api(test_context_settings):
+def get_mars_rover_manifests_v1_api(test_context_settings):
     mars_rover_manifests_v1_api_instance = MarsRoverManifestsV1Api(
         test_context_settings['gateway_url'], test_context_settings['dev_api_key'])
 
@@ -41,4 +41,10 @@ def get_mars_rover_manivests_v1_api(test_context_settings):
 # Arrange step with several rover names
 @pytest.fixture(scope="session", params=['spirit', 'opportunity', 'curiosity', 'perseverance'])
 def rover_name(request):
+    return request.param
+
+# Arrange step with expected data params on photos by earth date
+@pytest.fixture(params=[({'rover_name': 'curiosity', 'earth_date': '2014-12-12'},  8),
+                        ({'rover_name': 'perseverance', 'earth_date': '2024-06-12'},  16)])
+def expected_photo_amount_earth_date(request):
     return request.param

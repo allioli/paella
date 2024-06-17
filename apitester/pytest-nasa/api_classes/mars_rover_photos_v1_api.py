@@ -31,7 +31,7 @@ class MarsRoverPhotosV1Api(BaseApi):
         assert (response.status_code == 200), "Expected HTTP 200, received HTTP " + \
             str(response.status_code) + " : " + response.text
 
-        return response.json()['photos']
+        return response.json()
 
     # Example /mars-photos/api/v1/rovers/opportunity/photos?earth_date=2015-6-13
     def get_by_earth_date(self, rover_name, earth_date, camera=None, page_number=None):
@@ -54,4 +54,4 @@ class MarsRoverPhotosV1Api(BaseApi):
         assert (response.status_code == 200), "Expected HTTP 200, received HTTP " + \
             str(response.status_code) + " : " + response.text
 
-        return response.json()['photos']
+        return response.json()
