@@ -17,7 +17,10 @@ from mars_rover_manifests_v1_api import MarsRoverManifestsV1Api
 def test_context_settings():
     test_context_settings = {
         'gateway_url': 'https://api.nasa.gov',
-        'dev_api_key': 'e3Wh6EN0m0BcPY2Qa2H3QerLKmZQFnTMJ3OrUvYS'
+        'dev_api_key': 'e3Wh6EN0m0BcPY2Qa2H3QerLKmZQFnTMJ3OrUvYS',
+        'max_photos_per_page': 25,
+        'allowed_image_url_starts': ['http://mars.jpl.nasa.gov/', 'https://mars.nasa.gov/', 'http://mars.nasa.gov'],
+        'allowed_image_url_endings': ['.jpg', '.JPG']
     }
 
     return test_context_settings

@@ -5,30 +5,35 @@ from datetime import datetime
 import response_validators
 import rover_camera_helper as rc_helper
 import pytest
+from hamcrest import *
 
 
 class TestMarsRoverPhotosAPI():
 
     @pytest.mark.data_health
-    def test_rover_photos_by_martian_sol(self, get_mars_rover_photos_v1_api, rover_name):
+    def test_rover_photos_by_martian_sol(self, get_mars_rover_photos_v1_api, test_context_settings, rover_name):
+
+        # Arrange
+        sol = 1000
+        max_photos = test_context_settings['max_photos_per_page']
+        min_photos = 1
 
         # Act
         response_json = get_mars_rover_photos_v1_api.get_by_martian_sol(
-            rover_name=rover_name, sol_number=1000, page_number=1)
+            rover_name=rover_name, sol_number=sol, page_number=1)
 
         # Assert
-        response_validators.assert_number_of_elements_valid_range(
-            element_list_id='photos_' + rover_name + '_sol_1000',
-            elements=response_json['photos'],
-            min_elements=1,
-            max_elements=25)
+        response_validators.assert_number_of_elements_valid_range(element_description='photos_' + rover_name + '_sol_' + str(sol),
+                                                                  element_list=response_json['photos'],
+                                                                  min_elements=min_photos,
+                                                                  max_elements=max_photos)
 
         for photo_element in response_json['photos']:
             photo_printable_id = self.get_photo_printable_id(
                 photo=photo_element, rover_name=rover_name)
 
             self.check_photo_properties(
-                photo_id=photo_printable_id, photo=photo_element, rover_name=rover_name)
+                photo_id=photo_printable_id, photo=photo_element, rover_name=rover_name, test_context_settings=test_context_settings)
 
     def test_spirit_photos_default_api_key(self, test_context_settings):
 
@@ -43,8 +48,8 @@ class TestMarsRoverPhotosAPI():
 
         # Assert
         response_validators.assert_number_of_elements_valid_range(
-            element_list_id='photos_spirit_sol_2',
-            elements=response_json['photos'],
+            element_description='photos_spirit_sol_2',
+            element_list=response_json['photos'],
             min_elements=1,
             max_elements=25)
 
@@ -62,19 +67,17 @@ class TestMarsRoverPhotosAPI():
         # Assert
         expected_amount_photos = expected_photo_amount_earth_date[1]
 
-        response_validators.assert_number_of_elements(
-            element_list_id='photos_' + rover_name + '_earth_date_' + earth_date,
-            elements=response_json['photos'],
-            expected_size=expected_amount_photos)
-        
-    
+        assert_that(response_json['photos'],
+                    described_as('Number of photos for ' + rover_name + '_earth_date_' + earth_date + ' should be ' + str(expected_amount_photos),
+                                 has_length(equal_to(expected_amount_photos))))
+
     @pytest.mark.smoke
     def test_perseverance_photos_by_camera(self, get_mars_rover_photos_v1_api, expected_photos_by_camera):
 
         # Arrange
         rover_name = expected_photos_by_camera[0]['rover_name']
-        sol        = expected_photos_by_camera[0]['sol']
-        camera     = expected_photos_by_camera[0]['camera']
+        sol = expected_photos_by_camera[0]['sol']
+        camera = expected_photos_by_camera[0]['camera']
 
         # Act
         response_json = get_mars_rover_photos_v1_api.get_by_martian_sol(
@@ -82,34 +85,42 @@ class TestMarsRoverPhotosAPI():
 
         # Assert
         expected_photo_id_list = expected_photos_by_camera[1]
+        expected_amount_photos = len(expected_photo_id_list)
+        print_friendly_id      = rover_name + '_sol_' + str(sol) + '_camera_' + camera
 
-        response_validators.assert_number_of_elements(
-            element_list_id='photos_' + rover_name + '_sol_' + str(sol) + '_camera_' + camera,
-            elements=response_json['photos'],
-            expected_size=len(expected_photo_id_list))
+        assert_that(response_json['photos'],
+                    described_as('Number of photos for ' + print_friendly_id + ' should be ' + str(expected_amount_photos),
+                                 has_length(equal_to(expected_amount_photos))))
         
+        for photo in response_json['photos']:
+            assert_that(photo['id'],
+                    described_as('Unexpected photo for ' + print_friendly_id + ' Expected photo ids are ' + str(expected_photo_id_list),
+                                is_in(expected_photo_id_list)))
 
     @staticmethod
-    def check_photo_properties(photo_id, photo, rover_name):
-        response_validators.assert_int_property_valid_range(
-            element_id=photo_id, element=photo, property_name='id', min_value=0)
+    def check_photo_properties(photo_id, photo, test_context_settings, rover_name):
 
         response_validators.assert_int_property_valid_range(
-            element_id=photo_id, element=photo, property_name='sol', min_value=0)
+            element_id=photo_id, element=photo, property_name='id')
+
+        response_validators.assert_int_property_valid_range(
+            element_id=photo_id, element=photo, property_name='sol')
 
         response_validators.assert_url(element_id=photo_id, element=photo, property_name='img_src',
-                                       expected_url_start_list=['http://mars.jpl.nasa.gov/', 'https://mars.nasa.gov/', 'http://mars.nasa.gov'], expected_url_ending_list=['.jpg', '.JPG'])
+                                       expected_url_start_list=test_context_settings[
+                                           'allowed_image_url_starts'],
+                                       expected_url_ending_list=test_context_settings['allowed_image_url_endings'])
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=photo_id, element=photo, property_name='earth_date')
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_property_present(
             element_id=photo_id, element=photo, property_name='camera')
 
         rc_helper.check_photo_camera(
             element_id=photo_id + '_camera', camera_name=photo['camera']['name'], rover_name=rover_name)
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_property_present(
             element_id=photo_id, element=photo, property_name='rover')
 
     @staticmethod

@@ -4,6 +4,7 @@ import pytest
 from datetime import datetime
 import response_validators
 import rover_camera_helper as rc_helper
+from hamcrest import *
 
 
 class TestMarsRoverManifestsAPI():
@@ -73,43 +74,47 @@ class TestMarsRoverManifestsAPI():
 
     @staticmethod
     def check_manifest_properties(manifest_id, manifest):
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=manifest_id, element=manifest, property_name='name')
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=manifest_id, element=manifest, property_name='landing_date')
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=manifest_id, element=manifest, property_name='launch_date')
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=manifest_id, element=manifest, property_name='status')
 
         response_validators.assert_int_property_valid_range(
             element_id=manifest_id, element=manifest, property_name='max_sol')
 
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=manifest_id, element=manifest, property_name='max_date')
 
         response_validators.assert_int_property_valid_range(
             element_id=manifest_id, element=manifest, property_name='total_photos')
-
-        response_validators.assert_number_of_elements_valid_range(
-            element_list_id=manifest_id + '_photos', elements=manifest['photos'], min_elements=1)
+        
+        response_validators.assert_number_of_elements_valid_range(element_description=manifest_id + '_photos',
+                                                                  element_list=manifest['photos'],
+                                                                  min_elements=1,
+                                                                  max_elements=5000)
 
     @staticmethod
     def check_daily_photo_group_properties(photo_group_id, photo_group):
-        response_validators.assert_property_not_empty(
+        response_validators.assert_string_property_not_empty(
             element_id=photo_group_id, element=photo_group, property_name='earth_date')
 
         response_validators.assert_int_property_valid_range(
             element_id=photo_group_id, element=photo_group, property_name='sol')
 
         response_validators.assert_int_property_valid_range(
-            element_id=photo_group_id, element=photo_group, property_name='total_photos')
-
-        response_validators.assert_number_of_elements_valid_range(
-            element_list_id=photo_group_id + '_cameras', elements=photo_group['cameras'], min_elements=1)
+            element_id=photo_group_id, element=photo_group, property_name='total_photos', min_value=1)
+        
+        response_validators.assert_number_of_elements_valid_range(element_description=photo_group_id + '_cameras',
+                                                                  element_list=photo_group['cameras'],
+                                                                  min_elements=1,
+                                                                  max_elements=18)
 
     @staticmethod
     def get_photo_group_printable_id(photo_group):
