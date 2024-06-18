@@ -48,3 +48,9 @@ def rover_name(request):
                         ({'rover_name': 'perseverance', 'earth_date': '2024-06-12'},  16)])
 def expected_photo_amount_earth_date(request):
     return request.param
+
+# Arrange step with expected data params on photos by camera
+@pytest.fixture(params=[({'rover_name': 'perseverance', 'sol': 0, 'camera':'EDL_DDCAM'},  [810974, 810975]),
+                        ({'rover_name': 'curiosity', 'sol': 92, 'camera': 'FHAZ'},  [671])])
+def expected_photos_by_camera(request):
+    return request.param

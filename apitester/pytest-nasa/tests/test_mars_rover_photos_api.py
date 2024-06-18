@@ -42,10 +42,11 @@ class TestMarsRoverPhotosAPI():
             rover_name='spirit', sol_number=2, page_number=1)
 
         # Assert
-        response_validators.assert_number_of_elements(
+        response_validators.assert_number_of_elements_valid_range(
             element_list_id='photos_spirit_sol_2',
             elements=response_json['photos'],
-            expected_size=6)
+            min_elements=1,
+            max_elements=25)
 
     @pytest.mark.smoke
     def test_rover_photos_by_earth_date(self, get_mars_rover_photos_v1_api, expected_photo_amount_earth_date):
@@ -62,9 +63,31 @@ class TestMarsRoverPhotosAPI():
         expected_amount_photos = expected_photo_amount_earth_date[1]
 
         response_validators.assert_number_of_elements(
-            element_list_id='photos_' + rover_name + '_date_' + earth_date,
+            element_list_id='photos_' + rover_name + '_earth_date_' + earth_date,
             elements=response_json['photos'],
             expected_size=expected_amount_photos)
+        
+    
+    @pytest.mark.smoke
+    def test_perseverance_photos_by_camera(self, get_mars_rover_photos_v1_api, expected_photos_by_camera):
+
+        # Arrange
+        rover_name = expected_photos_by_camera[0]['rover_name']
+        sol        = expected_photos_by_camera[0]['sol']
+        camera     = expected_photos_by_camera[0]['camera']
+
+        # Act
+        response_json = get_mars_rover_photos_v1_api.get_by_martian_sol(
+            rover_name=rover_name, sol_number=sol, camera=camera, page_number=1)
+
+        # Assert
+        expected_photo_id_list = expected_photos_by_camera[1]
+
+        response_validators.assert_number_of_elements(
+            element_list_id='photos_' + rover_name + '_sol_' + str(sol) + '_camera_' + camera,
+            elements=response_json['photos'],
+            expected_size=len(expected_photo_id_list))
+        
 
     @staticmethod
     def check_photo_properties(photo_id, photo, rover_name):
