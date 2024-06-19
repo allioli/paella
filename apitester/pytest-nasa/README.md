@@ -12,10 +12,10 @@ It will run test cases related to the most excellent [Nasa Mars Photos API](http
 
 | **Folder** | **Contents** |
 | ---        | ---          |
-|   api_classes |    Reusable API objects for the different endpoints      |
-|   helpers |     Supporting code for response validation (Camera definitions, assertions, custom hamcrest matcher)       |
-|   tests |    Pytest fixtures and tests      |
-|  tests/conftest.py |   Fixtures defined here        |
+|   [api_classes](api_classes) |    Reusable API objects for the different endpoints      |
+|   [helpers](helpers) |     Supporting code for response validation (Camera definitions, assertions, custom hamcrest matcher)       |
+|   [tests](tests) |    Pytest fixtures and tests      |
+|  [conftest.py](tests/conftest.py) |   Fixtures defined here        |
 
 ## Dependencies
 
@@ -35,9 +35,9 @@ In this project, we want to encapsulate the request, authentication, error handl
 
 Decoupling these two major blocks of logic will allow them to evolve separately (new versions of the API will result in new API objects), at the same time as reducing code duplication.
 
-The base class [api_classes/base_api-py] takes care of common behaviour and settings, while the other classes cover requests for a particular enpoint.
+The base class [base_api.py](api_classes/base_api.py) takes care of common behaviour and settings, while the other classes cover requests for a particular enpoint.
 
-Example from [api_classes/mars_rover_manifests_v1_api.py]
+Example from [mars_rover_manifests_v1_api.py](api_classes/mars_rover_manifests_v1_api.py)
 
 ```
 class MarsRoverManifestsV1Api(BaseApi):
@@ -67,7 +67,7 @@ class MarsRoverManifestsV1Api(BaseApi):
 ### CI-friendly assert output
 Print friendly descriptions that identify a specfic data resource under test are passed to pytest assertions and pyhamcrest matchers with `described_as`, so that a person checking the test logs can quickly get that all-important context information without having to scroll up the log output for ages.
 
-Example from [helpers/rover_camera_helper.py]
+Example from [rover_camera_helper.py](helpers/rover_camera_helper.py)
 
 ```
 def check_photo_camera(element_id, camera_name, rover_name):
@@ -83,7 +83,7 @@ def check_photo_camera(element_id, camera_name, rover_name):
 ```
 
 ## Custom Pyhamcrest matcher
-This is an example of a matcher that checks a URL string for allowed starting and ending substrings. It comes handy for early detection of typos in URLs / unexpected file extensions. From [helpers/custom_string_matchers.py]
+This is an example of a matcher that checks a URL string for allowed starting and ending substrings. It comes handy for early detection of typos in URLs / unexpected file extensions. From [custom_string_matchers.py](helpers/custom_string_matchers.py)
 
 ```
 class IsValidURL(BaseMatcher):
@@ -129,7 +129,7 @@ def is_valid_url(url_start_list, url_ending_list):
 ```
 
 ### Fixtures for the people
-In this project we use fixtures defined in [tests/conftest.py] to:
+In this project we use fixtures defined in [conftest.py](tests/conftest.py) to:
 * Define basic context settings, like API gateway, API key
 * Define expectations for the content
 * Initialise API objects
@@ -140,6 +140,7 @@ In this project we use fixtures defined in [tests/conftest.py] to:
 There are different types of tests:
 * Tests that check expected data or number of resources given a specific request
 * Tests that check that returned data is valid (presence, range of expected properties, date consistency, URL content)
+
 Cross-endpoint testing is out of scope of this project. It would be a natural next step to check consistency of manifest, camera data across endpoints or supporting more functional, high level flows from a real client app.
 
  
