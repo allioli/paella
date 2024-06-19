@@ -25,8 +25,14 @@ It will run test cases related to the most excellent [Nasa Mars Photos API](http
 - pyhamcrest module
 
 ## How to run
-
+### From terminal
 `pytest`
+### From your favourite IDE
+- Import pytest project
+- Refresh tests (Example Vistual Studio Code: Command Palette -> Test: Refresh tests
+- Go to Tests section
+- You should see all tests expanded
+- Run / Debug at will
 
 ## Highlights
 
