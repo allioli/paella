@@ -6,6 +6,7 @@ import response_validators
 import rover_camera_helper as rc_helper
 import pytest
 from hamcrest import *
+from custom_string_matchers import is_valid_url
 
 
 class TestMarsRoverPhotosAPI():
@@ -117,11 +118,13 @@ class TestMarsRoverPhotosAPI():
 
         response_validators.assert_int_property_valid_range(
             element_id=photo_id, element=photo, property_name='sol')
-
-        response_validators.assert_url(element_id=photo_id, element=photo, property_name='img_src',
-                                       expected_url_start_list=test_context_settings[
-                                           'allowed_image_url_starts'],
-                                       expected_url_ending_list=test_context_settings['allowed_image_url_endings'])
+        
+        response_validators.assert_string_property_not_empty(
+            element_id=photo_id, element=photo, property_name='img_src')
+        
+        assert_that(photo['img_src'], 
+                    is_valid_url(url_start_list=test_context_settings['allowed_image_url_starts'], 
+                                 url_ending_list=test_context_settings['allowed_image_url_endings']))
 
         response_validators.assert_string_property_not_empty(
             element_id=photo_id, element=photo, property_name='earth_date')
