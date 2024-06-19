@@ -6,7 +6,7 @@ This repository contains a number of Test automation example projects
 
 |**Area** | **Project**  |
 |---       | ---         |
-| API testing |  [python unittest example](apitester/python-unittest)      |
+| API testing |  [python pytest example](apitester/pytest-nasa)        |
 | API testing |  [python behave example](apitester/python-behave)      |
 | WEB APP testing | [java cucumber selenium example](webtester/java)      |
 | WEB APP testing | [nodejs cucumber selenium example](webtester/nodejs)      |

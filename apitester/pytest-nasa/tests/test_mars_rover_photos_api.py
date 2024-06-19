@@ -87,22 +87,24 @@ class TestMarsRoverPhotosAPI():
         # Assert
         expected_photo_id_list = expected_photos_by_camera[1]
         expected_amount_photos = len(expected_photo_id_list)
-        print_friendly_id      = rover_name + '_sol_' + str(sol) + '_camera_' + camera
+        print_friendly_id = rover_name + '_sol_' + \
+            str(sol) + '_camera_' + camera
 
         assert_that(response_json['photos'],
                     described_as('Number of photos for ' + print_friendly_id + ' should be ' + str(expected_amount_photos),
                                  has_length(equal_to(expected_amount_photos))))
-        
+
         for photo in response_json['photos']:
             assert_that(photo['id'],
-                    described_as('Unexpected photo for ' + print_friendly_id + ' Expected photo ids are ' + str(expected_photo_id_list),
-                                is_in(expected_photo_id_list)))
-            
+                        described_as('Unexpected photo for ' + print_friendly_id + ' Expected photo ids are ' + str(expected_photo_id_list),
+                                     is_in(expected_photo_id_list)))
+
     @pytest.mark.smoke
     def test_rover_latest_photos(self, get_mars_rover_photos_v1_api, rover_name):
 
         # Act
-        response_json = get_mars_rover_photos_v1_api.get_latest(rover_name=rover_name, page_number=1)
+        response_json = get_mars_rover_photos_v1_api.get_latest(
+            rover_name=rover_name, page_number=1)
 
         # Assert
         response_validators.assert_number_of_elements_valid_range(element_description='latest_photos_' + rover_name,
@@ -118,12 +120,12 @@ class TestMarsRoverPhotosAPI():
 
         response_validators.assert_int_property_valid_range(
             element_id=photo_id, element=photo, property_name='sol')
-        
+
         response_validators.assert_string_property_not_empty(
             element_id=photo_id, element=photo, property_name='img_src')
-        
-        assert_that(photo['img_src'], 
-                    is_valid_url(url_start_list=test_context_settings['allowed_image_url_starts'], 
+
+        assert_that(photo['img_src'],
+                    is_valid_url(url_start_list=test_context_settings['allowed_image_url_starts'],
                                  url_ending_list=test_context_settings['allowed_image_url_endings']))
 
         response_validators.assert_string_property_not_empty(
