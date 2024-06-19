@@ -4,7 +4,7 @@ This is a Pytest project.
 
 It was put together installing `python 3.12`, then `pip3 install pytest requests pyhamcrest`
 
-It will run test cases related to the most excellent [Nasa Mars Photos API](https://api.nasa.gov/?ref=public_apis)
+It will run test cases related to the most excellent [Nasa Mars Photos API](https://api.nasa.gov/?ref=public_apis). If you want to explore other NASA APIs, you can fork them to your Postman workspace [here](https://www.postman.com/miguelolave/workspace/nasa-open-apis/overview).
 
 
 ## Contents
