@@ -72,7 +72,7 @@ class TestMarsRoverPhotosAPI():
                                  has_length(equal_to(expected_amount_photos))))
 
     @pytest.mark.smoke
-    def test_perseverance_photos_by_camera(self, get_mars_rover_photos_v1_api, expected_photos_by_camera):
+    def test_rover_photos_by_camera(self, get_mars_rover_photos_v1_api, expected_photos_by_camera):
 
         # Arrange
         rover_name = expected_photos_by_camera[0]['rover_name']
@@ -96,6 +96,18 @@ class TestMarsRoverPhotosAPI():
             assert_that(photo['id'],
                     described_as('Unexpected photo for ' + print_friendly_id + ' Expected photo ids are ' + str(expected_photo_id_list),
                                 is_in(expected_photo_id_list)))
+            
+    @pytest.mark.smoke
+    def test_rover_latest_photos(self, get_mars_rover_photos_v1_api, rover_name):
+
+        # Act
+        response_json = get_mars_rover_photos_v1_api.get_latest(rover_name=rover_name, page_number=1)
+
+        # Assert
+        response_validators.assert_number_of_elements_valid_range(element_description='latest_photos_' + rover_name,
+                                                                  element_list=response_json['latest_photos'],
+                                                                  min_elements=1,
+                                                                  max_elements=25)
 
     @staticmethod
     def check_photo_properties(photo_id, photo, test_context_settings, rover_name):
