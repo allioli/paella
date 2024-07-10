@@ -11,28 +11,20 @@ from movies_v3_api import MoviesV3Api
 import pytest
 from pytest_bdd import given, then
 from pytest_bdd import parsers
-
-
+from dotenv import dotenv_values
 
 
 # Arrange step with test context settings
 @pytest.fixture(scope="session")
 def test_context_settings():
-    test_context_settings = {
-        'gateway_url': 'https://api.themoviedb.org',
-        'tmbdb_account_id': 7954295,
-        'access_token': 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOGQ5YjZhMGFhMzBjOWE1ZGJkZDA0YjU5Mzk0NDQxNyIsIm5iZiI6MTcyMDQzOTY2NC43MzE5MzUsInN1YiI6IjViM2Y0MDA5MGUwYTI2MjZkZTAwNWI1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PXizLLv6rFT1soWp_mkjh6p1t3P5ZWTLf2kSzbrBhEA',
-        'image_url_start': 'https://image.tmdb.org/t/p/w300/',
-        'allowed_image_url_endings': ['.jpg', '.JPG']
-    }
-
+    test_context_settings = dotenv_values('.env')
     return test_context_settings
 
 # Arrange step to initialise api object
 @pytest.fixture(scope='class')
 def get_authentication_v3_api(test_context_settings):
     authentication_v3_api = AuthenticationV3Api(
-        test_context_settings['gateway_url'], test_context_settings['access_token'])
+        test_context_settings['TMDB_GATEWAY_URL'], test_context_settings['TMDB_API_ACCESS_TOKEN'])
 
     return authentication_v3_api
 
@@ -40,7 +32,7 @@ def get_authentication_v3_api(test_context_settings):
 @pytest.fixture(scope='class')
 def get_account_v3_api(test_context_settings):
     account_v3_api = AccountV3Api(
-        test_context_settings['gateway_url'], test_context_settings['access_token'])
+        test_context_settings['TMDB_GATEWAY_URL'], test_context_settings['TMDB_API_ACCESS_TOKEN'])
 
     return account_v3_api
 
@@ -48,7 +40,7 @@ def get_account_v3_api(test_context_settings):
 @pytest.fixture(scope='class')
 def get_movies_v3_api(test_context_settings):
     movies_v3_api = MoviesV3Api(
-        test_context_settings['gateway_url'], test_context_settings['access_token'])
+        test_context_settings['TMDB_GATEWAY_URL'], test_context_settings['TMDB_API_ACCESS_TOKEN'])
 
     return movies_v3_api
 

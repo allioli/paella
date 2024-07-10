@@ -23,13 +23,13 @@ def step_when_rate_film_intent(get_movies_v3_api, guest_session_id, rating):
 @when('I try to list My Rated Movies as guest user', target_fixture="response")
 def step_when_list_my_rated_movies_as_guest_user(test_context_settings, get_account_v3_api, guest_session_id):
     """I list My Rated Movies as guest user."""
-    account_id = test_context_settings['tmbdb_account_id']
+    account_id = test_context_settings['TMDB_ACCOUNT_ID']
     return get_account_v3_api.get_rated_movies_as_guest_intent(account_id=account_id, guest_session_id=guest_session_id) 
 
 @then(parsers.parse('A new record should appear in My Rated Movies with rating \"{expected_rating:.1f}\"')) 
 def step_then_new_record_rated_movies(test_context_settings, get_account_v3_api, expected_rating):
     """A new record should appear in My Rated Movies."""
-    account_id = test_context_settings['tmbdb_account_id']
+    account_id = test_context_settings['TMDB_ACCOUNT_ID']
     results_json = get_account_v3_api.get_latest_rated_movies(account_id=account_id)
 
     assert(results_json['total_results'] > 0)
