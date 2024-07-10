@@ -68,7 +68,7 @@ def step_then_response_contains(response, status_code):
     """Assert on Response."""
     assert(response.status_code == status_code)
 
-@then(parsers.parse('Response message is \"{response_message}\"'))
+@then(parsers.parse('Response status message is \"{response_message}\"'))
 def step_then_response_contains(response, response_message):
     """Assert on Response."""
     response_json = response.json()
