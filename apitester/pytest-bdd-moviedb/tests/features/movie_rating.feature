@@ -1,6 +1,8 @@
+@movie_rating
 Feature: MovieDB API Movie rating
   Movie ratings for the people.
 
+  @smoke
   Scenario: Rate The GodFather
     Given I have logged in as a guest moviedb user
     When  I rate The GodFather with value "8.5"
@@ -13,7 +15,7 @@ Feature: MovieDB API Movie rating
     And   Response status message is "Authentication failed: You do not have permissions to access the service."
 
 
-  Scenario Outline: Test Rating values
+  Scenario Outline: Test Rating incorrect values
     Given I have logged in as a guest moviedb user
     When  I try to rate a film with value "<rating>"
     Then  Response status code is "<status_code>"
