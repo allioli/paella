@@ -9,7 +9,8 @@ from authentication_v3_api import AuthenticationV3Api
 from account_v3_api import AccountV3Api
 from movies_v3_api import MoviesV3Api
 import pytest
-from pytest_bdd import given
+from pytest_bdd import given, then
+from pytest_bdd import parsers
 
 
 
@@ -51,7 +52,24 @@ def get_movies_v3_api(test_context_settings):
 
     return movies_v3_api
 
-@given('I have logged in as a moviedb user', target_fixture="session_id")
+# Act step to return a response to a Then step
+@pytest.fixture(scope='function')
+def response():
+    return {}
+
+@given('I have logged in as a guest moviedb user', target_fixture="guest_session_id")
 def step_given_logged_in_session_id(get_authentication_v3_api):
     """I have logged in as a moviedb user."""
     return get_authentication_v3_api.create_guest_session()
+
+
+@then(parsers.parse('Response status code is \"{status_code:d}\"'))
+def step_then_response_contains(response, status_code):
+    """Assert on Response."""
+    assert(response.status_code == status_code)
+
+@then(parsers.parse('Response message is \"{response_message}\"'))
+def step_then_response_contains(response, response_message):
+    """Assert on Response."""
+    response_json = response.json()
+    assert(response_json['status_message'] == response_message)
