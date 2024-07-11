@@ -4,10 +4,12 @@ import sys
 import os
 from pathlib import Path
 sys.path.append(os.path.join(Path(os.path.dirname(__file__)).parent, 'api_classes'))
+sys.path.append(os.path.join(Path(os.path.dirname(__file__)).parent, 'helpers'))
 
 from authentication_v3_api import AuthenticationV3Api
 from account_v3_api import AccountV3Api
 from movies_v3_api import MoviesV3Api
+from movie_top_rated_list_v3_api import MovieTopRatedListV3Api
 import pytest
 from pytest_bdd import given, then
 from pytest_bdd import parsers
@@ -45,6 +47,14 @@ def get_movies_v3_api(test_context_settings):
         test_context_settings['TMDB_GATEWAY_URL'], test_context_settings['TMDB_API_ACCESS_TOKEN'])
 
     return movies_v3_api
+
+# Initialise api object
+@pytest.fixture(scope='class')
+def get_movie_top_rated_v3_api(test_context_settings):
+    movie_top_rated_list_v3_api = MovieTopRatedListV3Api(
+        test_context_settings['TMDB_GATEWAY_URL'], test_context_settings['TMDB_API_ACCESS_TOKEN'])
+
+    return movie_top_rated_list_v3_api
 
 # Create guest user session
 # Session scope, because we only need to use it once per test session and cache the result

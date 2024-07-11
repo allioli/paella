@@ -1,6 +1,6 @@
 @movie_rating
 Feature: MovieDB API Movie rating
-  Movie ratings for the people.
+  Users can rate a movie and keep track of my rated movies.
 
   @smoke
   Scenario: Rate The GodFather
