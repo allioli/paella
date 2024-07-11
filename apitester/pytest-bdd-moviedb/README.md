@@ -26,6 +26,9 @@ It will run test scenarios related to the [The Movie Database API](https://devel
 ## How to run
 ### From terminal
 `pytest`
+
+Cucumber-style output is enabled by default via settings in [pytest.ini](pytest.ini)
+
 ### From your favourite IDE
 - Import pytest project
 - Refresh tests (Example Vistual Studio Code: Command Palette -> Test: Refresh tests
