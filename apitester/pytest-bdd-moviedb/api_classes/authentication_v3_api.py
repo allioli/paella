@@ -21,5 +21,5 @@ class AuthenticationV3Api(BaseApi):
         assert (response.status_code == 200), "Expected HTTP 200, received HTTP " + \
             str(response.status_code) + " : " + response.text
 
-        return response.json()["guest_session_id"]
+        return response.json()
     

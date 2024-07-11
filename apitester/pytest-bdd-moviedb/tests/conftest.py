@@ -13,22 +13,24 @@ from pytest_bdd import given, then
 from pytest_bdd import parsers
 from dotenv import dotenv_values
 
+## ARRANGE Fixtures ##
 
-# Arrange step with test context settings
+# Load test context settings
 @pytest.fixture(scope="session")
 def test_context_settings():
     test_context_settings = dotenv_values('.env')
     return test_context_settings
 
-# Arrange step to initialise api object
-@pytest.fixture(scope='class')
+# Initialise api object
+# Session scope, because we only need to use it once per test session and cache the result
+@pytest.fixture(scope='session')
 def get_authentication_v3_api(test_context_settings):
     authentication_v3_api = AuthenticationV3Api(
         test_context_settings['TMDB_GATEWAY_URL'], test_context_settings['TMDB_API_ACCESS_TOKEN'])
 
     return authentication_v3_api
 
-# Arrange step to initialise api object
+# Initialise api object
 @pytest.fixture(scope='class')
 def get_account_v3_api(test_context_settings):
     account_v3_api = AccountV3Api(
@@ -36,7 +38,7 @@ def get_account_v3_api(test_context_settings):
 
     return account_v3_api
 
-# Arrange step to initialise api object
+# Initialise api object
 @pytest.fixture(scope='class')
 def get_movies_v3_api(test_context_settings):
     movies_v3_api = MoviesV3Api(
@@ -44,17 +46,25 @@ def get_movies_v3_api(test_context_settings):
 
     return movies_v3_api
 
+# Create guest user session
+# Session scope, because we only need to use it once per test session and cache the result
+@pytest.fixture(scope='session')
+def guest_session_id(get_authentication_v3_api):
+    return get_authentication_v3_api.create_guest_session()['guest_session_id']
+
+## ACT fixtures ##
+
 # Act step to return a response to a Then step
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def response():
     return {}
 
-@given('I have logged in as a guest moviedb user', target_fixture="guest_session_id")
-def step_given_logged_in_session_id(get_authentication_v3_api):
+## Common GIVEN steps ##
+@given('I have logged in as a guest moviedb user')
+def step_given_logged_in_session_id(guest_session_id):
     """I have logged in as a moviedb user."""
-    return get_authentication_v3_api.create_guest_session()
 
-
+## Common THEN steps ##
 @then(parsers.parse('Response status code is \"{status_code:d}\"'))
 def step_then_response_contains(response, status_code):
     """Assert on Response."""
