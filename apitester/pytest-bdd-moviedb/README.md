@@ -46,12 +46,37 @@ Decoupling these two major blocks of logic will allow them to evolve separately 
 The base class [base_api.py](api_classes/base_api.py) takes care of common behaviour and settings, while the other classes cover requests for a particular enpoint.
 
 
-### Fixtures for the people
-In this project we use fixtures defined in [conftest.py](tests/conftest.py) to:
+### Common Fixtures and Steps
+In [conftest.py](tests/conftest.py) you will find scoped fixtures to perform the following set-up tasks:
 * Load basic context settings, like API gateway, API tokens from .env file
 * Initialise API objects
-* Support data-driven tests (parameterised fixtures for rover names, request-response expectations)
- 
+* Retrieve guest session id
+* Provide a base mechanism to pass response objects to other steps, overriding a common fixture
+
+Common Given, Then steps with glue code can be also found in [conftest.py](tests/conftest.py) that deal with: 
+* Providing guest session id to other steps
+* Asserting on response status and status message 
+
+### When steps: Functional vs Intent
+How do we keep the code in steps and API objects maintainable while supporting both happy path and error scenarios? Re-using API object methods and defining different steps for each type of scenario.
+
+* **Functional steps** are assertive "When" steps that support happy path scenarios. We expect a positive result, so the same API object method that performs the API call (user action) is also checking a success response status code. This is an example of "close ended" step. A bit of the validation is added to the action itself for convenience and DRY, at the price of less flexibility and step re-usability.
+
+Example from [test_movie_rating.py](tests/step_definitions/test_movie_rating.py)
+```
+@when(parsers.parse('I rate The GodFather with value \"{rating:.1f}\"'))
+def step_when_rate_the_godfather(get_movies_v3_api, guest_session_id, rating):
+    """I rate The GodFather."""
+    get_movies_v3_api.rate_movie(movie_id=238, session_id=guest_session_id, rating=rating, expected_status_code=201)
+```
+
+* **Intent steps** are tentative "When" steps that support error flows. We expect different error status codes, a list that could grow over time. In this case, we use an "open ended" step, that only performs an API call (user action) and delegates any validation to downstream "Then" steps by returning the response object. We decouple the API object methods from the list of relevant error codes, at the price of having to return the response object, instead of an optimistic response.json() that saves us some code on the step side.
+```
+@when(parsers.parse('I try to rate a film with value \"{rating}\"'), target_fixture="response")
+def step_when_rate_film_intent(get_movies_v3_api, guest_session_id, rating):
+    """I rate a film intent."""
+    return get_movies_v3_api.rate_movie(movie_id=238, session_id=guest_session_id, rating=rating)   
+```
 
 ## Sources
 * [Pytest BDD documentation](https://pypi.org/project/pytest-bdd/)
