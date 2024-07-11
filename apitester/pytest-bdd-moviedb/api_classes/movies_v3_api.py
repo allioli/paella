@@ -11,7 +11,7 @@ class MoviesV3Api(BaseApi):
         super().__init__(gateway_url + '/3/movie', access_token)
 
     # Example 3/movie/11/rating?guest_session_id=123223
-    def rate_movie(self, movie_id, session_id, rating):
+    def rate_movie(self, movie_id, session_id, rating, expected_status_code=None):
 
         url = self.base_url + '/' + str(movie_id) + '/rating'
 
@@ -22,20 +22,6 @@ class MoviesV3Api(BaseApi):
         response = requests.request(
             'POST', url, headers=self.headers, params=query_params, json=payload)
 
-        assert (response.status_code == 201), "Expected HTTP 201, received HTTP " + \
-            str(response.status_code) + " : " + response.text
-        
-    
-    # Example 3/movie/11/rating
-    def rate_movie_intent(self, movie_id, rating, session_id):
-
-        url = self.base_url + '/' + str(movie_id) + '/rating'
-
-        query_params = {'guest_session_id': session_id}
-
-        payload = {'value': rating}
-
-        response = requests.request(
-            'POST', url, headers=self.headers, params=query_params, json=payload)
+        self.check_response_status_code(response=response, expected_status_code=expected_status_code)
 
         return response

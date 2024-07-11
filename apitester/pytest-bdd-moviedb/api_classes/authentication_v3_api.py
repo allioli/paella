@@ -18,8 +18,7 @@ class AuthenticationV3Api(BaseApi):
         response = requests.request(
             'GET', url, headers=self.headers)
 
-        assert (response.status_code == 200), "Expected HTTP 200, received HTTP " + \
-            str(response.status_code) + " : " + response.text
+        self.check_response_status_code(response=response, expected_status_code=200)
 
-        return response.json()
+        return response
     

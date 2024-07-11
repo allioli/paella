@@ -11,29 +11,19 @@ class AccountV3Api(BaseApi):
         super().__init__(gateway_url + '/3/account', access_token)
 
     # Example 3/account/7954295/rated/movies?sort_by=created_at.desc
-    def get_latest_rated_movies(self, account_id):
+    def get_latest_rated_movies(self, account_id, session_id=None, expected_status_code=None):
 
         url = self.base_url + '/' + str(account_id) + '/rated/movies'
 
         query_params = {'sort_by' : 'created_at.desc'}
+        
+        if session_id is not None:
+            query_params['session_id'] = session_id
 
         response = requests.request(
             'GET', url, headers=self.headers, params=query_params)
-
-        assert (response.status_code == 200), "Expected HTTP 200, received HTTP " + \
-            str(response.status_code) + " : " + response.text
-
-        return response.json()
-    
-    # Example 3/account/7954295/rated/movies?session_id=34554333
-    def get_rated_movies_as_guest_intent(self, account_id, guest_session_id):
-
-        url = self.base_url + '/' + str(account_id) + '/rated/movies'
-
-        query_params = {'session_id' : guest_session_id}
-
-        response = requests.request(
-            'GET', url, headers=self.headers, params=query_params)
+ 
+        self.check_response_status_code(response=response, expected_status_code=expected_status_code)
 
         return response
     

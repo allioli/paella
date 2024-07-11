@@ -50,11 +50,12 @@ def get_movies_v3_api(test_context_settings):
 # Session scope, because we only need to use it once per test session and cache the result
 @pytest.fixture(scope='session')
 def guest_session_id(get_authentication_v3_api):
-    return get_authentication_v3_api.create_guest_session()['guest_session_id']
+    return get_authentication_v3_api.create_guest_session().json()['guest_session_id']
 
 ## ACT fixtures ##
 
 # Act step to return a response to a Then step
+# To be overriden by different When steps performing API calls
 @pytest.fixture(scope='session')
 def response():
     return {}
