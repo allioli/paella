@@ -57,7 +57,7 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      dentifier: identifier, // to expose unique id to appium (Android resource-id, iOS accessibility-id)
+      identifier: identifier, // to expose unique id to appium (Android resource-id, iOS accessibility-id)
       label: identifier, // to expose semantics label to Flutter finder find.bySemanticsLabel(RegExp(r'identifier'))
       explicitChildNodes: true, //to expose separated elements for the ItemTile and its child Text elements
       container: false,
