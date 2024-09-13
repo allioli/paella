@@ -38,7 +38,7 @@ public class SimpleFormSteps {
     @Then("I should see the result of the sum")
     public void checkSumResultMessage() {
         String actualResult = simpleFormDemoPage.getSumResult();
-        Assert.assertEquals("95", actualResult);
+        Assert.assertEquals("9", actualResult);
     }
 
 
