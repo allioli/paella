@@ -4,11 +4,11 @@ import io.cucumber.java.en.Given;
 import io.github.allioli.pages.CookiesDialog;
 import org.openqa.selenium.WebDriver;
 
-public class CookiesDialogSteps {
+public class CookiesDialogStepDefinitions {
 
     private CookiesDialog cookiesDialog;
 
-    public CookiesDialogSteps() {
+    public CookiesDialogStepDefinitions() {
         WebDriver driver = Hooks.driver;
         cookiesDialog = new CookiesDialog(driver);
     }

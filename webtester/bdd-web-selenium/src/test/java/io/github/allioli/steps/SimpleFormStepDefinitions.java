@@ -1,6 +1,5 @@
 package io.github.allioli.steps;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,11 +7,11 @@ import io.github.allioli.pages.SimpleFormDemoPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-public class SimpleFormSteps {
+public class SimpleFormStepDefinitions {
 
     private SimpleFormDemoPage simpleFormDemoPage;
 
-    public SimpleFormSteps() {
+    public SimpleFormStepDefinitions() {
         WebDriver driver = Hooks.driver;
         simpleFormDemoPage = new SimpleFormDemoPage(driver);
     }
