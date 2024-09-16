@@ -9,7 +9,9 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
         features = "classpath:features",
         glue     = {"io.github.allioli.steps"},
-        plugin   = {"pretty", "html:target/cucumber-html-report"},
+        plugin   = {"pretty",
+                    "html:target/cucumber-html-report/cucumber.html",
+                    "json:target/cucumber-reports/cucumber.json"},
         tags     = "@forms"
 )
 public class CucumberTestRunner {
