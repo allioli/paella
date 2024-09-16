@@ -31,15 +31,32 @@ public class SimpleFormStepDefinitions {
                 .enterSum2FieldValue(String.valueOf(number2));
     }
 
+    @When("I enter {string} to the message form")
+    public void enterMesssageText(String message) {
+        simpleFormDemoPage.await();
+        simpleFormDemoPage.enterMessageText(message);
+    }
+
     @When("I click on Sum button")
     public void clickSumButtonStep() {
         simpleFormDemoPage.clickTwoFieldFormSubmitButton();
+    }
+
+    @When("I click on Get checked value button")
+    public void clickGetCheckedValueButton() {
+        simpleFormDemoPage.clickSingleInputFieldFormSubmitButton();
     }
 
     @Then("I should see the result of the sum as {int}")
     public void checkSumResultMessage(int expectedResult) {
         String actualResult = simpleFormDemoPage.getSumResult();
         Assert.assertEquals(expectedResult, Integer.parseInt(actualResult));
+    }
+
+    @Then("I should see the entered message as {string}")
+    public void checkEnteredMessage(String expectedMessage) {
+        String actualMessage = simpleFormDemoPage.getEnteredMessage();
+        Assert.assertEquals(expectedMessage, actualMessage);
     }
 
 

@@ -30,6 +30,9 @@ public class SimpleFormDemoPage extends BasePage {
     @FindBy(how=How.ID, using="addmessage")
     private WebElement twoFieldFormSumResult;
 
+    @FindBy(how=How.ID, using="message")
+    private WebElement userEnteredMessage;
+
     private static final String URL = "https://www.lambdatest.com/selenium-playground/simple-form-demo";
 
     public SimpleFormDemoPage(WebDriver driver) {
@@ -67,8 +70,19 @@ public class SimpleFormDemoPage extends BasePage {
         return this;
     }
 
+    public SimpleFormDemoPage enterMessageText(String text) {
+        singleInputFormMessageInput.clear();
+        singleInputFormMessageInput.sendKeys(text);
+        return this;
+    }
+
     public SimpleFormDemoPage clickTwoFieldFormSubmitButton() {
         twoFieldFormSubmitButton.click();
+        return this;
+    }
+
+    public SimpleFormDemoPage clickSingleInputFieldFormSubmitButton() {
+        singleInputFieldFormSubmitButton.click();
         return this;
     }
 
@@ -76,5 +90,11 @@ public class SimpleFormDemoPage extends BasePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOf(twoFieldFormSumResult));
         return twoFieldFormSumResult.getText();
+    }
+
+    public String getEnteredMessage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.visibilityOf(userEnteredMessage));
+        return userEnteredMessage.getText();
     }
 }
