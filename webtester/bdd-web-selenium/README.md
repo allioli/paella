@@ -12,13 +12,13 @@ Results are visible on the console as well as HTML and JSON reports in the build
 ## Contents
 
 
-| **Folder / File**                                                              | **Contents**                                      |
-|--------------------------------------------------------------------------------|---------------------------------------------------|
-| [src/test/resources/features](src/test/resources/features)                     | feature files with Gherkin scenarios              |
-| [src/test/java/io/github/allioli/pages](src/test/java/io/github/allioli/pages) | Pages implementing Page Object Model              |
-| [src/test/java/io/github/allioli/steps](src/test/java/io/github/allioli/steps) | Scenario step definitions and supporting code     |
-| [CucumberTestRunner.java](src/test/java/io/github/CucumberTestRunner.java)     | Test Runner class with Cucumber runner parameters |
-| [pom.xml](pom.xml)                                                             | Maven project dependencies and description        |
+| **Folder / File**                                                                  | **Contents**                                      |
+|------------------------------------------------------------------------------------|---------------------------------------------------|
+| [src/test/resources/features](src/test/resources/features)                         | feature files with Gherkin scenarios              |
+| [src/test/java/io/github/allioli/pages](src/test/java/io/github/allioli/pages)     | Pages implementing Page Object Model              |
+| [src/test/java/io/github/allioli/steps](src/test/java/io/github/allioli/steps)     | Scenario step definitions and supporting code     |
+| [CucumberTestRunner.java](src/test/java/io/github/allioli/CucumberTestRunner.java) | Test Runner class with Cucumber runner parameters |
+| [pom.xml](pom.xml)                                                                 | Maven project dependencies and description        |
 
 
 ## Dependencies
