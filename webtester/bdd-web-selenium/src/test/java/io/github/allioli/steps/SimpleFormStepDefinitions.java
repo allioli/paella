@@ -7,6 +7,8 @@ import io.github.allioli.pages.SimpleFormDemoPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
+import static java.lang.Integer.*;
+
 public class SimpleFormStepDefinitions {
 
     private SimpleFormDemoPage simpleFormDemoPage;
@@ -16,28 +18,28 @@ public class SimpleFormStepDefinitions {
         simpleFormDemoPage = new SimpleFormDemoPage(driver);
     }
 
-    @Given("^I have opened form page in sandbox$")
+    @Given("I have opened form page in sandbox")
     public void openSandboxSimpleFormPageStep() {
         simpleFormDemoPage.openPage();
     }
 
-    @When("^I enter two numbers to the sum up form$")
-    public void enterTwoNumbersStep() {
+    @When("I enter {int} and {int} to the sum up form")
+    public void enterTwoNumbersStep(int number1, int number2) {
         simpleFormDemoPage.await();
         simpleFormDemoPage.waitForDefaultElements();
-        simpleFormDemoPage.enterSum1FieldValue("2")
-                .enterSum2FieldValue("7");
+        simpleFormDemoPage.enterSum1FieldValue(String.valueOf(number1))
+                .enterSum2FieldValue(String.valueOf(number2));
     }
 
-    @When("^I click on Sum button$")
+    @When("I click on Sum button")
     public void clickSumButtonStep() {
         simpleFormDemoPage.clickTwoFieldFormSubmitButton();
     }
 
-    @Then("^I should see the result of the sum$")
-    public void checkSumResultMessage() {
+    @Then("I should see the result of the sum as {int}")
+    public void checkSumResultMessage(int expectedResult) {
         String actualResult = simpleFormDemoPage.getSumResult();
-        Assert.assertEquals("9", actualResult);
+        Assert.assertEquals(expectedResult, Integer.parseInt(actualResult));
     }
 
 

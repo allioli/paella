@@ -13,7 +13,7 @@ public class CookiesDialogStepDefinitions {
         cookiesDialog = new CookiesDialog(driver);
     }
 
-    @Given("^I have dismissed Cookies dialog$")
+    @Given("I have dismissed Cookies dialog")
     public void dismissCookiesDialog() {
         cookiesDialog.await();
         cookiesDialog.clickAllowSelection();
