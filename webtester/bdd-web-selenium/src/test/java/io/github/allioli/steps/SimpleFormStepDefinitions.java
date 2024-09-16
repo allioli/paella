@@ -16,12 +16,12 @@ public class SimpleFormStepDefinitions {
         simpleFormDemoPage = new SimpleFormDemoPage(driver);
     }
 
-    @Given("I have opened form page in sandbox")
+    @Given("^I have opened form page in sandbox$")
     public void openSandboxSimpleFormPageStep() {
         simpleFormDemoPage.openPage();
     }
 
-    @When("I enter two numbers to the sum up form")
+    @When("^I enter two numbers to the sum up form$")
     public void enterTwoNumbersStep() {
         simpleFormDemoPage.await();
         simpleFormDemoPage.waitForDefaultElements();
@@ -29,12 +29,12 @@ public class SimpleFormStepDefinitions {
                 .enterSum2FieldValue("7");
     }
 
-    @When("I click on Sum button")
+    @When("^I click on Sum button$")
     public void clickSumButtonStep() {
         simpleFormDemoPage.clickTwoFieldFormSubmitButton();
     }
 
-    @Then("I should see the result of the sum")
+    @Then("^I should see the result of the sum$")
     public void checkSumResultMessage() {
         String actualResult = simpleFormDemoPage.getSumResult();
         Assert.assertEquals("9", actualResult);
