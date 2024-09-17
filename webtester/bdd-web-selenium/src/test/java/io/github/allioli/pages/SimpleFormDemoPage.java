@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class SimpleFormDemoPage extends BasePage {
+public class SimpleFormDemoPage extends AbstractPage {
 
     @FindBy(how=How.ID, using="user-message")
     private WebElement singleInputFormMessageInput;
@@ -42,20 +42,6 @@ public class SimpleFormDemoPage extends BasePage {
     public SimpleFormDemoPage openPage() {
         driver.get(URL);
         return this;
-    }
-
-    @Override
-    protected List<WebElement> identifyingElements() {
-        return List.of(singleInputFormMessageInput);
-    }
-
-
-    @Override
-    public void waitForDefaultElements() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOfAllElements(singleInputFormMessageInput, twoFieldFormSumInput1, twoFieldFormSumInput2));
-        wait.until(ExpectedConditions.elementToBeClickable(singleInputFieldFormSubmitButton));
-        wait.until(ExpectedConditions.elementToBeClickable(twoFieldFormSubmitButton));
     }
 
     public SimpleFormDemoPage enterSum1FieldValue(String value) {
@@ -96,5 +82,18 @@ public class SimpleFormDemoPage extends BasePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.visibilityOf(userEnteredMessage));
         return userEnteredMessage.getText();
+    }
+
+    @Override
+    protected List<WebElement> identifyingElements() {
+        return List.of(singleInputFormMessageInput);
+    }
+
+    @Override
+    public void waitForDefaultElements() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfAllElements(singleInputFormMessageInput, twoFieldFormSumInput1, twoFieldFormSumInput2));
+        wait.until(ExpectedConditions.elementToBeClickable(singleInputFieldFormSubmitButton));
+        wait.until(ExpectedConditions.elementToBeClickable(twoFieldFormSubmitButton));
     }
 }

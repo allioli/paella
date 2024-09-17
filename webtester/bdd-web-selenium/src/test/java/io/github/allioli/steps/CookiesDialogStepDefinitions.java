@@ -6,11 +6,10 @@ import org.openqa.selenium.WebDriver;
 
 public class CookiesDialogStepDefinitions {
 
-    private CookiesDialog cookiesDialog;
+    private final CookiesDialog cookiesDialog;
 
     public CookiesDialogStepDefinitions() {
-        WebDriver driver = Hooks.driver;
-        cookiesDialog = new CookiesDialog(driver);
+        cookiesDialog = new CookiesDialog(Hooks.driverManager.getWebDriver());
     }
 
     @Given("I have dismissed Cookies dialog")

@@ -10,11 +10,11 @@ import java.time.Duration;
 import java.util.List;
 
 
-public abstract class BasePage {
+public abstract class AbstractPage implements IBasePage {
 
     protected WebDriver driver;
 
-    protected BasePage(WebDriver driver) {
+    protected AbstractPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
@@ -26,8 +26,5 @@ public abstract class BasePage {
 
     // List of WebElements that uniquely identify this page
     abstract List<WebElement> identifyingElements();
-
-    // Wait for default elements of the page to be loaded
-    abstract void waitForDefaultElements();
 }
 

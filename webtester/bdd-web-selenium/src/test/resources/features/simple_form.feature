@@ -4,9 +4,11 @@ Feature: User interacts with a simple form
   Background:
     Given I have opened form page in sandbox
     And   I have dismissed Cookies dialog
+    And   I am in "Simple Form Demo" page
 
   Scenario: Enter text using a form
-    When  I enter "bla bla" to the message form
+    When  I verify "Simple Form Demo" page
+    And   I enter "bla bla" to the message form
     And   I click on Get checked value button
     Then  I should see the entered message as "bla bla"
 
