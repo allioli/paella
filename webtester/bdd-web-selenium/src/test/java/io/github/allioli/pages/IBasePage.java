@@ -2,7 +2,7 @@ package io.github.allioli.pages;
 
 public interface IBasePage {
 
-    // Wait for element(s) that identify this page to be loaded
+    // Wait for element(s) that uniquely identify this page to be loaded
     public void await();
 
     // Wait for default elements of this page to be loaded
