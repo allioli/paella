@@ -1,19 +1,16 @@
 package io.github.allioli;
 
+import org.junit.platform.suite.api.*;
 import org.junit.runner.RunWith;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
+import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        features = "classpath:features",
-        glue     = {"io.github.allioli.steps"},
-        plugin   = {"pretty",
-                    "html:target/cucumber-reports/cucumber-report.html",
-                    "json:target/cucumber-reports/cucumber-report.json",
-                    "timeline:target/cucumber-reports/timeline-report"},
-        tags     = "@forms"
-)
+@Suite
+@IncludeEngines("cucumber")
+@SelectPackages("io.github.allioli")
+@SelectClasspathResource("features")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "io.github.allioli.steps")
 public class CucumberTestRunner {
 }
