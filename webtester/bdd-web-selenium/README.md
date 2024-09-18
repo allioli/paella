@@ -12,13 +12,13 @@ Results are visible on the console as well as HTML and JSON reports in the targe
 ## Contents
 
 
-| **Folder / File**                                                                  | **Contents**                                                   |
-|------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| [src/test/resources/io/github/allioli/features](features)                          | feature files with Gherkin scenarios                           |
-| [src/test/java/io/github/allioli/pages](src/test/java/io/github/allioli/pages)     | Pages implementing Page Object Model                           |
-| [src/test/java/io/github/allioli/steps](src/test/java/io/github/allioli/steps)     | Scenario step definitions and supporting code                  |
-| [CucumberTestRunner.java](src/test/java/io/github/allioli/CucumberTestRunner.java) | Test Runner class with JUnit Platform Suite Engine annotations |
-| [pom.xml](pom.xml)                                                                 | Maven project dependencies / Cucumber parameters               |
+| **Folder / File**                                                                                                          | **Contents**                                                   |
+|----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| [src/test/resources/io/github/allioli/features](src/test/resources/io/github/allioli/features)                             | feature files with Gherkin scenarios                           |
+| [src/test/java/io/github/allioli/pages](src/test/java/io/github/allioli/pages)                                             | Pages implementing Page Object Model                           |
+| [src/test/java/io/github/allioli/steps](src/test/java/io/github/allioli/steps)                                             | Scenario step definitions and supporting code                  |
+| [CucumberTestRunner.java](src/test/java/io/github/allioli/CucumberTestRunner.java)                                         | Test Runner class with JUnit Platform Suite Engine annotations |
+| [pom.xml](pom.xml)                                                                                                         | Maven project dependencies / Cucumber parameters               |
 
 
 ## Dependencies
@@ -47,9 +47,11 @@ Results are visible on the console as well as HTML and JSON reports in the targe
 ### Page Object model
 We want to separate Web Page element locators, interaction, info retrieval and navigation from the test validation logic. This separation of concerns will reduce test maintenance efforts and avoid code duplication.
 
-Each Page Object in this project implements interface *IBasePage*, which is the basic behaviour expected in order to
+Each Page Object in this project implements interface `IBasePage.java`, which is the basic behaviour expected in order to
 1. Check that the user is seeing the expected Page (mandatory)
 2. Wait for all elements in Page default state are loaded (optional)
+
+This is the behaviour needed by Generic Step Definitions, which leverage a simple `MyPageFactory.java` to obtain objects that implement IBasePage interface.
 
 Other methods specific to each Page Object are also available to support interaction, info retrieval and navigation requirements from the logic in Step Definitions.
 
@@ -108,6 +110,50 @@ public class SimpleFormDemoPage extends AbstractPage {
     }
 }
 ```
+### Step Definitions
+The Glue code is organised in different step definition files in package `io.github.allioli.steps`. There are two types of step definitions:
+* Domain specific steps (Belong to a particular bit of functionality)
+* Generic steps (Reusable steps for explicit page validation)
+
+### Parallel execution
+Tests run in parallel by means of *Cucumber JUnit Platform Engine*, following the configuration defined in the `pom.xml` file. This option takes precedence over the values in a separate `junit-platform.properties` file, according to the [documentation](https://junit.org/junit5/docs/current/user-guide/#running-tests-config-params). In the spirit of keeping it simple, no separate properties file is specified.
+In this `pom.xml` example, the concurrency is fixed to 4 threads in parallel.
+
+```xml
+<build>
+        <plugins>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <properties>
+                        <configurationParameters>
+                            cucumber.junit-platform.naming-strategy=long
+                            cucumber.execution.parallel.enabled=true
+                            cucumber.execution.parallel.config.strategy=fixed
+                            cucumber.execution.parallel.config.fixed.parallelism=4
+                            cucumber.execution.parallel.config.fixed.max-pool-size=4
+                            cucumber.plugin=pretty, html:target/cucumber-reports/cucumber-report.html, json:target/cucumber-reports/cucumber-report.json, timeline:target/cucumber-reports/timeline-report
+                        </configurationParameters>
+                    </properties>
+                    <includes>
+                        <include>**/CucumberTestRunner.java</include>
+                    </includes>
+                </configuration>
+             </plugin>
+        </plugins>
+    </build>
+```
+
+
+To prevent several threads accessing the same instance of the WebDriver, `MyDriverManager.java` provides access to ThreadLocal instances from the `Hooks.java` class.
+
+### Reports
+At the end of each test run, the following reports are expected:
+* Cucumber HTML with failure screenshots
+* Cucumber JSON
+* Thread execution timeline
 
 ## Sources
 * [Cucumber parallel execution](https://cucumber.io/docs/guides/parallel-execution/?sbsearch=parallel&lang=java)
