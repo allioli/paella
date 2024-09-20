@@ -63,7 +63,7 @@ How do we keep the code in steps and API objects maintainable while supporting b
 * **Functional steps** are assertive "When" steps that support happy path scenarios. We expect a positive result, so the same API object method that performs the API call (user action) is also checking a success response status code. This is an example of "close ended" step. A bit of the validation is added to the action itself for convenience and DRY, at the price of less flexibility and step re-usability.
 
 Example from [test_movie_rating.py](tests/step_definitions/test_movie_rating.py)
-```
+```python
 @when(parsers.parse('I rate The GodFather with value \"{rating:.1f}\"'))
 def step_when_rate_the_godfather(get_movies_v3_api, guest_session_id, rating):
     """I rate The GodFather."""
@@ -71,7 +71,7 @@ def step_when_rate_the_godfather(get_movies_v3_api, guest_session_id, rating):
 ```
 
 * **Intent steps** are tentative "When" steps that support error flows. We expect different error status codes, a list that could grow over time. In this case, we use an "open ended" step, that only performs an API call (user action) and delegates any validation to downstream "Then" steps by returning the response object. We decouple the API object methods from the list of relevant error codes, at the price of having to return the response object, instead of an optimistic response.json() that saves us some code on the step side.
-```
+```python
 @when(parsers.parse('I try to rate a film with value \"{rating}\"'), target_fixture="response")
 def step_when_rate_film_intent(get_movies_v3_api, guest_session_id, rating):
     """I rate a film intent."""
