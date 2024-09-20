@@ -45,7 +45,7 @@ The base class [base_api.py](api_classes/base_api.py) takes care of common behav
 
 Example from [mars_rover_manifests_v1_api.py](api_classes/mars_rover_manifests_v1_api.py)
 
-```
+```python
 class MarsRoverManifestsV1Api(BaseApi):
 
     earth_date_format = "%Y-%m-%d"
@@ -75,7 +75,7 @@ Print friendly descriptions that identify a specfic data resource under test are
 
 Example from [rover_camera_helper.py](helpers/rover_camera_helper.py)
 
-```
+```python
 def check_photo_camera(element_id, camera_name, rover_name):
 
     allowed_camera_types_for_rover = expected_rover_camera_types[MarsRover(
@@ -91,7 +91,7 @@ def check_photo_camera(element_id, camera_name, rover_name):
 ## Custom Pyhamcrest matcher
 This is an example of a matcher that checks a URL string for allowed starting and ending substrings. It comes handy for early detection of typos in URLs / unexpected file extensions. From [custom_string_matchers.py](helpers/custom_string_matchers.py)
 
-```
+```python
 class IsValidURL(BaseMatcher):
 
     def __init__(self, url_start_list, url_ending_list):
