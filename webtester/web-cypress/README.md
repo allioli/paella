@@ -35,3 +35,4 @@ Results are visible on the local Cypress runner.
 * [Cypress Getting Started](https://docs.cypress.io/guides/getting-started/installing-cypress)
 * [Cypress built-in Actionability](https://docs.cypress.io/guides/core-concepts/interacting-with-elements)
 * [Cypress best practices](https://docs.cypress.io/guides/references/best-practices)
+* [Writing Assertions](https://testgrid.io/blog/cypress-assertions/)
