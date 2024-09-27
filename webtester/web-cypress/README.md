@@ -31,6 +31,38 @@ Results are visible on the local Cypress runner.
 ### With console headless runner
 `npx cypress run`
 
+## Highlights
+
+### Parameterized test case
+There is an example of data-driven test cases in [simple_form.cy.js](cypress/e2e/simple_form.cy.js). A [fixture file](cypress/fixtures/sums.json) defines different combination of inputs and expected results.
+
+#### Example [simple_form.cy.js](cypress/e2e/simple_form.cy.js)
+```javascript
+describe('User interacts with Simple Form', () => {
+  const sum_fixtures = require('../fixtures/sums')
+
+  ...
+
+  sum_fixtures.forEach((sum_fixture) => {
+    it(`Form adding ${sum_fixture.number1} and ${sum_fixture.number2}`, () => {
+      // WHEN I enter <number1> and <number2> to the sum up form
+      cy.get('#sum1').type(sum_fixture.number1)
+      cy.get('#sum2').type(sum_fixture.number2)
+
+      // AND I click on Sum button
+      cy.get('#gettotal > button').click()
+
+      // THEN I should see the result of the sum as <result>
+      cy.get('#addmessage')
+      .should('have.text', sum_fixture.result)
+
+    })
+  })
+})
+```
+
+
+
 ## Sources
 * [Cypress Getting Started](https://docs.cypress.io/guides/getting-started/installing-cypress)
 * [Cypress built-in Actionability](https://docs.cypress.io/guides/core-concepts/interacting-with-elements)
