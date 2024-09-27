@@ -1,0 +1,17 @@
+[
+{
+    "number1": 4,
+    "number2": 5,
+    "result":  9
+},
+{
+    "number1": 0,
+    "number2": 2,
+    "result":  2
+},
+{
+    "number1":  54,
+    "number2": -54,
+    "result":    0
+}
+]
