@@ -4,7 +4,7 @@ This is a Cypress project in Javascript.
 
 It will run test cases against https://www.lambdatest.com/selenium-playground on a local Chrome browser.
 
-Follow the steps [here](https://testgrid.io/blog/cypress-testing/) to set up the project locally.
+Follow the steps [here](https://docs.cypress.io/guides/getting-started/installing-cypress) to set up the project locally.
 
 Results are visible on the local Cypress runner.
 
@@ -32,6 +32,6 @@ Results are visible on the local Cypress runner.
 `npx cypress run`
 
 ## Sources
-* [Cypress Testing](https://testgrid.io/blog/cypress-testing/)
+* [Cypress Getting Started](https://docs.cypress.io/guides/getting-started/installing-cypress)
 * [Cypress built-in Actionability](https://docs.cypress.io/guides/core-concepts/interacting-with-elements)
 * [Cypress best practices](https://docs.cypress.io/guides/references/best-practices)
