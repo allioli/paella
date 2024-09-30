@@ -1,6 +1,6 @@
 # Overview
 
-This is a Cucumber BDD project that automates the validation of Scenarios that describe expected behaviour Gherkin language.
+This is a Cucumber BDD project that automates the validation of Scenarios that describe expected behaviour in Gherkin language.
 
 The basic building blocks are Cucumber JVM, Selenium and Junit, with Maven as building and dependency tool.
 

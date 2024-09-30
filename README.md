@@ -8,8 +8,8 @@ This repository contains a number of Test automation example projects
 |---       | ---         |
 | API testing |  [python pytest example](apitester/pytest-nasa)        |
 | API testing |  [python pytest BDD example](apitester/pytest-bdd-moviedb)      |
-| WEB APP testing | [java cucumber selenium example](webtester/java)      |
-| WEB APP testing | [nodejs cucumber selenium example](webtester/nodejs)      |
+| WEB APP testing | [BDD cucumber selenium java example](webtester/bdd-web-selenium)      |
+| WEB APP testing | [Cypress example](webtester/cypress)      |
 | WEB APP testing | [java selenium testng example](webtester/login-tester-testng-selenium)      |
 | MOBILE testing | [java appium junit example](mobiletester/appium-java-tester)      |
 | MOBILE testing | [Flutter Playground](flutter-playground) |
