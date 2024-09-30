@@ -16,6 +16,7 @@ Results are visible on the local Cypress runner.
 |----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
 | [cypress/e2e](cypress/e2e)                             | Spec files with tests                           |
 | [cypress/fixtures](cypress/fixtures)                             | Fixtures for parameterised tests                           |
+| [cypress/pages](cypress/pages)                             | Page Objects files                          |
 | [cypress.config.js](cypress.config.js)                 | Cypress config file               |
 
 
