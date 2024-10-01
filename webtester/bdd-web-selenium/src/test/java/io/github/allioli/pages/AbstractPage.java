@@ -16,6 +16,9 @@ public abstract class AbstractPage implements IBasePage {
 
     protected AbstractPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        // We could use AjaxElementLocatorFactory to lazy load *all* elements, polling for presence with a timeout.
+        // However, in this example the explicit await() method is in charge of polling the *key* elements for visibility instead.
+        // PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
         this.driver = driver;
     }
 
