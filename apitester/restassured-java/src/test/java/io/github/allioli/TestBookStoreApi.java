@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -22,7 +23,7 @@ public class TestBookStoreApi {
     private final String password = "Secret1!";
     private String authToken = null;
 
-    @BeforeSuite
+    @BeforeClass
     public void setUp() {
         RestAssured.baseURI = "https://bookstore.toolsqa.com";
     }

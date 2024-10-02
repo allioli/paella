@@ -3,7 +3,8 @@
 <suite name="restAssured-maven">
     <test thread-count="1" name="Demo">
         <classes>
-            <class name="io.github.allioli.TestAlbumsApi"/> <!-- test case class-->
+            <class name="io.github.allioli.TestAlbumsApi"/>
+            <class name="io.github.allioli.TestBookStoreApi"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
