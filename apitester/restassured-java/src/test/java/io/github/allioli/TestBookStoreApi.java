@@ -6,6 +6,7 @@ import io.github.allioli.bookstore.model.requests.ISBN;
 import io.github.allioli.bookstore.model.responses.Book;
 import io.github.allioli.bookstore.model.responses.GenerateTokenResponse;
 import io.github.allioli.bookstore.model.responses.GetUserAccountResponse;
+import io.github.allioli.bookstore.specs.BookstoreSpecs;
 import io.restassured.RestAssured;
 
 import org.testng.Assert;
@@ -37,7 +38,7 @@ public class TestBookStoreApi {
     public void getAllBooks() {
 
         given()
-                .header("Content-Type", "application/json")
+                .spec(BookstoreSpecs.getBaseRequestSpec())
         .when()
                 .get("/BookStore/v1/Books")
         .then().log().ifValidationFails()
@@ -53,7 +54,7 @@ public class TestBookStoreApi {
     public void checkGetBooksContract() {
 
         given()
-                .header("Content-Type", "application/json")
+                .spec(BookstoreSpecs.getBaseRequestSpec())
         .when()
                 .get("/BookStore/v1/Books")
         .then().log().ifValidationFails()
@@ -70,8 +71,8 @@ public class TestBookStoreApi {
         AddBooksPayload payload = new AddBooksPayload(userID, new ISBN(bookIsbn));
 
         given()
-                .header("Authorization", "Bearer " + authTokenInfo.token)
-                .header("Content-Type", "application/json")
+                .spec(BookstoreSpecs.getBaseRequestSpec())
+                .spec(BookstoreSpecs.getAuthRequestSpec(authTokenInfo.token))
         .when()
                 .body(payload)
                 .post("/BookStore/v1/Books")
@@ -95,8 +96,8 @@ public class TestBookStoreApi {
     public void removeAllBooksFromReadingList() {
 
         given()
-                .header("Authorization", "Bearer " + authTokenInfo.token)
-                .header("Content-Type", "application/json")
+                .spec(BookstoreSpecs.getBaseRequestSpec())
+                .spec(BookstoreSpecs.getAuthRequestSpec(authTokenInfo.token))
         .when()
                 .queryParam("UserId", userID)
                 .delete("/BookStore/v1/Books")
@@ -113,7 +114,7 @@ public class TestBookStoreApi {
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
         return
                 given()
-                        .header("Content-Type", "application/json")
+                        .spec(BookstoreSpecs.getBaseRequestSpec())
                 .when()
                         .body(payload)
                         .post("/Account/v1/GenerateToken")
@@ -129,8 +130,8 @@ public class TestBookStoreApi {
     private GetUserAccountResponse getUserAccount() {
         return
                 given()
-                        .header("Authorization", "Bearer " + authTokenInfo.token)
-                        .header("Content-Type", "application/json")
+                        .spec(BookstoreSpecs.getBaseRequestSpec())
+                        .spec(BookstoreSpecs.getAuthRequestSpec(authTokenInfo.token))
                 .when()
                         .pathParam("UUID", userID)
                         .get("/Account/v1/User/{UUID}")
