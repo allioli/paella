@@ -5,14 +5,13 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 
 
@@ -46,6 +45,20 @@ public class TestBookStoreApi {
                 .body("books[0]", hasKey("isbn"))
                 .body("books[0].pages", greaterThan(0))
                 .time(lessThan(2000L));
+    }
+
+    @Test(description = "Validate Get Books response")
+    public void checkGetBooksContract() {
+
+        given()
+                .header("Content-Type", "application/json")
+                .when()
+                .get("/BookStore/v1/Books")
+                .then().log().ifValidationFails()
+                .statusCode(200)
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("schemas/books_v1_schema.json"));
+
     }
 
     @Test(description = "Borrow a book")
