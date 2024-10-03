@@ -1,5 +1,8 @@
 package io.github.allioli;
 
+import io.github.allioli.bookstore.model.requests.AddBooksPayload;
+import io.github.allioli.bookstore.model.requests.GenerateTokenPayload;
+import io.github.allioli.bookstore.model.requests.ISBN;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -61,17 +64,17 @@ public class TestBookStoreApi {
 
     }
 
-    @Test(description = "Borrow a book")
-    public void borrowBook() {
+    @Test(description = "Add book to reading list")
+    public void addBookToReadingList() {
 
         String bookIsbn = "9781593277574";
+        AddBooksPayload payload = new AddBooksPayload(userID, new ISBN(bookIsbn));
 
         given()
                 .header("Authorization", "Bearer " + authToken)
                 .header("Content-Type", "application/json")
         .when()
-                .body("{ \"userId\": \"" + userID + "\", " +
-                        "\"collectionOfIsbns\": [ { \"isbn\": \"" + bookIsbn + "\" } ]}")
+                .body(payload)
                 .post("/BookStore/v1/Books")
         .then().log().ifValidationFails()
                 .statusCode(201);
@@ -90,8 +93,8 @@ public class TestBookStoreApi {
         Assert.assertTrue(borrowedBookFound);
     }
 
-    @Test(description = "Return all books")
-    public void returnAllBooks() {
+    @Test(description = "Remove all books from reading list")
+    public void removeAllBooksFromReadingList() {
 
         given()
                 .header("Authorization", "Bearer " + authToken)
@@ -110,11 +113,12 @@ public class TestBookStoreApi {
 
 
     private String generateAuthToken() {
+        GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
         String token =
                 given()
                         .header("Content-Type", "application/json")
                 .when()
-                        .body("{ \"userName\":\"" + userName + "\", \"password\":\"" + password + "\"}")
+                        .body(payload)
                         .post("/Account/v1/GenerateToken")
                 .then().log().body()
                         .statusCode(200)
