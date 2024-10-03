@@ -26,12 +26,9 @@ public class TestBookStoreApi {
     @BeforeClass
     public void setUp() {
         RestAssured.baseURI = "https://bookstore.toolsqa.com";
-    }
 
-    @BeforeTest
-    public void setUpAuthToken() {
-         if (authToken == null) {
-             authToken = generateAuthToken();
+        if (authToken == null) {
+            authToken = generateAuthToken();
         }
     }
 
