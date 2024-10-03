@@ -54,9 +54,9 @@ public class TestBookStoreApi {
 
         given()
                 .header("Content-Type", "application/json")
-                .when()
+        .when()
                 .get("/BookStore/v1/Books")
-                .then().log().ifValidationFails()
+        .then().log().ifValidationFails()
                 .statusCode(200)
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("schemas/books_v1_schema.json"));
@@ -121,7 +121,7 @@ public class TestBookStoreApi {
                         .statusCode(200)
                         .assertThat()
                         .body("token", notNullValue())
-                        .extract()
+                .extract()
                         .response()
                         .as(GenerateTokenResponse.class);
     }
