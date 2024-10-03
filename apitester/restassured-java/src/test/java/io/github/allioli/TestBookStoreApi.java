@@ -1,12 +1,13 @@
 package io.github.allioli;
 
-import io.github.allioli.bookstore.Endpoints;
+import io.github.allioli.bookstore.services.AccountAuthService;
+import io.github.allioli.bookstore.services.AccountService;
 import io.github.allioli.bookstore.model.requests.AddBooksPayload;
 import io.github.allioli.bookstore.model.requests.GenerateTokenPayload;
 import io.github.allioli.bookstore.model.requests.ISBN;
 import io.github.allioli.bookstore.model.responses.Book;
-import io.github.allioli.bookstore.model.responses.GenerateTokenResponse;
-import io.github.allioli.bookstore.model.responses.GetUserAccountResponse;
+import io.github.allioli.bookstore.model.responses.GenerateTokenResponseBody;
+import io.github.allioli.bookstore.model.responses.GetUserAccountResponseBody;
 import io.github.allioli.bookstore.specs.BookstoreSpecs;
 import io.restassured.RestAssured;
 
@@ -25,14 +26,14 @@ public class TestBookStoreApi {
     private final String userID = "5fa127c4-1f2b-4ccd-b8f2-e0620f562da8";
     private final String userName = "xavi-test2";
     private final String password = "Secret1!";
-    private GenerateTokenResponse authTokenInfo = null;
+    private String authToken = null;
 
     @BeforeClass
     public void setUp() {
         RestAssured.baseURI = "https://bookstore.toolsqa.com";
 
-        if (authTokenInfo == null) {
-            authTokenInfo = generateAuthToken();
+        if (authToken == null) {
+            authenticateUserAndSaveAuthToken();
         }
     }
 
@@ -74,18 +75,18 @@ public class TestBookStoreApi {
 
         given()
                 .spec(BookstoreSpecs.getBaseRequestSpec())
-                .spec(BookstoreSpecs.getAuthRequestSpec(authTokenInfo.token))
+                .spec(BookstoreSpecs.getAuthRequestSpec(authToken))
         .when()
                 .body(payload)
                 .post("/BookStore/v1/Books")
         .then().log().ifValidationFails()
                 .statusCode(201);
 
-        GetUserAccountResponse getUserAccountResponse = getUserAccount();
-        Assert.assertFalse(getUserAccountResponse.books.isEmpty());
+        GetUserAccountResponseBody getUserAccountResponseBody = getUserAccount();
+        Assert.assertFalse(getUserAccountResponseBody.books.isEmpty());
 
         boolean userBookFound = false;
-        for (Book bookOfUser : getUserAccountResponse.books) {
+        for (Book bookOfUser : getUserAccountResponseBody.books) {
             if (bookOfUser.isbn.equals(bookIsbn)) {
                 userBookFound = true;
                 break;
@@ -99,36 +100,29 @@ public class TestBookStoreApi {
 
         given()
                 .spec(BookstoreSpecs.getBaseRequestSpec())
-                .spec(BookstoreSpecs.getAuthRequestSpec(authTokenInfo.token))
+                .spec(BookstoreSpecs.getAuthRequestSpec(authToken))
         .when()
                 .queryParam("UserId", userID)
                 .delete("/BookStore/v1/Books")
         .then().log().ifValidationFails()
                 .statusCode(204);
 
-        GetUserAccountResponse getUserAccountResponse = getUserAccount();
-        Assert.assertTrue(getUserAccountResponse.books.isEmpty());
+        GetUserAccountResponseBody getUserAccountResponseBody = this.getUserAccount();
+
+        Assert.assertTrue(getUserAccountResponseBody.books.isEmpty());
+        Assert.assertEquals(getUserAccountResponseBody.username, userName);
     }
 
-    private GenerateTokenResponse generateAuthToken() {
+    private void authenticateUserAndSaveAuthToken() {
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
-        return Endpoints.generateUserToken(payload);
+        Response response = AccountAuthService.generateUserToken(payload);
+        GenerateTokenResponseBody tokenInfo = response.getBody().as(GenerateTokenResponseBody.class);
+        authToken = tokenInfo.token;
     }
 
-    private GetUserAccountResponse getUserAccount() {
-        return
-                given()
-                        .spec(BookstoreSpecs.getBaseRequestSpec())
-                        .spec(BookstoreSpecs.getAuthRequestSpec(authTokenInfo.token))
-                .when()
-                        .pathParam("UUID", userID)
-                        .get("/Account/v1/User/{UUID}")
-                .then().log().body()
-                        .statusCode(200)
-                        .assertThat()
-                        .body("username", is(userName))
-                .extract()
-                        .response()
-                        .as(GetUserAccountResponse.class);
+    private GetUserAccountResponseBody getUserAccount() {
+        AccountService accountService = new AccountService(authToken);
+        Response response = accountService.getUserAccount(userID);
+        return response.as(GetUserAccountResponseBody.class);
     }
 }

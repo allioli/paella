@@ -1,8 +1,6 @@
 package io.github.allioli.bookstore.specs;
 
-import io.restassured.authentication.OAuth2Scheme;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
