@@ -3,15 +3,14 @@ package io.github.allioli;
 import io.github.allioli.bookstore.model.requests.AddBooksPayload;
 import io.github.allioli.bookstore.model.requests.GenerateTokenPayload;
 import io.github.allioli.bookstore.model.requests.ISBN;
+import io.github.allioli.bookstore.model.responses.Book;
+import io.github.allioli.bookstore.model.responses.GenerateTokenResponse;
+import io.github.allioli.bookstore.model.responses.GetUserAccountResponse;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -23,14 +22,14 @@ public class TestBookStoreApi {
     private final String userID = "5fa127c4-1f2b-4ccd-b8f2-e0620f562da8";
     private final String userName = "xavi-test2";
     private final String password = "Secret1!";
-    private String authToken = null;
+    private GenerateTokenResponse authTokenInfo = null;
 
     @BeforeClass
     public void setUp() {
         RestAssured.baseURI = "https://bookstore.toolsqa.com";
 
-        if (authToken == null) {
-            authToken = generateAuthToken();
+        if (authTokenInfo == null) {
+            authTokenInfo = generateAuthToken();
         }
     }
 
@@ -71,7 +70,7 @@ public class TestBookStoreApi {
         AddBooksPayload payload = new AddBooksPayload(userID, new ISBN(bookIsbn));
 
         given()
-                .header("Authorization", "Bearer " + authToken)
+                .header("Authorization", "Bearer " + authTokenInfo.token)
                 .header("Content-Type", "application/json")
         .when()
                 .body(payload)
@@ -79,25 +78,24 @@ public class TestBookStoreApi {
         .then().log().ifValidationFails()
                 .statusCode(201);
 
-        Response getUserResponse = getUser();
-        List<Map<String, String>> booksOfUser = JsonPath.from(getUserResponse.asString()).get("books");
-        Assert.assertFalse(booksOfUser.isEmpty());
+        GetUserAccountResponse getUserAccountResponse = getUserAccount();
+        Assert.assertFalse(getUserAccountResponse.books.isEmpty());
 
-        boolean borrowedBookFound = false;
-        for (Map<String, String> bookOfUser : booksOfUser) {
-            if (bookOfUser.get("isbn").equals(bookIsbn)) {
-                borrowedBookFound = true;
+        boolean userBookFound = false;
+        for (Book bookOfUser : getUserAccountResponse.books) {
+            if (bookOfUser.isbn.equals(bookIsbn)) {
+                userBookFound = true;
                 break;
             }
         }
-        Assert.assertTrue(borrowedBookFound);
+        Assert.assertTrue(userBookFound);
     }
 
     @Test(description = "Remove all books from reading list")
     public void removeAllBooksFromReadingList() {
 
         given()
-                .header("Authorization", "Bearer " + authToken)
+                .header("Authorization", "Bearer " + authTokenInfo.token)
                 .header("Content-Type", "application/json")
         .when()
                 .queryParam("UserId", userID)
@@ -105,16 +103,15 @@ public class TestBookStoreApi {
         .then().log().ifValidationFails()
                 .statusCode(204);
 
-        Response getUserResponse = getUser();
-        List<Map<String, String>> booksOfUser = JsonPath.from(getUserResponse.asString()).get("books");
-        Assert.assertTrue(booksOfUser.isEmpty());
+        GetUserAccountResponse getUserAccountResponse = getUserAccount();
+        Assert.assertTrue(getUserAccountResponse.books.isEmpty());
     }
 
 
 
-    private String generateAuthToken() {
+    private GenerateTokenResponse generateAuthToken() {
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
-        String token =
+        return
                 given()
                         .header("Content-Type", "application/json")
                 .when()
@@ -126,15 +123,13 @@ public class TestBookStoreApi {
                         .body("token", notNullValue())
                         .extract()
                         .response()
-                        .path("token");
-
-        return token;
+                        .as(GenerateTokenResponse.class);
     }
 
-    private Response getUser() {
-        Response response =
+    private GetUserAccountResponse getUserAccount() {
+        return
                 given()
-                        .header("Authorization", "Bearer " + authToken)
+                        .header("Authorization", "Bearer " + authTokenInfo.token)
                         .header("Content-Type", "application/json")
                 .when()
                         .pathParam("UUID", userID)
@@ -144,8 +139,7 @@ public class TestBookStoreApi {
                         .assertThat()
                         .body("username", is(userName))
                 .extract()
-                        .response();
-        
-        return response;
+                        .response()
+                        .as(GetUserAccountResponse.class);
     }
 }

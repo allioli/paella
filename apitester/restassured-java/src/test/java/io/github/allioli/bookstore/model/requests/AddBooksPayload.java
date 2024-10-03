@@ -10,7 +10,7 @@ public class AddBooksPayload {
 
     public AddBooksPayload(String userId, ISBN isbn) {
         this.userId = userId;
-        collectionOfIsbns = new ArrayList<ISBN>();
+        collectionOfIsbns = new ArrayList<>();
         collectionOfIsbns.add(isbn);
     }
 }
