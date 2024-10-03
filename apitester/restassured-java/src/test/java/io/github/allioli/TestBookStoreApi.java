@@ -1,5 +1,6 @@
 package io.github.allioli;
 
+import io.github.allioli.bookstore.Endpoints;
 import io.github.allioli.bookstore.model.requests.AddBooksPayload;
 import io.github.allioli.bookstore.model.requests.GenerateTokenPayload;
 import io.github.allioli.bookstore.model.requests.ISBN;
@@ -9,6 +10,7 @@ import io.github.allioli.bookstore.model.responses.GetUserAccountResponse;
 import io.github.allioli.bookstore.specs.BookstoreSpecs;
 import io.restassured.RestAssured;
 
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -108,23 +110,9 @@ public class TestBookStoreApi {
         Assert.assertTrue(getUserAccountResponse.books.isEmpty());
     }
 
-
-
     private GenerateTokenResponse generateAuthToken() {
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
-        return
-                given()
-                        .spec(BookstoreSpecs.getBaseRequestSpec())
-                .when()
-                        .body(payload)
-                        .post("/Account/v1/GenerateToken")
-                .then().log().body()
-                        .statusCode(200)
-                        .assertThat()
-                        .body("token", notNullValue())
-                .extract()
-                        .response()
-                        .as(GenerateTokenResponse.class);
+        return Endpoints.generateUserToken(payload);
     }
 
     private GetUserAccountResponse getUserAccount() {
