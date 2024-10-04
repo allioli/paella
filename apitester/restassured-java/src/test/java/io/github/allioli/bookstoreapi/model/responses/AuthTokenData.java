@@ -1,6 +1,6 @@
 package io.github.allioli.bookstoreapi.model.responses;
 
-public class GenerateTokenResponseBody {
+public class AuthTokenData {
 
     public String token;
     public String expires;

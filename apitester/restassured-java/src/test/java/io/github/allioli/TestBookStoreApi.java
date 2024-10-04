@@ -1,13 +1,14 @@
 package io.github.allioli;
 
+import io.github.allioli.bookstoreapi.IGenericResponse;
 import io.github.allioli.bookstoreapi.services.AccountAuthV1Service;
 import io.github.allioli.bookstoreapi.services.AccountV1Service;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
 import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
 import io.github.allioli.bookstoreapi.model.requests.ISBN;
 import io.github.allioli.bookstoreapi.model.responses.Book;
-import io.github.allioli.bookstoreapi.model.responses.GenerateTokenResponseBody;
-import io.github.allioli.bookstoreapi.model.responses.GetUserAccountResponseBody;
+import io.github.allioli.bookstoreapi.model.responses.AuthTokenData;
+import io.github.allioli.bookstoreapi.model.responses.UserAccountData;
 import io.github.allioli.bookstoreapi.services.BookStoreV1Service;
 import io.restassured.RestAssured;
 
@@ -16,11 +17,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 
 public class TestBookStoreApi {
 
@@ -42,11 +40,11 @@ public class TestBookStoreApi {
     public void listAllBooks() {
 
         BookStoreV1Service bookStoreService = new BookStoreV1Service();
-        Response response = bookStoreService.getAllBooks();
+        Response response = bookStoreService.getAllBooks().getRestAssuredResponse();
         response
             .then()
                 .assertThat()
-                .body("size()", greaterThan(0))
+                .body("books.size()", equalTo(8))
                 .body("books[0]", hasKey("isbn"))
                 .body("books[0].pages", greaterThan(0));
     }
@@ -55,7 +53,7 @@ public class TestBookStoreApi {
     public void checkGetBooksContract() {
 
         BookStoreV1Service bookStoreService = new BookStoreV1Service();
-        Response response = bookStoreService.getAllBooks();
+        Response response = bookStoreService.getAllBooks().getRestAssuredResponse();
         response
             .then()
                 .assertThat()
@@ -74,11 +72,11 @@ public class TestBookStoreApi {
         bookStoreService.addBookToUserAccount(payload);
 
         // Assert that expected book was added to user account
-        GetUserAccountResponseBody getUserAccountResponseBody = getUserAccount();
-        Assert.assertFalse(getUserAccountResponseBody.books.isEmpty());
+        UserAccountData userAccountData = this.getUserAccount().getBodyData();
+        Assert.assertFalse(userAccountData.books.isEmpty());
 
         boolean userBookFound = false;
-        for (Book bookOfUser : getUserAccountResponseBody.books) {
+        for (Book bookOfUser : userAccountData.books) {
             if (bookOfUser.isbn.equals(bookIsbn)) {
                 userBookFound = true;
                 break;
@@ -95,8 +93,8 @@ public class TestBookStoreApi {
         bookStoreService.removeAllBooksFromUserAccount(userID);
 
         // Assert that user account has no books
-        GetUserAccountResponseBody getUserAccountResponseBody = this.getUserAccount();
-        Assert.assertTrue(getUserAccountResponseBody.books.isEmpty());
+        UserAccountData userAccountData = this.getUserAccount().getBodyData();
+        Assert.assertTrue(userAccountData.books.isEmpty());
 
     }
 
@@ -104,14 +102,13 @@ public class TestBookStoreApi {
         AccountAuthV1Service accountAuthService = new AccountAuthV1Service();
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
 
-        Response response = accountAuthService.generateUserToken(payload);
-        GenerateTokenResponseBody tokenInfo = response.as(GenerateTokenResponseBody.class);
-        authToken = tokenInfo.token;
+        IGenericResponse<AuthTokenData> response = accountAuthService.generateUserToken(payload);
+        authToken = response.getBodyData().token;
     }
 
-    private GetUserAccountResponseBody getUserAccount() {
+    private IGenericResponse<UserAccountData> getUserAccount() {
         AccountV1Service accountService = new AccountV1Service(authToken);
-        Response response = accountService.getUserAccount(userID);
-        return response.as(GetUserAccountResponseBody.class);
+        return accountService.getUserAccount(userID);
+
     }
 }

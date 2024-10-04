@@ -1,6 +1,9 @@
 package io.github.allioli.bookstoreapi.services;
 
+import io.github.allioli.bookstoreapi.GenericResponse;
+import io.github.allioli.bookstoreapi.IGenericResponse;
 import io.github.allioli.bookstoreapi.RoutesV1;
+import io.github.allioli.bookstoreapi.model.responses.UserAccountData;
 import io.restassured.response.Response;
 
 
@@ -13,8 +16,8 @@ public class AccountV1Service extends BaseService {
         super(authToken);
     }
 
-    public Response getUserAccount(String userId) {
-        return
+    public IGenericResponse<UserAccountData> getUserAccount(String userId) {
+        Response response =
             request
                 .when()
                     .get(RoutesV1.userAccount(userId))
@@ -23,5 +26,7 @@ public class AccountV1Service extends BaseService {
                     .body("userId", is(userId))
                 .extract()
                     .response();
+
+        return new GenericResponse<>(UserAccountData.class, response);
     }
 }

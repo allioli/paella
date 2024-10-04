@@ -2,8 +2,7 @@ package io.github.allioli.bookstoreapi.model.responses;
 
 import java.util.List;
 
-public class GetUserAccountResponseBody {
-    public String userId;
-    public String username;
+public class BooksData {
+
     public List<Book> books;
 }

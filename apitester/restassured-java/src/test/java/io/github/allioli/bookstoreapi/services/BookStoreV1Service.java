@@ -1,7 +1,9 @@
 package io.github.allioli.bookstoreapi.services;
 
+import io.github.allioli.bookstoreapi.GenericResponse;
 import io.github.allioli.bookstoreapi.RoutesV1;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
+import io.github.allioli.bookstoreapi.model.responses.BooksData;
 import io.restassured.response.Response;
 
 import static org.hamcrest.Matchers.lessThan;
@@ -15,8 +17,8 @@ public class BookStoreV1Service extends BaseService {
         super(authToken);
     }
 
-    public Response getAllBooks() {
-        return
+    public GenericResponse<BooksData> getAllBooks() {
+        Response response =
             request
                 .when()
                     .get(RoutesV1.books())
@@ -25,6 +27,8 @@ public class BookStoreV1Service extends BaseService {
                     .time(lessThan(2000L))
                 .extract()
                     .response();
+
+        return new GenericResponse<>(BooksData.class, response);
     }
 
     public void removeAllBooksFromUserAccount(String userID) {

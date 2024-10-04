@@ -1,7 +1,10 @@
 package io.github.allioli.bookstoreapi.services;
 
+import io.github.allioli.bookstoreapi.GenericResponse;
+import io.github.allioli.bookstoreapi.IGenericResponse;
 import io.github.allioli.bookstoreapi.RoutesV1;
 import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
+import io.github.allioli.bookstoreapi.model.responses.AuthTokenData;
 import io.restassured.response.Response;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -12,9 +15,9 @@ public class AccountAuthV1Service extends BaseService {
         super();
     }
 
-    public Response generateUserToken(GenerateTokenPayload payload) {
+    public IGenericResponse<AuthTokenData> generateUserToken(GenerateTokenPayload payload) {
 
-        return request
+        Response response = request
                 .when()
                     .body(payload)
                     .post(RoutesV1.generateToken())
@@ -24,5 +27,7 @@ public class AccountAuthV1Service extends BaseService {
                     .body("token", notNullValue())
                 .extract()
                     .response();
+
+        return new GenericResponse<>(AuthTokenData.class, response);
     }
 }
