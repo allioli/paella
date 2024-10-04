@@ -1,5 +1,6 @@
 package io.github.allioli.bookstoreapi.services;
 
+import io.github.allioli.bookstoreapi.RoutesV1;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
 import io.restassured.response.Response;
 
@@ -18,7 +19,7 @@ public class BookStoreV1Service extends BaseService {
         return
             request
                 .when()
-                    .get("/BookStore/v1/Books")
+                    .get(RoutesV1.books())
                 .then().log().ifValidationFails()
                     .statusCode(200)
                     .time(lessThan(2000L))
@@ -30,7 +31,7 @@ public class BookStoreV1Service extends BaseService {
         request
             .when()
                 .queryParam("UserId", userID)
-                .delete("/BookStore/v1/Books")
+                .delete(RoutesV1.books())
             .then().log().ifValidationFails()
                 .statusCode(204);
     }
@@ -39,7 +40,7 @@ public class BookStoreV1Service extends BaseService {
         request
             .when()
                 .body(payload)
-                .post("/BookStore/v1/Books")
+                .post(RoutesV1.books())
             .then().log().ifValidationFails()
                 .statusCode(201);
     }

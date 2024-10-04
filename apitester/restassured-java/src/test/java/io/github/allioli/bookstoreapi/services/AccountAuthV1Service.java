@@ -1,5 +1,6 @@
 package io.github.allioli.bookstoreapi.services;
 
+import io.github.allioli.bookstoreapi.RoutesV1;
 import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
 import io.restassured.response.Response;
 
@@ -16,7 +17,7 @@ public class AccountAuthV1Service extends BaseService {
         return request
                 .when()
                     .body(payload)
-                    .post("/Account/v1/GenerateToken")
+                    .post(RoutesV1.generateToken())
                 .then().log().body()
                     .statusCode(200)
                     .assertThat()

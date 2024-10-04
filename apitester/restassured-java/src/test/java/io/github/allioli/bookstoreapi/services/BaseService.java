@@ -8,11 +8,11 @@ public class BaseService {
 
     protected final RequestSpecification request;
 
-    public BaseService(){
+    protected BaseService(){
         request = RestAssured.given()
                 .spec(BookstoreSpecs.getBaseRequestSpec());
     }
-    public BaseService(String authToken){
+    protected BaseService(String authToken){
         request = RestAssured.given()
                 .spec(BookstoreSpecs.getBaseRequestSpec())
                 .spec(BookstoreSpecs.getAuthRequestSpec(authToken));

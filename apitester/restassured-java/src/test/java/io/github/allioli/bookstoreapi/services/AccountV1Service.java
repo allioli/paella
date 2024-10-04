@@ -1,5 +1,6 @@
 package io.github.allioli.bookstoreapi.services;
 
+import io.github.allioli.bookstoreapi.RoutesV1;
 import io.restassured.response.Response;
 
 
@@ -16,8 +17,7 @@ public class AccountV1Service extends BaseService {
         return
             request
                 .when()
-                    .pathParam("UUID", userId)
-                    .get("/Account/v1/User/{UUID}")
+                    .get(RoutesV1.userAccount(userId))
                 .then().log().body()
                     .statusCode(200)
                     .body("userId", is(userId))
