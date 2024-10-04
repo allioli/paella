@@ -4,7 +4,7 @@ This is a RestAssured Java project to test Restful web services.
 
 ## Main goals
 * Practise simple, concise test cases written in RestAssured DSL, leveraging the fluent interface to enhance test readability. 
-* Expand the usage of RestAssured to test a web api with user authentication. 
+* Expand the usage of RestAssured to test a web api with user authentication and functional test cases. 
 
 Explore best practices to maximise reusable code, decouple testing logic from client-server interactions and reduce friction when incorporating more test cases.
 
@@ -54,7 +54,8 @@ There are different types of tests:
 ## Best practices explored in this example project
 
 # Service classes 
-Service classes encapsulate client-server interaction details and provide a cleaner abstraction for the test logic. The aim is to have test input params and assertions in test cases. Calls to the endpoints and supporting logic live in Service classes. All Services support BookStore API v1. If there were endpoints versioned as v2, we would create Service classes for V2.
+Service classes encapsulate client-server interaction details and provide a cleaner abstraction for the test logic. The aim is to have test input params and assertions in test cases. Calls to the endpoints and supporting logic live in Service classes. An exception to this rule are the checks for status code, time spent. Given that the tests are mostly happy path user flows, these can be regarded as low-level checks in this context. 
+All Services support BookStore API v1. If there were endpoints versioned as v2, we would create Service classes for V2.
 
 # POJOS for serialisation / deserialisation of data
 Dealing with raw JSON in request / response body can lead to errors when maintaining tests. In the Bookstore API tests we are using POJOs to represent that data, and letting Restassured do the serialisation work in the request builder methods. Similarly, instead of deserialising String responses with `JsonPath.fromString).get("books");`, we can do `response.getBody().as(BooksData.class);` This comes very handy also to catch fields that are missing / have changed name unexpectedly.
