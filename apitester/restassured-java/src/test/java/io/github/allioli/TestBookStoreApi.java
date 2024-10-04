@@ -35,7 +35,8 @@ public class TestBookStoreApi {
         RestAssured.baseURI = cfg.baseURI();
 
         if (authToken == null) {
-            authenticateUserAndSaveAuthToken();
+            CredentialsPayload registeredUserCredentials = new CredentialsPayload(cfg.userName(), cfg.password());
+            authToken = authenticateUserAndReturnAuthToken(registeredUserCredentials);
         }
     }
 
@@ -110,30 +111,34 @@ public class TestBookStoreApi {
     public void createNewUser() {
 
         // GIVEN non-registered user with credentials
-        CredentialsPayload payload = Instancio.of(CredentialsPayload.class)
+        CredentialsPayload newCredentials = Instancio.of(CredentialsPayload.class)
                 .generate(field("password"), gen -> gen.text().pattern("#d#d#C#c!secret"))
                 .create();
 
         // WHEN she registers as a new user
         AccountV1Service accountV1Service = new AccountV1Service();
-        IGenericResponse<UserCreatedAccountData> response = accountV1Service.createUserAccount(payload);
+        IGenericResponse<UserCreatedAccountData> response = accountV1Service.createUserAccount(newCredentials);
 
         // THEN there is a new user account
         UserCreatedAccountData newAccountData = response.getBodyData();
-        Assert.assertEquals(newAccountData.username, payload.userName);
         Assert.assertNotNull(newAccountData.userID);
+        Assert.assertEquals(newAccountData.username, newCredentials.userName);
         Assert.assertTrue(newAccountData.books.isEmpty());
+
+        // And she can delete user account
+        String newUserAuthToken = authenticateUserAndReturnAuthToken(newCredentials);
+        AccountV1Service accountV1ServiceWithAuth = new AccountV1Service(newUserAuthToken);
+        accountV1ServiceWithAuth.deleteUserAccount(newAccountData.userID);
     }
 
-    private void authenticateUserAndSaveAuthToken() {
+    private String authenticateUserAndReturnAuthToken(CredentialsPayload credentials) {
 
         AccountAuthV1Service accountAuthService = new AccountAuthV1Service();
-        CredentialsPayload payload = new CredentialsPayload(cfg.userName(), cfg.password());
+        IGenericResponse<AuthTokenData> response = accountAuthService.generateUserToken(credentials);
 
-        IGenericResponse<AuthTokenData> response = accountAuthService.generateUserToken(payload);
-        authToken = response.getBodyData().token;
+        accountAuthService.checkUserAuthorised(credentials);
 
-        accountAuthService.checkUserAuthorised(payload);
+        return response.getBodyData().token;
     }
 
     private IGenericResponse<UserAccountData> getUserAccount(String userID) {

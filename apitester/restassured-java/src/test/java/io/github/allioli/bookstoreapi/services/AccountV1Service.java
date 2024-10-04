@@ -49,4 +49,14 @@ public class AccountV1Service extends BaseService {
 
         return new GenericResponse<>(UserCreatedAccountData.class, response);
     }
+
+    public void deleteUserAccount(String userId) {
+
+        request
+            .when()
+                .delete(RoutesV1.concreteUserAccount(userId))
+            .then().log().ifValidationFails()
+                .statusCode(204);
+
+    }
 }
