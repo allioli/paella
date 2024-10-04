@@ -5,7 +5,7 @@ import io.github.allioli.bookstoreapi.config.ApiTestConfiguration;
 import io.github.allioli.bookstoreapi.services.AccountAuthV1Service;
 import io.github.allioli.bookstoreapi.services.AccountV1Service;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
-import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
+import io.github.allioli.bookstoreapi.model.requests.CredentialsPayload;
 import io.github.allioli.bookstoreapi.model.requests.ISBN;
 import io.github.allioli.bookstoreapi.model.responses.Book;
 import io.github.allioli.bookstoreapi.model.responses.AuthTokenData;
@@ -104,11 +104,14 @@ public class TestBookStoreApi {
     }
 
     private void authenticateUserAndSaveAuthToken() {
+
         AccountAuthV1Service accountAuthService = new AccountAuthV1Service();
-        GenerateTokenPayload payload = new GenerateTokenPayload(cfg.userName(), cfg.password());
+        CredentialsPayload payload = new CredentialsPayload(cfg.userName(), cfg.password());
 
         IGenericResponse<AuthTokenData> response = accountAuthService.generateUserToken(payload);
         authToken = response.getBodyData().token;
+
+        accountAuthService.checkUserAuthorised(payload);
     }
 
     private IGenericResponse<UserAccountData> getUserAccount(String userID) {

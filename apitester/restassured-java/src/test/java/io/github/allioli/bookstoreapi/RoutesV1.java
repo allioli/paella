@@ -10,6 +10,11 @@ public class RoutesV1 {
         return ACCOUNT + VERSION + "/GenerateToken";
     }
 
+    // Example /Account/v1/Authorized
+    public static String userAuthorised(){
+        return ACCOUNT + VERSION + "/Authorized";
+    }
+
     // Example /BookStore/v1/Books
     public static String books(){
         return BOOKSTORE + VERSION + "/Books";
