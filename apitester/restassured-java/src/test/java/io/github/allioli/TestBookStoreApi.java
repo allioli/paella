@@ -1,16 +1,14 @@
 package io.github.allioli;
 
-import io.github.allioli.bookstoreapi.model.responses.GetBooksResponseBody;
-import io.github.allioli.bookstoreapi.services.AccountAuthService;
-import io.github.allioli.bookstoreapi.services.AccountService;
+import io.github.allioli.bookstoreapi.services.AccountAuthV1Service;
+import io.github.allioli.bookstoreapi.services.AccountV1Service;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
 import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
 import io.github.allioli.bookstoreapi.model.requests.ISBN;
 import io.github.allioli.bookstoreapi.model.responses.Book;
 import io.github.allioli.bookstoreapi.model.responses.GenerateTokenResponseBody;
 import io.github.allioli.bookstoreapi.model.responses.GetUserAccountResponseBody;
-import io.github.allioli.bookstoreapi.services.BookStoreService;
-import io.github.allioli.bookstoreapi.specs.BookstoreSpecs;
+import io.github.allioli.bookstoreapi.services.BookStoreV1Service;
 import io.restassured.RestAssured;
 
 import io.restassured.response.Response;
@@ -43,7 +41,7 @@ public class TestBookStoreApi {
     @Test(description = "Should list all books")
     public void listAllBooks() {
 
-        BookStoreService bookStoreService = new BookStoreService();
+        BookStoreV1Service bookStoreService = new BookStoreV1Service();
         Response response = bookStoreService.getAllBooks();
         response
             .then()
@@ -56,7 +54,7 @@ public class TestBookStoreApi {
     @Test(description = "Should validate response schema for GET books method")
     public void checkGetBooksContract() {
 
-        BookStoreService bookStoreService = new BookStoreService();
+        BookStoreV1Service bookStoreService = new BookStoreV1Service();
         Response response = bookStoreService.getAllBooks();
         response
             .then()
@@ -71,7 +69,7 @@ public class TestBookStoreApi {
         String bookIsbn = "9781593277574";
 
         // Add book to user account
-        BookStoreService bookStoreService = new BookStoreService(authToken);
+        BookStoreV1Service bookStoreService = new BookStoreV1Service(authToken);
         AddBooksPayload payload = new AddBooksPayload(userID, new ISBN(bookIsbn));
         bookStoreService.addBookToUserAccount(payload);
 
@@ -93,7 +91,7 @@ public class TestBookStoreApi {
     public void removeAllBooksFromReadingList() {
 
         // Remove all books from user account
-        BookStoreService bookStoreService = new BookStoreService(authToken);
+        BookStoreV1Service bookStoreService = new BookStoreV1Service(authToken);
         bookStoreService.removeAllBooksFromUserAccount(userID);
 
         // Assert that user account has no books
@@ -103,7 +101,7 @@ public class TestBookStoreApi {
     }
 
     private void authenticateUserAndSaveAuthToken() {
-        AccountAuthService accountAuthService = new AccountAuthService();
+        AccountAuthV1Service accountAuthService = new AccountAuthV1Service();
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
 
         Response response = accountAuthService.generateUserToken(payload);
@@ -112,7 +110,7 @@ public class TestBookStoreApi {
     }
 
     private GetUserAccountResponseBody getUserAccount() {
-        AccountService accountService = new AccountService(authToken);
+        AccountV1Service accountService = new AccountV1Service(authToken);
         Response response = accountService.getUserAccount(userID);
         return response.as(GetUserAccountResponseBody.class);
     }

@@ -5,9 +5,9 @@ import io.restassured.response.Response;
 
 import static org.hamcrest.Matchers.notNullValue;
 
-public class AccountAuthService extends BaseService {
+public class AccountAuthV1Service extends BaseService {
 
-    public AccountAuthService() {
+    public AccountAuthV1Service() {
         super();
     }
 

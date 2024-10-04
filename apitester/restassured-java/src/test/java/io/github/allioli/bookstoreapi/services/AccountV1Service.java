@@ -6,9 +6,9 @@ import io.restassured.response.Response;
 import static org.hamcrest.Matchers.is;
 
 
-public class AccountService extends BaseService {
+public class AccountV1Service extends BaseService {
 
-    public AccountService(String authToken){
+    public AccountV1Service(String authToken){
         super(authToken);
     }
 

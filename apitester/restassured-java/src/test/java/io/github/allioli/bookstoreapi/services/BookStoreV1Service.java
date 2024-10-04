@@ -1,20 +1,16 @@
 package io.github.allioli.bookstoreapi.services;
 
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
-import io.github.allioli.bookstoreapi.specs.BookstoreSpecs;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;
 
-public class BookStoreService extends BaseService {
+public class BookStoreV1Service extends BaseService {
 
-    public BookStoreService(){
+    public BookStoreV1Service(){
         super();
     }
-    public BookStoreService(String authToken){
+    public BookStoreV1Service(String authToken){
         super(authToken);
     }
 
