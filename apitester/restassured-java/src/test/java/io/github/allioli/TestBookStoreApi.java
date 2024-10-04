@@ -1,6 +1,7 @@
 package io.github.allioli;
 
 import io.github.allioli.bookstoreapi.IGenericResponse;
+import io.github.allioli.bookstoreapi.config.ApiTestConfiguration;
 import io.github.allioli.bookstoreapi.services.AccountAuthV1Service;
 import io.github.allioli.bookstoreapi.services.AccountV1Service;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
@@ -13,6 +14,7 @@ import io.github.allioli.bookstoreapi.services.BookStoreV1Service;
 import io.restassured.RestAssured;
 
 import io.restassured.response.Response;
+import org.aeonbits.owner.ConfigFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -22,14 +24,12 @@ import static org.hamcrest.Matchers.*;
 
 public class TestBookStoreApi {
 
-    private final String userID = "5fa127c4-1f2b-4ccd-b8f2-e0620f562da8";
-    private final String userName = "xavi-test2";
-    private final String password = "Secret1!";
+    private final ApiTestConfiguration cfg = ConfigFactory.create(ApiTestConfiguration.class);
     private String authToken = null;
 
     @BeforeClass
     public void setUp() {
-        RestAssured.baseURI = "https://bookstore.toolsqa.com";
+        RestAssured.baseURI = cfg.baseURI();
 
         if (authToken == null) {
             authenticateUserAndSaveAuthToken();
@@ -64,15 +64,17 @@ public class TestBookStoreApi {
     @Test(description = "Should add book to user reading list")
     public void addBookToReadingList() {
 
+        // GIVEN registered user and a book she likes
         String bookIsbn = "9781593277574";
+        String userID = cfg.userID();
 
-        // Add book to user account
+        // WHEN she adds a book to the collection in her user account
         BookStoreV1Service bookStoreService = new BookStoreV1Service(authToken);
         AddBooksPayload payload = new AddBooksPayload(userID, new ISBN(bookIsbn));
         bookStoreService.addBookToUserAccount(payload);
 
-        // Assert that expected book was added to user account
-        UserAccountData userAccountData = this.getUserAccount().getBodyData();
+        // THEN the expected book is added to user account
+        UserAccountData userAccountData = this.getUserAccount(userID).getBodyData();
         Assert.assertFalse(userAccountData.books.isEmpty());
 
         boolean userBookFound = false;
@@ -88,25 +90,28 @@ public class TestBookStoreApi {
     @Test(description = "Should remove all books from user reading list")
     public void removeAllBooksFromReadingList() {
 
-        // Remove all books from user account
+        // GIVEN registered user
+        String userID = cfg.userID();
+
+        // WHEN she removes all books from her user account
         BookStoreV1Service bookStoreService = new BookStoreV1Service(authToken);
         bookStoreService.removeAllBooksFromUserAccount(userID);
 
-        // Assert that user account has no books
-        UserAccountData userAccountData = this.getUserAccount().getBodyData();
+        // THEN the book collection in her account is empty
+        UserAccountData userAccountData = this.getUserAccount(userID).getBodyData();
         Assert.assertTrue(userAccountData.books.isEmpty());
 
     }
 
     private void authenticateUserAndSaveAuthToken() {
         AccountAuthV1Service accountAuthService = new AccountAuthV1Service();
-        GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
+        GenerateTokenPayload payload = new GenerateTokenPayload(cfg.userName(), cfg.password());
 
         IGenericResponse<AuthTokenData> response = accountAuthService.generateUserToken(payload);
         authToken = response.getBodyData().token;
     }
 
-    private IGenericResponse<UserAccountData> getUserAccount() {
+    private IGenericResponse<UserAccountData> getUserAccount(String userID) {
         AccountV1Service accountService = new AccountV1Service(authToken);
         return accountService.getUserAccount(userID);
 
