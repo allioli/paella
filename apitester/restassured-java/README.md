@@ -21,7 +21,7 @@ We want to keep the fluent given, when, then descriptive test logic as much as p
 |   [schemas](src/test/resources/schemas/) |     Json schemas to support response data validation, including expected format for uri, date-time fields       |
 |   [bookstoreapi.properties](src/test/resources/bookstoreapi.properties) |   BookstoreApi test settings      |
 |   [bookstoreapi.model.requests](src/test/java/io/github/allioli/bookstoreapi/model/requests/) |   POJOS to represent request data        |
-|   [bookstoreapi.model.responses](src/test/java/io/github/allioli/bookstoreapi/model/respponses/) |   POJOS to represent response data        |
+|   [bookstoreapi.model.responses](src/test/java/io/github/allioli/bookstoreapi/model/responses/) |   POJOS to represent response data        |
 |   [bookstoreapi.services](src/test/java/io/github/allioli/bookstoreapi/services/) |   Reusable Endpoint classes with mapped actions on resources        |
 |   [bookstoreapi.specs](src/test/java/io/github/allioli/bookstoreapi/specs/) |   Reusable RestAssured request specs used by services        |
 |   [IGenericResponse.java](src/test/java/io/github/allioli/bookstoreapi/IGenericResponse.java) |   Interface for a generic response containing RestAssured response and deserialised response data        |
