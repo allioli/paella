@@ -2,6 +2,7 @@ package io.github.allioli;
 
 import io.github.allioli.bookstoreapi.IGenericResponse;
 import io.github.allioli.bookstoreapi.config.ApiTestConfiguration;
+import io.github.allioli.bookstoreapi.model.responses.UserCreatedAccountData;
 import io.github.allioli.bookstoreapi.services.AccountAuthV1Service;
 import io.github.allioli.bookstoreapi.services.AccountV1Service;
 import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
@@ -15,12 +16,14 @@ import io.restassured.RestAssured;
 
 import io.restassured.response.Response;
 import org.aeonbits.owner.ConfigFactory;
+import org.instancio.Instancio;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
+import static org.instancio.Select.field;
 
 public class TestBookStoreApi {
 
@@ -101,6 +104,25 @@ public class TestBookStoreApi {
         UserAccountData userAccountData = this.getUserAccount(userID).getBodyData();
         Assert.assertTrue(userAccountData.books.isEmpty());
 
+    }
+
+    @Test(description = "Should create new user account")
+    public void createNewUser() {
+
+        // GIVEN non-registered user with credentials
+        CredentialsPayload payload = Instancio.of(CredentialsPayload.class)
+                .generate(field("password"), gen -> gen.text().pattern("#d#d#C#c!secret"))
+                .create();
+
+        // WHEN she registers as a new user
+        AccountV1Service accountV1Service = new AccountV1Service();
+        IGenericResponse<UserCreatedAccountData> response = accountV1Service.createUserAccount(payload);
+
+        // THEN there is a new user account
+        UserCreatedAccountData newAccountData = response.getBodyData();
+        Assert.assertEquals(newAccountData.username, payload.userName);
+        Assert.assertNotNull(newAccountData.userID);
+        Assert.assertTrue(newAccountData.books.isEmpty());
     }
 
     private void authenticateUserAndSaveAuthToken() {

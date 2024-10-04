@@ -14,7 +14,7 @@ public class GenericResponse<T> implements IGenericResponse<T> {
             throw new RuntimeException("Missing default constructor in Response POJO of class: " + t.getTypeName());
         }
         // Let's cast the body data at instantiation time, so that we only perform the cast once
-        // Throws ClassCastException if the body data is invalid
+        // Throws RuntimeException if the body data is invalid
         this.data = (T) response.getBody().as(data.getClass());
     }
 
