@@ -1,4 +1,4 @@
-package io.github.allioli.bookstore.specs;
+package io.github.allioli.bookstoreapi.specs;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;

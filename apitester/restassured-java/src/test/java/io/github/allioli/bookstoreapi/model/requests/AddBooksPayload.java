@@ -1,4 +1,4 @@
-package io.github.allioli.bookstore.model.requests;
+package io.github.allioli.bookstoreapi.model.requests;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.github.allioli.bookstore.model.requests;
+package io.github.allioli.bookstoreapi.model.requests;
 
 public class GenerateTokenPayload {
     public String userName;

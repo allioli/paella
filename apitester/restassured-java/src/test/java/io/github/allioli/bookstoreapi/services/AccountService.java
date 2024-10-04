@@ -1,19 +1,15 @@
-package io.github.allioli.bookstore.services;
+package io.github.allioli.bookstoreapi.services;
 
-import io.github.allioli.bookstore.specs.BookstoreSpecs;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 
-public class AccountService {
+import static org.hamcrest.Matchers.is;
 
-    private final RequestSpecification request;
+
+public class AccountService extends BaseService {
 
     public AccountService(String authToken){
-        request = RestAssured.given()
-                .spec(BookstoreSpecs.getBaseRequestSpec())
-                .spec(BookstoreSpecs.getAuthRequestSpec(authToken));
+        super(authToken);
     }
 
     public Response getUserAccount(String userId) {
@@ -24,6 +20,7 @@ public class AccountService {
                     .get("/Account/v1/User/{UUID}")
                 .then().log().body()
                     .statusCode(200)
+                    .body("userId", is(userId))
                 .extract()
                     .response();
     }

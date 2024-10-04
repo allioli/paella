@@ -1,14 +1,16 @@
 package io.github.allioli;
 
-import io.github.allioli.bookstore.services.AccountAuthService;
-import io.github.allioli.bookstore.services.AccountService;
-import io.github.allioli.bookstore.model.requests.AddBooksPayload;
-import io.github.allioli.bookstore.model.requests.GenerateTokenPayload;
-import io.github.allioli.bookstore.model.requests.ISBN;
-import io.github.allioli.bookstore.model.responses.Book;
-import io.github.allioli.bookstore.model.responses.GenerateTokenResponseBody;
-import io.github.allioli.bookstore.model.responses.GetUserAccountResponseBody;
-import io.github.allioli.bookstore.specs.BookstoreSpecs;
+import io.github.allioli.bookstoreapi.model.responses.GetBooksResponseBody;
+import io.github.allioli.bookstoreapi.services.AccountAuthService;
+import io.github.allioli.bookstoreapi.services.AccountService;
+import io.github.allioli.bookstoreapi.model.requests.AddBooksPayload;
+import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
+import io.github.allioli.bookstoreapi.model.requests.ISBN;
+import io.github.allioli.bookstoreapi.model.responses.Book;
+import io.github.allioli.bookstoreapi.model.responses.GenerateTokenResponseBody;
+import io.github.allioli.bookstoreapi.model.responses.GetUserAccountResponseBody;
+import io.github.allioli.bookstoreapi.services.BookStoreService;
+import io.github.allioli.bookstoreapi.specs.BookstoreSpecs;
 import io.restassured.RestAssured;
 
 import io.restassured.response.Response;
@@ -19,6 +21,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class TestBookStoreApi {
@@ -37,51 +40,42 @@ public class TestBookStoreApi {
         }
     }
 
-    @Test(description = "List all books")
-    public void getAllBooks() {
+    @Test(description = "Should list all books")
+    public void listAllBooks() {
 
-        given()
-                .spec(BookstoreSpecs.getBaseRequestSpec())
-        .when()
-                .get("/BookStore/v1/Books")
-        .then().log().ifValidationFails()
-                .statusCode(200)
+        BookStoreService bookStoreService = new BookStoreService();
+        Response response = bookStoreService.getAllBooks();
+        response
+            .then()
                 .assertThat()
                 .body("size()", greaterThan(0))
                 .body("books[0]", hasKey("isbn"))
-                .body("books[0].pages", greaterThan(0))
-                .time(lessThan(2000L));
+                .body("books[0].pages", greaterThan(0));
     }
 
-    @Test(description = "Validate Get Books response")
+    @Test(description = "Should validate response schema for GET books method")
     public void checkGetBooksContract() {
 
-        given()
-                .spec(BookstoreSpecs.getBaseRequestSpec())
-        .when()
-                .get("/BookStore/v1/Books")
-        .then().log().ifValidationFails()
-                .statusCode(200)
+        BookStoreService bookStoreService = new BookStoreService();
+        Response response = bookStoreService.getAllBooks();
+        response
+            .then()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("schemas/books_v1_schema.json"));
 
     }
 
-    @Test(description = "Add book to reading list")
+    @Test(description = "Should add book to user reading list")
     public void addBookToReadingList() {
 
         String bookIsbn = "9781593277574";
+
+        // Add book to user account
+        BookStoreService bookStoreService = new BookStoreService(authToken);
         AddBooksPayload payload = new AddBooksPayload(userID, new ISBN(bookIsbn));
+        bookStoreService.addBookToUserAccount(payload);
 
-        given()
-                .spec(BookstoreSpecs.getBaseRequestSpec())
-                .spec(BookstoreSpecs.getAuthRequestSpec(authToken))
-        .when()
-                .body(payload)
-                .post("/BookStore/v1/Books")
-        .then().log().ifValidationFails()
-                .statusCode(201);
-
+        // Assert that expected book was added to user account
         GetUserAccountResponseBody getUserAccountResponseBody = getUserAccount();
         Assert.assertFalse(getUserAccountResponseBody.books.isEmpty());
 
@@ -95,28 +89,25 @@ public class TestBookStoreApi {
         Assert.assertTrue(userBookFound);
     }
 
-    @Test(description = "Remove all books from reading list")
+    @Test(description = "Should remove all books from user reading list")
     public void removeAllBooksFromReadingList() {
 
-        given()
-                .spec(BookstoreSpecs.getBaseRequestSpec())
-                .spec(BookstoreSpecs.getAuthRequestSpec(authToken))
-        .when()
-                .queryParam("UserId", userID)
-                .delete("/BookStore/v1/Books")
-        .then().log().ifValidationFails()
-                .statusCode(204);
+        // Remove all books from user account
+        BookStoreService bookStoreService = new BookStoreService(authToken);
+        bookStoreService.removeAllBooksFromUserAccount(userID);
 
+        // Assert that user account has no books
         GetUserAccountResponseBody getUserAccountResponseBody = this.getUserAccount();
-
         Assert.assertTrue(getUserAccountResponseBody.books.isEmpty());
-        Assert.assertEquals(getUserAccountResponseBody.username, userName);
+
     }
 
     private void authenticateUserAndSaveAuthToken() {
+        AccountAuthService accountAuthService = new AccountAuthService();
         GenerateTokenPayload payload = new GenerateTokenPayload(userName, password);
-        Response response = AccountAuthService.generateUserToken(payload);
-        GenerateTokenResponseBody tokenInfo = response.getBody().as(GenerateTokenResponseBody.class);
+
+        Response response = accountAuthService.generateUserToken(payload);
+        GenerateTokenResponseBody tokenInfo = response.as(GenerateTokenResponseBody.class);
         authToken = tokenInfo.token;
     }
 

@@ -1,18 +1,19 @@
-package io.github.allioli.bookstore.services;
+package io.github.allioli.bookstoreapi.services;
 
-import io.github.allioli.bookstore.model.requests.GenerateTokenPayload;
-import io.github.allioli.bookstore.specs.BookstoreSpecs;
+import io.github.allioli.bookstoreapi.model.requests.GenerateTokenPayload;
 import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class AccountAuthService {
+public class AccountAuthService extends BaseService {
 
-    public static Response generateUserToken(GenerateTokenPayload payload) {
+    public AccountAuthService() {
+        super();
+    }
 
-        return given()
-                    .spec(BookstoreSpecs.getBaseRequestSpec())
+    public Response generateUserToken(GenerateTokenPayload payload) {
+
+        return request
                 .when()
                     .body(payload)
                     .post("/Account/v1/GenerateToken")

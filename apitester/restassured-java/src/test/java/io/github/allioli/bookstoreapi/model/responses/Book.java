@@ -1,4 +1,4 @@
-package io.github.allioli.bookstore.model.responses;
+package io.github.allioli.bookstoreapi.model.responses;
 
 public class Book {
     public String isbn;
