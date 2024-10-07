@@ -1,6 +1,7 @@
 name: Validate new git push on MovieDB python project   
   
 on:
+  workflow_dispatch:
   push:  
     paths:
       - apitester/pytest-bdd-moviedb/**
