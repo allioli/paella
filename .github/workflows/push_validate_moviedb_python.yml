@@ -1,7 +1,9 @@
-name: Validate new git push   
+name: Validate new git push to MovieDB python project   
   
-on: [push]  
-  
+on:
+  push:  
+    paths:
+      - apitester/pytest-bdd-moviedb/**
 jobs:  
   build:  
     runs-on: ubuntu-latest  
@@ -20,5 +22,6 @@ jobs:
           python -m pip install --upgrade pip  
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
       - name: Run Movie Smoke tests - pytest 
-        run: |  
+        run: |
+          cd apitester/pytest-bdd-moviedb  
           pytest -m smoke
