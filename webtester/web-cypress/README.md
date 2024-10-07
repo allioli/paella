@@ -40,7 +40,7 @@ Page Objects encapsulate element locator definition and URLs from test logic.
 ### Parameterized test case
 There is an example of data-driven test cases in [simpleForm.cy.js](cypress/e2e/simpleForm.cy.js). A [fixture file](cypress/fixtures/sums.json) defines different combination of inputs and expected results.
 
-#### Example [simpleForm.cy.js)](cypress/e2e/simpleForm.cy.js)
+#### Example [simpleForm.cy.js](cypress/e2e/simpleForm.cy.js)
 ```javascript
 describe('User interacts with Simple Form', () => {
   const sum_fixtures = require('../fixtures/sums')
