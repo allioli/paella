@@ -38,7 +38,7 @@ Results are visible on the local Cypress runner.
 Page Objects encapsulate element locator definition and URLs from test logic.
 
 ### Parameterized test case
-There is an example of data-driven test cases in [simple_form.cy.js](cypress/e2e/simple_form.cy.js). A [fixture file](cypress/fixtures/sums.json) defines different combination of inputs and expected results.
+There is an example of data-driven test cases in [simple_form.cy.js](cypress/e2e/simpleForm.cy.js). A [fixture file](cypress/fixtures/sums.json) defines different combination of inputs and expected results.
 
 #### Example [simple_form.cy.js](cypress/e2e/simple_form.cy.js)
 ```javascript
