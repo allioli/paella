@@ -8,5 +8,5 @@ def check_movies_sorted_by_attribute(movies_list, attribute_name):
         current_value = values_list[index]
         previous_value = values_list[index - 1]
         # Check that movie value for attribute_name is lower or equal than on the previous one
-        assert(values_list[index] <= values_list[index - 1]), 'Movies not correctly sorted by ' + attribute_name + \
+        assert(current_value <= previous_value), 'Movies not correctly sorted by ' + attribute_name + \
             ': ' + str(values_list)  

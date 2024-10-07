@@ -77,12 +77,12 @@ def step_given_logged_in_session_id(guest_session_id):
 
 ## Common THEN steps ##
 @then(parsers.parse('Response status code is \"{status_code:d}\"'))
-def step_then_response_contains(response, status_code):
+def step_then_response_status_code(response, status_code):
     """Assert on Response."""
     assert(response.status_code == status_code)
 
 @then(parsers.parse('Response status message is \"{response_message}\"'))
-def step_then_response_contains(response, response_message):
+def step_then_response_status_message(response, response_message):
     """Assert on Response."""
     response_json = response.json()
     assert(response_json['status_message'] == response_message)
