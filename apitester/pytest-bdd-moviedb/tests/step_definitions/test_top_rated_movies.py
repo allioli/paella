@@ -32,6 +32,7 @@ def step_when_check_top_rated_movie_list(get_movie_top_rated_v3_api, user_params
 @then('Movies should be sorted by vote_average in descending order')
 def step_then_movies_sorted_by_vote_average(response):
     """Movies should be sorted by vote_average in descending order."""
+    
     movie_validation.check_movies_sorted_by_attribute(
         movies_list=response.json()['results'], attribute_name='vote_average')
     
