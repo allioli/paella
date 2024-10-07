@@ -25,7 +25,7 @@ jobs:
       - name: Lint with Ruff
         run: |
           pip install ruff
-          ruff check --output-format=github apitester/pytest-bdd-moviedb  
+          ruff check --output-format=github apitestera/pytest-bdd-moviedb  
       - name: Run Movie tests - pytest 
         run: |
           cd apitester/pytest-bdd-moviedb  
