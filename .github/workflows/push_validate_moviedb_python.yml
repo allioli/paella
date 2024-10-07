@@ -1,4 +1,4 @@
-name: Validate new git push to MovieDB python project   
+name: Validate new git push on MovieDB python project   
   
 on:
   push:  
@@ -12,9 +12,9 @@ jobs:
         python-version: ["3.12"]  
   
     steps:  
-      - uses: actions/checkout  
+      - uses: actions/checkout@v4.2.0  
       - name: Set up Python ${{ matrix.python-version }}  
-        uses: actions/setup-python  
+        uses: actions/setup-python@v5.2.0  
         with:  
           python-version: ${{ matrix.python-version }}  
       - name: Install dependencies  
