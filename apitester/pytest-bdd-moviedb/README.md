@@ -18,7 +18,7 @@ It will run test scenarios related to the [The Movie Database API](https://devel
 
 ## Dependencies
 
-- Python 3.12
+- Python 3.12 
 - pytest 8.2.2 with plugin bdd-7.2.0
 - requests module
 - pydotenv module
