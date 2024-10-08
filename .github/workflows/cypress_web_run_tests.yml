@@ -19,5 +19,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: webtester/web-cypress
-          build: npm run build
-          start: npm start
+          
