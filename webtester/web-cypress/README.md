@@ -65,6 +65,8 @@ describe('User interacts with Simple Form', () => {
 })
 ```
 
+## Issues encountered
+Test results from local runs are not consistent with those using CI solutions like Cypress Github actions. Particularly, with session cookie handling. More on this topic in this [issue](https://github.com/cypress-io/github-action/issues/1023).
 
 
 ## Sources
