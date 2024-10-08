@@ -19,4 +19,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: webtester/web-cypress
-          
+          browser: chrome
