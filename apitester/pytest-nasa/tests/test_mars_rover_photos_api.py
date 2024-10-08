@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from mars_rover_photos_v1_api import MarsRoverPhotosV1Api
-from datetime import datetime
 import response_validators
 import rover_camera_helper as rc_helper
 import pytest
-from hamcrest import *
+from hamcrest import assert_that, described_as, is_in, has_length, equal_to
 from custom_string_matchers import is_valid_url
 
 

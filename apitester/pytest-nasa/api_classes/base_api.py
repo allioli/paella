@@ -11,7 +11,7 @@ class BaseApi:
 
         self.base_url = base_url
 
-        if dev_api_key == None:
+        if dev_api_key is None:
             self.api_key = BaseApi.default_api_key
         else:
             self.api_key = dev_api_key

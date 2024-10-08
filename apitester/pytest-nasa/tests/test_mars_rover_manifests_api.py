@@ -4,7 +4,6 @@ import pytest
 from datetime import datetime
 import response_validators
 import rover_camera_helper as rc_helper
-from hamcrest import *
 
 
 class TestMarsRoverManifestsAPI():

@@ -1,5 +1,5 @@
 
-from hamcrest import *
+from hamcrest import assert_that, described_as, has_key, has_length, greater_than_or_equal_to, less_than_or_equal_to, all_of, greater_than
 
 
 def assert_property_present(element_id, element, property_name):
