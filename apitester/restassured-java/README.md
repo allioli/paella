@@ -53,25 +53,25 @@ There are different types of tests:
 
 ## Best practices explored in this example project
 
-# Service classes 
+### Service classes 
 Service classes encapsulate client-server interaction details and provide a cleaner abstraction for the test logic. The aim is to have test input params and assertions in test cases. Calls to the endpoints and supporting logic live in Service classes. An exception to this rule are the checks for status code, time spent. Given that the tests are mostly happy path user flows, these can be regarded as low-level checks in this context. 
 All Services support BookStore API v1. If there were endpoints versioned as v2, we would create Service classes for V2.
 
-# POJOS for serialisation / deserialisation of data
+### POJOS for serialisation / deserialisation of data
 Dealing with raw JSON in request / response body can lead to errors when maintaining tests. In the Bookstore API tests we are using POJOs to represent that data, and letting Restassured do the serialisation work in the request builder methods. Similarly, instead of deserialising String responses with `JsonPath.fromString).get("books");`, we can do `response.getBody().as(BooksData.class);` This comes very handy also to catch fields that are missing / have changed name unexpectedly.
 
 Despite the improvement, one could argue that we still need to keep all the POJOs up-to-date manually: to go further, we should have a fixture generator based on the latest API spec, but this is out of scope of this project.
 
-# Generic response interface
+### Generic response interface
 We have a little bit of a problem: some methods in Service classes would be more convenient if they returned deserialised POJOs as response data. At the same time, we don't want to lose all the RestAssured Response class goodness in terms of fluent assertions, access to headers, stataus code, etc.
 
 A possible solution is `IGenericResponse.java`. It is a generic interface that exposes both RestAssures response and the deserialised POJO. This way, the test logic can get value from both to assert expected results.
 
-# Reusable specs
+### Reusable specs
 Service classes support resource operations with and without authorisation. To prevent duplicating the request header builder in each call to server, Request specs are defined in `BookstoreSpecs.java` and built in a member request variable by the parent `BaseService.java` in the different constructors available. Service classes inheriting from `BaseService.java` re-use this request and don't have to specify common traits like `Content-Type` or `Authorisation`.
 
 
-# All Routes lead to Rome
+### All Routes lead to Rome
 Endpoint route definitions are encapsulated in `RoutesV1.java`. Service classes use the provided abstraction to get the appropriate route for each endpoint operation, without having to re-define them every time. This will allow us to quickly update / extend them from a single place.
 
  
