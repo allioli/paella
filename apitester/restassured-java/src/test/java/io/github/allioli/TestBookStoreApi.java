@@ -21,6 +21,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 import static org.instancio.Select.field;
@@ -80,15 +82,7 @@ public class TestBookStoreApi {
         // THEN the expected book is added to user account
         UserAccountData userAccountData = this.getUserAccount(userID).getBodyData();
         Assert.assertFalse(userAccountData.books.isEmpty());
-
-        boolean userBookFound = false;
-        for (Book bookOfUser : userAccountData.books) {
-            if (bookOfUser.isbn.equals(bookIsbn)) {
-                userBookFound = true;
-                break;
-            }
-        }
-        Assert.assertTrue(userBookFound);
+        Assert.assertTrue(isBookPresent(userAccountData.books, bookIsbn));
     }
 
     @Test(description = "Should remove all books from user reading list")
@@ -145,5 +139,14 @@ public class TestBookStoreApi {
         AccountV1Service accountService = new AccountV1Service(authToken);
         return accountService.getUserAccount(userID);
 
+    }
+
+    private boolean isBookPresent(List<Book> books, String isbn) {
+        for (Book bookOfUser : books) {
+            if (bookOfUser.isbn.equals(isbn)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
