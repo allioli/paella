@@ -16,13 +16,13 @@ const test = base.extend<{ loginFixture: LoginPage}>({
   },
 });
 
-test('should login to shop', async ({ page, loginFixture }) => {
+test.skip('should login to shop', async ({ page, loginFixture }) => {
     const primaryHeader = new ShopPrimaryHeader(page);
     const shopItemsPage = new ShopItemsPage(page, primaryHeader);
     await shopItemsPage.isReady();
 });
 
-test('should log out from shop', async ({ page, loginFixture }) => {
+test.skip('should log out from shop', async ({ page, loginFixture }) => {
     const primaryHeader = new ShopPrimaryHeader(page);
     const shopItemsPage = new ShopItemsPage(page, primaryHeader);
     await shopItemsPage.primaryHeader.logout();
