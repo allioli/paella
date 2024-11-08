@@ -8,6 +8,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+export const STORAGE_STATE = path.join(__dirname, './.auth/user.json');
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -35,17 +37,32 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  /* Configure projects for major browsers */
+  /* Configure setup and browser projects */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'setup',
+      testMatch: '**/*.setup.ts',
     },
-
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'e2e tests logged in',
+      dependencies: ['setup'],
+      use: {
+        storageState: STORAGE_STATE,
+      },
     },
+    // {
+    //   name: 'e2e tests not logged in',
+    //   testIgnore: ['**/*purchase.spec.ts', '**/*.setup.ts'],
+    // },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
+
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     // {
     //   name: 'firefox',

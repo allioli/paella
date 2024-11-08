@@ -16,6 +16,10 @@ export class ShopItemsPage {
     this.items = this.page.getByTestId('inventory-item');
   }
 
+  async goto() {
+    await this.page.goto('/inventory.html');
+  }
+
   // Wait for elements that uniquely identify this page to be present
   async isReady() {
     await expect(this.page).toHaveURL(new RegExp("^.*inventory.html"));
