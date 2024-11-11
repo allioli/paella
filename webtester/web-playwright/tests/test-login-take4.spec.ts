@@ -9,7 +9,7 @@ test.afterEach(async ({ page }) => {
 test.skip('should show inventory after log in', async ({ pageWithUserLoggedIn, shopItemsPage }) => {
     await shopItemsPage.isReady();
     // This will not stop the test when failed
-    await expect.soft(shopItemsPage.items).toHaveCount(6);
+    await expect.soft(shopItemsPage.itemCards).toHaveCount(6);
 });
 
 test.skip('should log out from shop', async ({ pageWithUserLoggedIn, shopItemsPage, loginPage }) => {

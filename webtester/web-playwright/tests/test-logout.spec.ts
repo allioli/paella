@@ -1,6 +1,6 @@
 // @ts-check
 
-import { test, expect } from './custom-fixtures/base-test';
+import { test } from './custom-fixtures/base-test';
 
 test.afterEach(async ({ page }) => {
     await page.close();
