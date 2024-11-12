@@ -11,6 +11,7 @@ This repository contains a number of Test automation example projects
 | API testing |  [java Rest Assured example](apitester/restassured-java/)      |
 | WEB APP testing | [BDD cucumber selenium java example](webtester/bdd-web-selenium)      |
 | WEB APP testing | [Cypress example](webtester/web-cypress)      |
+| WEB APP testing | [Playwright example](webtester/web-playwright)      |
 | WEB APP testing | [java selenium testng example](webtester/login-tester-testng-selenium)      |
 | MOBILE testing | [java appium junit example](mobiletester/appium-java-tester)      |
 | MOBILE testing | [Flutter Playground](flutter-playground) |

@@ -97,7 +97,7 @@ Move the auth re-use mechanisme from project config level to a reusable fixture.
 
 
 ## Sources
-* [Cypress Getting Started](https://docs.cypress.io/guides/getting-started/installing-cypress)
-* [Cypress built-in Actionability](https://docs.cypress.io/guides/core-concepts/interacting-with-elements)
-* [Cypress best practices](https://docs.cypress.io/guides/references/best-practices)
-* [Writing Assertions](https://testgrid.io/blog/cypress-assertions/)
+* [Playwright Getting Started](https://playwright.dev/docs/intro)
+* [Playwright built-in Actionability](https://playwright.dev/docs/actionability)
+* [Cypress best practices](https://playwright.dev/docs/best-practices)
+* [Writing Assertions](https://playwright.dev/docs/test-assertions)
