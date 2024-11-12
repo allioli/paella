@@ -25,10 +25,6 @@ export class CheckoutStepTwoPage {
     this.totalAmount = this.page.getByTestId('total-label');
   }
 
-  async goto() {
-    await this.page.goto('/cart.html');
-  }
-
   // Wait for elements that uniquely identify this page to be present
   async isReady() {
     await expect(this.page).toHaveURL(new RegExp("^.*checkout-step-two.html"));
@@ -38,6 +34,10 @@ export class CheckoutStepTwoPage {
     await expect(this.totalAmount).toBeVisible();
     await expect(this.cancelButton).toBeVisible();
     await this.primaryHeader.isReady();
+  }
+
+  async clickFinishButton() {
+    await this.finishButton.click();
   }
 }
  

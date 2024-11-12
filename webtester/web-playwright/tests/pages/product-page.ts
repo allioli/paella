@@ -37,4 +37,8 @@ export class ProductPage {
   async clickBackToProductsButton() {
     await this.backToProductsButton.click();
   }
+
+  async clickAddToCartButton() {
+    await this.addToCartButton.click();
+  }
 }

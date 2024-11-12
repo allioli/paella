@@ -2,7 +2,7 @@
 
 import { test as base } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
-import { ProductsPage } from './pages/products-page';
+import { ProductListPage } from './pages/products-page';
 import { ShopPrimaryHeader } from './pages/shop-primary-header';
 
 // Extend basic test by providing a "login" fixture.
@@ -18,13 +18,13 @@ const test = base.extend<{ loginFixture: LoginPage}>({
 
 test.skip('should login to shop', async ({ page, loginFixture }) => {
     const primaryHeader = new ShopPrimaryHeader(page);
-    const shopItemsPage = new ProductsPage(page, primaryHeader);
+    const shopItemsPage = new ProductListPage(page, primaryHeader);
     await shopItemsPage.isReady();
 });
 
 test.skip('should log out from shop', async ({ page, loginFixture }) => {
     const primaryHeader = new ShopPrimaryHeader(page);
-    const shopItemsPage = new ProductsPage(page, primaryHeader);
+    const shopItemsPage = new ProductListPage(page, primaryHeader);
     await shopItemsPage.primaryHeader.logout();
     await loginFixture.isReady();
 });

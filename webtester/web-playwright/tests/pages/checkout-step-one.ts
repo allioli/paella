@@ -23,10 +23,6 @@ export class CheckoutStepOnePage {
     this.cancelButton = this.page.getByRole('button').and(this.page.getByTestId('cancel'));
   }
 
-  async goto() {
-    await this.page.goto('/cart.html');
-  }
-
   // Wait for elements that uniquely identify this page to be present
   async isReady() {
     await expect(this.page).toHaveURL(new RegExp("^.*checkout-step-one.html"));
