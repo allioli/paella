@@ -8,15 +8,6 @@ test.describe('View product tests', {
       await page.close();
     });
 
-  test('should show available products after log in', async ({ productListPage }) => {
-      // Given I am in products page
-      await productListPage.goto();
-      await productListPage.isReady();
-
-      // Then I should see 6 products
-      await expect.soft(productListPage.productCards).toHaveCount(6);
-  });
-
   [
     { sortCriteria: ProductListPage.SortingCriteria.priceASC, expected: ["$7.99", "$9.99", "$15.99", "$15.99", "$29.99", "$49.99"] },
     { sortCriteria: ProductListPage.SortingCriteria.priceDESC, expected: ["$49.99", "$29.99", "$15.99", "$15.99", "$9.99", "$7.99"] },
@@ -38,6 +29,9 @@ test.describe('View product tests', {
     // Given I am in products page
     await productListPage.goto();
     await productListPage.isReady();
+
+    // Then I should see 6 products
+    await expect.soft(productListPage.productCards).toHaveCount(6);
 
     // When I click on the first product card
     await productListPage.clickFirstProductCardName();

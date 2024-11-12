@@ -44,10 +44,11 @@ export default defineConfig({
       testMatch: '**/*.setup.ts',
     },
     {
-      name: 'e2e tests logged in',
+      name: 'Desktop Chrome',
       dependencies: ['setup'],
       use: {
         storageState: STORAGE_STATE,
+        ...devices['Desktop Chrome'], 
       },
     },
     // {
@@ -70,19 +71,29 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: {
+        ...devices['Pixel 5'],
+        storageState: STORAGE_STATE, 
+      },
+    },
+    {
+      name: 'Mobile Safari',
+      use: { 
+        ...devices['iPhone 13'],
+        storageState: STORAGE_STATE,
+      },
+    },
 
     /* Test against branded browsers. */
     // {
     //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    //   use: { 
+    //     ...devices['Desktop Edge'], 
+    //     channel: 'msedge',
+    //     storageState: STORAGE_STATE,
+    //   },
     // },
     // {
     //   name: 'Google Chrome',
