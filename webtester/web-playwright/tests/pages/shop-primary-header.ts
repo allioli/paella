@@ -1,6 +1,6 @@
 // @ts-check
 
-import { type Page, type Locator } from '@playwright/test';
+import { type Page, type Locator, expect } from '@playwright/test';
 
 export class ShopPrimaryHeader {
   private readonly page: Page;
@@ -15,6 +15,12 @@ export class ShopPrimaryHeader {
     this.burgerMenuButton = this.headerContainer.locator('#react-burger-menu-btn');
     this.shoppingCartLink = this.headerContainer.getByTestId('shopping-cart-link');
     this.logoutMenuOption = this.headerContainer.getByTestId('logout-sidebar-link');
+  }
+
+  // Wait for elements that uniquely identify this component to be present
+  async isReady() {
+    await expect(this.burgerMenuButton).toBeVisible();
+    await expect(this.shoppingCartLink).toBeVisible();
   }
 
   async logout() {

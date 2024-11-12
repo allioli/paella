@@ -5,6 +5,9 @@ import { LoginPage } from '../pages/login-page';
 import { ShopPrimaryHeader } from '../pages/shop-primary-header';
 import { ProductsPage } from '../pages/products-page';
 import { ProductPage } from '../pages/product-page';
+import { CartPage } from '../pages/cart-page';
+import { CheckoutStepOnePage } from '../pages/checkout-step-one';
+import { CheckoutStepTwoPage } from '../pages/checkout-step-two';
 
 
 type MyTestFixtures = {
@@ -12,6 +15,9 @@ type MyTestFixtures = {
     shopPrimaryHeader: ShopPrimaryHeader
     productsPage: ProductsPage
     productPage: ProductPage
+    cartPage: CartPage
+    checkoutStepOnePage: CheckoutStepOnePage
+    checkoutStepTwoPage: CheckoutStepTwoPage
     pageWithUserLoggedIn: Page
 
 }
@@ -28,6 +34,15 @@ export const test = base.extend<MyTestFixtures>({
     },
     productPage: async ({ page, shopPrimaryHeader}, use) => {
         await use(new ProductPage(page, shopPrimaryHeader));
+    },
+    cartPage: async ({ page, shopPrimaryHeader}, use) => {
+        await use(new CartPage(page, shopPrimaryHeader));
+    },
+    checkoutStepOnePage: async ({ page, shopPrimaryHeader}, use) => {
+        await use(new CheckoutStepOnePage(page, shopPrimaryHeader));
+    },
+    checkoutStepTwoPage: async ({ page, shopPrimaryHeader}, use) => {
+        await use(new CheckoutStepTwoPage(page, shopPrimaryHeader));
     },
     pageWithUserLoggedIn: async ({ page, loginPage }, use) => {
         // SetUp

@@ -28,6 +28,7 @@ export class ProductPage {
   async isReady() {
     await expect(this.page).toHaveURL(new RegExp("^.*inventory-item.html"));
     await expect(this.addToCartButton).toBeVisible();
+    await this.primaryHeader.isReady();
     await expect(this.name).toBeVisible();
     await expect(this.price).toBeVisible();
     await expect(this.image).toBeVisible();

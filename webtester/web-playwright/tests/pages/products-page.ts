@@ -28,6 +28,7 @@ export class ProductsPage {
   async isReady() {
     await expect(this.page).toHaveURL(new RegExp("^.*inventory.html"));
     await expect(this.productSortContainer).toBeVisible();
+    await this.primaryHeader.isReady();
     await expect(this.productCards.first()).toBeVisible();
   }
 
@@ -39,6 +40,22 @@ export class ProductsPage {
 
   async clickFirstProductCardName() { 
     await this.productCardNames.first().click();
+  }
+
+  async addProductsToShoppingCart(productNames: string[]) {
+    for(let productName of productNames){
+      await this.addProductToShoppingCart(productName);
+    }
+  }
+
+  async addProductToShoppingCart(productName: string) {
+    const addToCardButton: Locator = this.getAddProductToCartButtonLocator(productName);
+    await addToCardButton.click();
+  }
+
+  public getAddProductToCartButtonLocator(productName: string) {
+    const testId =  "add-to-cart-" + productName;
+    return this.page.getByTestId(testId);
   }
 }
 
