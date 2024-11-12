@@ -1,13 +1,13 @@
 // @ts-check
 
-import { type Page, type Locator, expect } from '@playwright/test';
+import { type Page, type Locator } from '@playwright/test';
 
 export class ShopPrimaryHeader {
-  private page: Page;
-  private headerContainer: Locator;
-  private burgerMenuButton: Locator;
-  private shoppingCartLink: Locator;
-  private logoutMenuOption: Locator;
+  private readonly page: Page;
+  private readonly headerContainer: Locator;
+  private readonly burgerMenuButton: Locator;
+  private readonly shoppingCartLink: Locator;
+  private readonly logoutMenuOption: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -25,7 +25,4 @@ export class ShopPrimaryHeader {
   async clickCartLink() {
     await this.shoppingCartLink.click();
   }
-  
-  
-  
 }

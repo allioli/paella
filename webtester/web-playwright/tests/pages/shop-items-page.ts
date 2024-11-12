@@ -6,16 +6,18 @@ import { ShopPrimaryHeader } from './shop-primary-header';
 export class ShopItemsPage {
   private readonly page: Page;
   public  readonly primaryHeader: ShopPrimaryHeader;
-  public  readonly itemCards: Locator;
-  public  readonly itemPrices: Locator;
+  public  readonly productCards: Locator;
+  public  readonly productCardPrices: Locator;
+  public  readonly productCardNames: Locator;
   private readonly productSortContainer: Locator;
 
   constructor(page: Page, primaryHeader: ShopPrimaryHeader) {
     this.page = page;
     this.primaryHeader = primaryHeader; 
     this.productSortContainer = this.page.getByTestId('product-sort-container');
-    this.itemCards = this.page.getByTestId('inventory-item');
-    this.itemPrices = this.itemCards.getByTestId('inventory-item-price');
+    this.productCards = this.page.getByTestId('inventory-item');
+    this.productCardPrices = this.productCards.getByTestId('inventory-item-price');
+    this.productCardNames = this.productCards.getByTestId('inventory-item-name');
   }
 
   async goto() {
@@ -26,13 +28,17 @@ export class ShopItemsPage {
   async isReady() {
     await expect(this.page).toHaveURL(new RegExp("^.*inventory.html"));
     await expect(this.productSortContainer).toBeVisible();
-    await expect(this.itemCards.first()).toBeVisible();
+    await expect(this.productCards.first()).toBeVisible();
   }
 
   async sortProducts(requiredSortingCriteria: ShopItemsPage.SortingCriteria) { 
     await this.productSortContainer.click();
-    let resultString = ShopItemsPage.sortingCriteriaMap[requiredSortingCriteria]
-    await this.productSortContainer.selectOption(resultString);
+    let optionString = ShopItemsPage.sortingCriteriaMap[requiredSortingCriteria]
+    await this.productSortContainer.selectOption(optionString);
+  }
+
+  async clickFirstProductCardName() { 
+    await this.productCardNames.first().click();
   }
 }
 
