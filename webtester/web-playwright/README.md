@@ -68,7 +68,7 @@ There are examples of data-driven test cases in [test-view-products.spec.ts](tes
 
 #### Example [test-view-products.spec.ts](tests/test-view-products.spec.ts)
 ```typescript
-describe('User interacts with Simple Form', () => {
+...
   [
     { sortCriteria: ProductListPage.SortingCriteria.priceASC, expected: ["$7.99", "$9.99", "$15.99", "$15.99", "$29.99", "$49.99"] },
     { sortCriteria: ProductListPage.SortingCriteria.priceDESC, expected: ["$49.99", "$29.99", "$15.99", "$15.99", "$9.99", "$7.99"] },
