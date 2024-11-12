@@ -3,7 +3,7 @@
 import { type Page, type Locator, expect } from '@playwright/test';
 import { ShopPrimaryHeader } from './shop-primary-header';
 
-export class ShopItemsPage {
+export class ProductsPage {
   private readonly page: Page;
   public  readonly primaryHeader: ShopPrimaryHeader;
   public  readonly productCards: Locator;
@@ -31,9 +31,9 @@ export class ShopItemsPage {
     await expect(this.productCards.first()).toBeVisible();
   }
 
-  async sortProducts(requiredSortingCriteria: ShopItemsPage.SortingCriteria) { 
+  async sortProducts(requiredSortingCriteria: ProductsPage.SortingCriteria) { 
     await this.productSortContainer.click();
-    let optionString = ShopItemsPage.sortingCriteriaMap[requiredSortingCriteria]
+    let optionString = ProductsPage.sortingCriteriaMap[requiredSortingCriteria]
     await this.productSortContainer.selectOption(optionString);
   }
 
@@ -42,7 +42,7 @@ export class ShopItemsPage {
   }
 }
 
-export namespace ShopItemsPage {
+export namespace ProductsPage {
   export const enum SortingCriteria {
     priceASC  = "priceASC",
     priceDESC = "priceDESC",

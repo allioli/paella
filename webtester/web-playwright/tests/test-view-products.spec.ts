@@ -1,21 +1,21 @@
 import { test, expect } from './custom-fixtures/base-test';
-import { ShopItemsPage } from './pages/shop-items-page';
+import { ProductsPage } from './pages/products-page';
 
 test.afterEach(async ({ page }) => {
     await page.close();
   });
 
-test('should show available products after log in', async ({ shopItemsPage }) => {
+test('should show available products after log in', async ({ productsPage: shopItemsPage }) => {
     await shopItemsPage.goto();
     await shopItemsPage.isReady();
     await expect.soft(shopItemsPage.productCards).toHaveCount(6);
 });
 
 [
-  { sortCriteria: ShopItemsPage.SortingCriteria.priceASC, expected: ["$7.99", "$9.99", "$15.99", "$15.99", "$29.99", "$49.99"] },
-  { sortCriteria: ShopItemsPage.SortingCriteria.priceDESC, expected: ["$49.99", "$29.99", "$15.99", "$15.99", "$9.99", "$7.99"] },
+  { sortCriteria: ProductsPage.SortingCriteria.priceASC, expected: ["$7.99", "$9.99", "$15.99", "$15.99", "$29.99", "$49.99"] },
+  { sortCriteria: ProductsPage.SortingCriteria.priceDESC, expected: ["$49.99", "$29.99", "$15.99", "$15.99", "$9.99", "$7.99"] },
 ].forEach(({ sortCriteria, expected }) => {
-  test(`should sort products by price according to ${sortCriteria}`, async ({ shopItemsPage }) => {
+  test(`should sort products by price according to ${sortCriteria}`, async ({ productsPage: shopItemsPage }) => {
     await shopItemsPage.goto();
     await shopItemsPage.isReady();
     await shopItemsPage.sortProducts(sortCriteria);
@@ -23,7 +23,7 @@ test('should show available products after log in', async ({ shopItemsPage }) =>
   });
 });
 
-test('should show product details and go back to products', async ({ shopItemsPage, productPage }) => {
+test('should show product details and go back to products', async ({ productsPage: shopItemsPage, productPage }) => {
   await shopItemsPage.goto();
   await shopItemsPage.isReady();
   await shopItemsPage.clickFirstProductCardName();

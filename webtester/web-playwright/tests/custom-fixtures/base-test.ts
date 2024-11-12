@@ -3,14 +3,14 @@
 import { test as base, Page } from '@playwright/test';
 import { LoginPage } from '../pages/login-page';
 import { ShopPrimaryHeader } from '../pages/shop-primary-header';
-import { ShopItemsPage } from '../pages/shop-items-page';
+import { ProductsPage } from '../pages/products-page';
 import { ProductPage } from '../pages/product-page';
 
 
 type MyTestFixtures = {
     loginPage: LoginPage
     shopPrimaryHeader: ShopPrimaryHeader
-    shopItemsPage: ShopItemsPage
+    productsPage: ProductsPage
     productPage: ProductPage
     pageWithUserLoggedIn: Page
 
@@ -23,8 +23,8 @@ export const test = base.extend<MyTestFixtures>({
     shopPrimaryHeader: async ({ page }, use) => {
         await use(new ShopPrimaryHeader(page));
     },
-    shopItemsPage: async ({ page, shopPrimaryHeader}, use) => {
-        await use(new ShopItemsPage(page, shopPrimaryHeader));
+    productsPage: async ({ page, shopPrimaryHeader}, use) => {
+        await use(new ProductsPage(page, shopPrimaryHeader));
     },
     productPage: async ({ page, shopPrimaryHeader}, use) => {
         await use(new ProductPage(page, shopPrimaryHeader));
