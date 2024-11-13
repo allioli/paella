@@ -15,13 +15,22 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
-        working-directory: webtester/web-playwright
     - name: Install dependencies
-      run: npm ci
+      run: |
+          cd webtester/web-playwright
+          npm ci
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: |
+          cd webtester/web-playwright
+          npx playwright install --with-deps
+    - name: Run type checks
+      run: |
+          cd webtester/web-playwright
+          npx tsc -p tsconfig.json --noEmit
     - name: Run Playwright tests
-      run: npx playwright test
+      run: |
+          cd webtester/web-playwright
+          npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
