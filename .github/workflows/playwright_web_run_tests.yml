@@ -30,7 +30,7 @@ jobs:
     - name: Run Playwright tests
       run: |
           cd webtester/web-playwright
-          npx playwright test
+          npx playwright test --trace on
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
