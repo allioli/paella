@@ -99,5 +99,6 @@ Move the auth re-use mechanisme from project config level to a reusable fixture.
 ## Sources
 * [Playwright Getting Started](https://playwright.dev/docs/intro)
 * [Playwright built-in Actionability](https://playwright.dev/docs/actionability)
-* [Cypress best practices](https://playwright.dev/docs/best-practices)
+* [Playwright best practices](https://playwright.dev/docs/best-practices)
 * [Writing Assertions](https://playwright.dev/docs/test-assertions)
+* [Storing login context](https://dev.to/playwright/a-better-global-setup-in-playwright-reusing-login-with-project-dependencies-14)
